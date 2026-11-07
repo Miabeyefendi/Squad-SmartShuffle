@@ -25,55 +25,53 @@ One line per entry in the server log. Unreal may put its own prefix in front
 
 ```
 SmartShuffleDump BEGIN
-SmartShuffleDump P eos=<EOS ID> k=<kills> w=<wounds dealt> d=<deaths> r=<revives> h=<healing> dmg=<damage> s=<suppression dealt> sr=<suppression received> a=<ammo supplied> c=<construction supplied> m=<markers> ts=<tactical support> cap=<captures+neutralizations> ct=<capture ticks> dt=<defense ticks> tk=<teamkills> min=<minutes played> name=<player name>
+SmartShuffleDump P eos=<EOS ID> k=<kills> w=<wounds dealt> d=<deaths> tk=<teamkills> r=<revives> h=<healing> dmg=<damage> s=<suppression dealt> sr=<suppression received> a=<ammo supplied> c=<construction supplied> m=<markers> ts=<tactical support> cap=<captures> capn=<neutralizations> ct=<capture ticks> dt=<defense ticks> name=<player name>
 SmartShuffleDump END
 ```
 
 - Key order does not matter. A missing key counts as 0 (or keeps the value SquadJS counted itself).
+  `cap` and `capn` add up. `min=<minutes>` is accepted too; without it the plugin uses its own playtime count.
 - `name=` always comes last, since names can contain spaces.
 - The plugin looks for a 32 digit EOS ID inside `eos=`; `EOS:...`, a list, or the bare ID all work. Without
   one, the player is matched by name.
 - v4a is used when at least 80% of the players on the server are in the dump.
 
-## Blueprint recipe: BP_SmartShuffleDump
+## Blueprint: BP_SmartShuffleDump
 
-In the Squad SDK, create a new Blueprint under `Plugins\Mods\ShuffleTeams\Content\` with parent class
-`SQGameRuleSet`.
+Mod `SmartShuffle` in the Squad SDK, Blueprint `Plugins\Mods\SmartShuffle\Content\BP_SmartShuffleDump`, parent
+class `SQGameRuleSet`. The graph as built (96 nodes):
 
-1. Event: `On End Match` (SQGameRuleSet).
-2. `Print String` ("SmartShuffleDump BEGIN"). Print to Screen OFF, Print to Log ON.
-3. `Get Game State` -> `Player Array` -> `For Each Loop`. `Cast To SQPlayerState` for each element.
-   Skip it when `Team Id` is not 1 or 2.
+1. Event: `On End Match` (SQGameRuleSet override).
+2. `Log Error` (SQBlueprintLibrary) with "SmartShuffleDump BEGIN". `Log Error` is used instead of
+   `Print String` because `Print String` is marked Development Only and is compiled out of Shipping builds.
+3. `Get Game State` -> `Player Array` -> `For Each Loop` -> `Cast To SQPlayerState`. Players that fail the cast
+   are skipped. Spectators are not filtered here; the plugin ignores records it cannot match to a team player.
 4. Per-player values:
 
    | Key | Node |
    |---|---|
-   | eos | `Get Player Online Id` (or `Get Player All Online IDs`) |
-   | k | `Get Num Kills` |
-   | w | `Get Num Wounded` |
-   | d | `Get Num Deaths` |
-   | tk | `Get Num Team Kills` |
-   | r, h, dmg, s, sr, a, c | `SQStatsCollectorSubsystem` -> `Get Stat` (REVIVES, HEALING, DAMAGE_INFLICTED, SUPPRESSION_INFLICTED, SUPPRESSION_RECEIVED, AMMO_SUPPLIED, CONSTRUCTION_SUPPLIED) |
-   | m, ts | `Get Stat` (PLACED_SUPPORT_REQUESTS, SENT_TACTICAL_SUPPORT) |
-   | cap | `Get Stat` (OBJECTIVE_CAPTURE) + `Get Stat` (OBJECTIVE_NEUTRALIZE) |
-   | ct, dt | `Get Stat` (OBJECTIVE_CAPTURE_TICK, OBJECTIVE_DEFENSE_TICK) |
-   | min | (current time - `SQTeamworkStatsCollector.Get Player Join Time`) / 60 |
+   | eos | `Get Player Online Id` |
+   | k, w, d, tk | `Get Num Kills`, `Get Num Wounded`, `Get Num Deaths`, `Get Num Team Kills` |
+   | r, h, dmg, s, sr, a, c | `SQStatsCollectorSubsystem` -> `Get Stat` (Revives, Healing, DamageInflicted, SuppressionInflicted, SuppressionReceived, AmmoSupplied, ConstructionSupplied) |
+   | m, ts | `Get Stat` (PlacedSupportRequests, SentTacticalSupport) |
+   | cap, capn | `Get Stat` (ObjectiveCapture, ObjectiveNeutralize) |
+   | ct, dt | `Get Stat` (ObjectiveCaptureTick, ObjectiveDefenseTick) |
    | name | `Get Only Player Name` |
 
-   `player_index` for `Get Stat`: the PlayerState's `Player Id` (not verified yet, see below).
-   `SQStatsCollectorSubsystem`: `Get Game Instance Subsystem` node, class SQStatsCollectorSubsystem.
-5. Build the line with `Append`: "SmartShuffleDump P eos=" + eos + " k=" + k + ... + " name=" + name, then
-   `Print String` (log only).
-6. After the loop, `Print String` ("SmartShuffleDump END").
+   `Get Stat` is an impure call with a by-ref `Stat Type`, so every call is chained on the exec line and fed by
+   an enum literal node. `Player Index` comes from the PlayerState's `Get Player ID` (not verified yet, see below).
+   Numbers go through `To String (Integer)` / `To String (Integer64)`, the line is built with a chain of `Append`.
+5. `Log Error` with the finished "SmartShuffleDump P ..." line, once per player.
+6. After the loop (`Completed`), `Log Error` with "SmartShuffleDump END".
 
-Register it with ModLoader: add `/ShuffleTeams/BP_SmartShuffleDump.BP_SmartShuffleDump_C` to the "rulesets"
+Register it with ModLoader: add `/SmartShuffle/BP_SmartShuffleDump.BP_SmartShuffleDump_C` to the "rulesets"
 list in `Saved/ModLoader/ModLoader.json` (SquadJSLogger uses the same form:
 `/SquadJSLogger/BP_SquadJSLogger.BP_SquadJSLogger_C`).
 
 ## Check on the first test server (not verified yet)
 
-1. Does `Print String` reach the server log? Print String can be compiled out of Shipping builds. If it does
-   not show up, use the log node SquadJSLogger uses (that mod does write to the server log).
+1. Do the `Log Error` lines reach the server log? They should appear as `LogSquad: Error: SmartShuffleDump ...`
+   (the plugin accepts any log category in front of the word).
 2. Is `player_index` for `Get Stat` the same as `Player Id`? Check: for one player, `Get Stat (KILLS)` and
    `Get Num Kills` must give the same number. If they do not, dump `Get Player Stats String (player_index)`
    and compare.

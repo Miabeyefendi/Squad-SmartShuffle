@@ -83,8 +83,8 @@
 <summary><b>Karma yol (tam skorbord)</b></summary>
 
 1. Yukarıdaki SquadJS yolunu kur ve `"useScoreboardDump": true` yap.
-2. Döküm ruleset'ini Squad SDK'da [`src/hybrid/BP_SmartShuffleDump.md`](./src/hybrid/BP_SmartShuffleDump.md) tarifine göre kur.
-3. Workshop'a yükle ve `Saved/ModLoader/ModLoader.json` içindeki `rulesets` listesine ekle.
+2. Sunucuya [ModLoader](https://steamcommunity.com/sharedfiles/filedetails/?id=3516838562) ve [SmartShuffle Workshop öğesini](https://steamcommunity.com/sharedfiles/filedetails/?id=3835528773) (ID 3835528773) kur.
+3. `/SmartShuffle/BP_SmartShuffleDump.BP_SmartShuffleDump_C` yolunu `Saved/ModLoader/ModLoader.json` içindeki `rulesets` listesine ekle. Blueprint'in kendisi [`src/hybrid/BP_SmartShuffleDump.md`](./src/hybrid/BP_SmartShuffleDump.md) dosyasında anlatılıyor.
 
 Döküm satırları gelmezse eklenti kendiliğinden SquadJS verisine döner.
 
@@ -170,7 +170,7 @@ eklentiyi sahte bir SquadJS sunucusunda çalıştırır.
 ## 🧭 Yol haritası
 
 - [ ] SquadJS eklentisini canlı sunucuda çalıştır, `ListPlayers` party biçimini doğrula
-- [ ] Karma yolun döküm ruleset'ini kur ve Workshop'ta yayınla
+- [x] Karma yolun döküm ruleset'ini kur ve Workshop'ta yayınla
 - [ ] ModLoader Blueprint'ini kur
 
 Buradakilerin hiçbiri söz değildir. Bu kişisel bir proje ve liste önceliklerim

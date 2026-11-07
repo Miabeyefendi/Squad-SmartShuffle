@@ -83,8 +83,8 @@
 <summary><b>Гибридный вариант (полная таблица счёта)</b></summary>
 
 1. Установите вариант SquadJS выше и задайте `"useScoreboardDump": true`.
-2. Соберите рулсет выгрузки в Squad SDK по [`src/hybrid/BP_SmartShuffleDump.md`](./src/hybrid/BP_SmartShuffleDump.md).
-3. Загрузите его в Мастерскую и добавьте в список `rulesets` в `Saved/ModLoader/ModLoader.json`.
+2. Установите на сервер [ModLoader](https://steamcommunity.com/sharedfiles/filedetails/?id=3516838562) и [элемент SmartShuffle из Мастерской](https://steamcommunity.com/sharedfiles/filedetails/?id=3835528773) (ID 3835528773).
+3. Добавьте `/SmartShuffle/BP_SmartShuffleDump.BP_SmartShuffleDump_C` в список `rulesets` в `Saved/ModLoader/ModLoader.json`. Сам Blueprint описан в [`src/hybrid/BP_SmartShuffleDump.md`](./src/hybrid/BP_SmartShuffleDump.md).
 
 Если строки выгрузки не приходят, плагин сам возвращается к данным SquadJS.
 
@@ -170,7 +170,7 @@
 ## 🧭 Планы
 
 - [ ] Запустить плагин SquadJS на живом сервере и проверить формат party в `ListPlayers`
-- [ ] Собрать рулсет выгрузки для гибрида и опубликовать его в Мастерской
+- [x] Собрать рулсет выгрузки для гибрида и опубликовать его в Мастерской
 - [ ] Собрать Blueprint для ModLoader
 
 Здесь нет обещаний. Это личный проект, и список меняется вместе с моими

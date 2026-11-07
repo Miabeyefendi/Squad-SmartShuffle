@@ -99,6 +99,7 @@ test('scoreboard dump line parsing', () => {
   assert.equal(parseDumpLine('P eos=- k=1 name=X').eosID, null);
   const eos = '0002a10186d9414496bf20d22d3860ba';
   assert.equal(parseDumpLine(`P eos=EOS:${eos},steam:7656 k=1 name=X`).eosID, eos);
+  assert.equal(parseDumpLine('P eos=- cap=2 capn=3 name=X').stats.caps, 5);
 });
 
 // ---- plugin flow against a fake SquadJS server ----

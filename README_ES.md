@@ -83,8 +83,8 @@
 <summary><b>Vía híbrida (marcador completo)</b></summary>
 
 1. Instala la vía SquadJS de arriba y pon `"useScoreboardDump": true`.
-2. Crea el ruleset de volcado en el Squad SDK siguiendo [`src/hybrid/BP_SmartShuffleDump.md`](./src/hybrid/BP_SmartShuffleDump.md).
-3. Súbelo al Workshop y añádelo a la lista `rulesets` de `Saved/ModLoader/ModLoader.json`.
+2. En el servidor, instala [ModLoader](https://steamcommunity.com/sharedfiles/filedetails/?id=3516838562) y el [elemento SmartShuffle del Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3835528773) (ID 3835528773).
+3. Añade `/SmartShuffle/BP_SmartShuffleDump.BP_SmartShuffleDump_C` a la lista `rulesets` de `Saved/ModLoader/ModLoader.json`. El Blueprint se describe en [`src/hybrid/BP_SmartShuffleDump.md`](./src/hybrid/BP_SmartShuffleDump.md).
 
 Si las líneas del volcado no llegan, el plugin vuelve por sí solo a los datos de SquadJS.
 
@@ -172,7 +172,7 @@ y ejecutan el plugin contra un servidor SquadJS simulado.
 ## 🧭 Hoja de ruta
 
 - [ ] Ejecutar el plugin de SquadJS en un servidor real y confirmar el formato de party de `ListPlayers`
-- [ ] Crear y publicar en el Workshop el ruleset de volcado de la vía híbrida
+- [x] Crear y publicar en el Workshop el ruleset de volcado de la vía híbrida
 - [ ] Crear el Blueprint de ModLoader
 
 Nada de esto es una promesa. Es un proyecto personal y la lista cambia cuando

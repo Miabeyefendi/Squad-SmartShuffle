@@ -83,8 +83,8 @@
 <summary><b>Hybrid route (full scoreboard)</b></summary>
 
 1. Install the SquadJS route above and set `"useScoreboardDump": true`.
-2. Build the dump ruleset in the Squad SDK by following [`src/hybrid/BP_SmartShuffleDump.md`](./src/hybrid/BP_SmartShuffleDump.md).
-3. Upload it to the Workshop and add it to the `rulesets` list in `Saved/ModLoader/ModLoader.json`.
+2. On the server, install [ModLoader](https://steamcommunity.com/sharedfiles/filedetails/?id=3516838562) and the [SmartShuffle Workshop item](https://steamcommunity.com/sharedfiles/filedetails/?id=3835528773) (ID 3835528773).
+3. Add `/SmartShuffle/BP_SmartShuffleDump.BP_SmartShuffleDump_C` to the `rulesets` list in `Saved/ModLoader/ModLoader.json`. The Blueprint itself is described in [`src/hybrid/BP_SmartShuffleDump.md`](./src/hybrid/BP_SmartShuffleDump.md).
 
 When the dump lines do not arrive, the plugin falls back to the SquadJS data on its own.
 
@@ -170,7 +170,7 @@ and run the plugin against a fake SquadJS server.
 ## 🧭 Roadmap
 
 - [ ] Run the SquadJS plugin on a live server and confirm the `ListPlayers` party format
-- [ ] Build and publish the hybrid dump ruleset on the Workshop
+- [x] Build and publish the hybrid dump ruleset on the Workshop
 - [ ] Build the ModLoader Blueprint
 
 Nothing here is a promise. This is a personal project and the list moves when my

@@ -32,6 +32,29 @@ The three routes are released separately, each with its own tag: `squadjs-vX.Y.Z
 
 ---
 
+## [Hybrid 0.2.0] - 2026-11-07
+
+### Added
+
+- The dump ruleset is built and published on the Steam Workshop as
+  [SmartShuffle](https://steamcommunity.com/sharedfiles/filedetails/?id=3835528773) (ID 3835528773), with
+  ModLoader as a required item. Packaged for Windows and Windows servers.
+
+### Changed
+
+- The ruleset writes its lines with `Log Error` instead of `Print String`, which is compiled out of Shipping
+  builds. Captures and neutralizations are written as separate keys (`cap`, `capn`).
+
+---
+
+## [SquadJS 1.0.1] - 2026-11-07
+
+### Fixed
+
+- Scoreboard dump lines with both `cap` and `capn` now add the two together instead of keeping only the last one.
+
+---
+
 ## [SquadJS 1.0.0] - 2026-11-07
 
 ### Added
@@ -70,6 +93,8 @@ The three routes are released separately, each with its own tag: `squadjs-vX.Y.Z
 
 <!-- Keep this link block at the bottom and add one line per release. -->
 
+[Hybrid 0.2.0]: https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/hybrid-v0.2.0
+[SquadJS 1.0.1]: https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/squadjs-v1.0.1
 [SquadJS 1.0.0]: https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/squadjs-v1.0.0
 [Hybrid 0.1.0]: https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/hybrid-v0.1.0
 [ModLoader 0.1.0]: https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/modloader-v0.1.0

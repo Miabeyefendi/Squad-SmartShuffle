@@ -10,8 +10,8 @@ servers that do not run SquadJS.
 
 ## Class and registration
 
-- New Blueprint, parent class `SQGameRuleSet`, name `BP_SmartShuffle`, in `Plugins\Mods\ShuffleTeams\Content\`.
-- ModLoader: add `/ShuffleTeams/BP_SmartShuffle.BP_SmartShuffle_C` to the "rulesets" list in
+- New Blueprint, parent class `SQGameRuleSet`, name `BP_SmartShuffle`, in `Plugins\Mods\SmartShuffle\Content\`.
+- ModLoader: add `/SmartShuffle/BP_SmartShuffle.BP_SmartShuffle_C` to the "rulesets" list in
   `Saved/ModLoader/ModLoader.json`.
 
 ## Settings (`SQBlueprintLibrary`)

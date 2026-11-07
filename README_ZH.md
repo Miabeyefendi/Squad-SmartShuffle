@@ -83,8 +83,8 @@
 <summary><b>混合方式（完整记分板）</b></summary>
 
 1. 先按上面安装 SquadJS 方式，并设置 `"useScoreboardDump": true`。
-2. 按照 [`src/hybrid/BP_SmartShuffleDump.md`](./src/hybrid/BP_SmartShuffleDump.md) 在 Squad SDK 中制作导出规则集。
-3. 上传到创意工坊，并加入 `Saved/ModLoader/ModLoader.json` 的 `rulesets` 列表。
+2. 在服务器上安装 [ModLoader](https://steamcommunity.com/sharedfiles/filedetails/?id=3516838562) 和 [SmartShuffle 创意工坊物品](https://steamcommunity.com/sharedfiles/filedetails/?id=3835528773)（ID 3835528773）。
+3. 将 `/SmartShuffle/BP_SmartShuffleDump.BP_SmartShuffleDump_C` 加入 `Saved/ModLoader/ModLoader.json` 的 `rulesets` 列表。蓝图本身的说明见 [`src/hybrid/BP_SmartShuffleDump.md`](./src/hybrid/BP_SmartShuffleDump.md)。
 
 如果导出行没有出现，插件会自动退回使用 SquadJS 数据。
 
@@ -163,7 +163,7 @@
 ## 🧭 路线图
 
 - [ ] 在真实服务器上运行 SquadJS 插件，确认 `ListPlayers` 的 party 格式
-- [ ] 制作混合方式的导出规则集并发布到创意工坊
+- [x] 制作混合方式的导出规则集并发布到创意工坊
 - [ ] 制作 ModLoader 蓝图
 
 这里没有任何承诺。这是个人项目，清单会随着我的优先级而变化。

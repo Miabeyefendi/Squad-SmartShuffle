@@ -355,8 +355,8 @@ const LIST_PLAYERS_RE =
 const DUMP_RE = /^\[([0-9.:-]+)]\[([ 0-9]*)]\w+: .*?SmartShuffleDump (BEGIN|END|P (.*))\s*$/;
 const DUMP_KEYS = {
   k: 'kills', w: 'knocks', d: 'deaths', r: 'revives', h: 'heal', dmg: 'damage', s: 'supp', sr: 'supp_recv',
-  a: 'ammo', c: 'constr', m: 'markers', ts: 'support', cap: 'caps', ct: 'cticks', dt: 'dticks', tk: 'tk',
-  min: 'minutes'
+  a: 'ammo', c: 'constr', m: 'markers', ts: 'support', cap: 'caps', capn: 'caps', ct: 'cticks', dt: 'dticks',
+  tk: 'tk', min: 'minutes'
 };
 
 export function parseListPlayers(text) {
@@ -395,7 +395,11 @@ export function parseDumpLine(body) {
       const hex = val.match(/[0-9a-f]{32}/i);
       rec.eosID = hex ? hex[0] : val && val !== '-' ? val : null;
     }
-    else if (DUMP_KEYS[key]) rec.stats[DUMP_KEYS[key]] = parseFloat(val) || 0;
+    else if (DUMP_KEYS[key]) {
+      // keys that map to the same stat add up (cap = captures, capn = neutralizations)
+      const k = DUMP_KEYS[key];
+      rec.stats[k] = (rec.stats[k] || 0) + (parseFloat(val) || 0);
+    }
   }
   return rec;
 }
