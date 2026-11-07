@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./assets/logo-dark.svg">
-  <img src="./assets/logo.svg" width="120" alt="Squad-SmartShuffle">
+  <source media="(prefers-color-scheme: dark)" srcset="./assets/banner-dark.png">
+  <img src="./assets/banner.png" width="92%" alt="Баннер Squad Smart Shuffle: шесть силуэтов солдат в двух группах по три над словами SQUAD и SMART SHUFFLE, соединёнными двумя стрелками обмена">
 </picture>
 
 # Squad-SmartShuffle

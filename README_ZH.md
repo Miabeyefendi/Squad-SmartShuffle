@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./assets/logo-dark.svg">
-  <img src="./assets/logo.svg" width="120" alt="Squad-SmartShuffle">
+  <source media="(prefers-color-scheme: dark)" srcset="./assets/banner-dark.png">
+  <img src="./assets/banner.png" width="92%" alt="Squad Smart Shuffle 横幅：六个士兵剪影分成两组，每组三人，下方是由两个交换箭头连接的 SQUAD 和 SMART SHUFFLE 字样">
 </picture>
 
 # Squad-SmartShuffle
