@@ -587,3 +587,128 @@ test('plugin: the moves finish even with a failing command or a long scoreboard 
   assert.equal(plugin.last.stopped, false);
   await plugin.unmount();
 });
+
+// ---- session history and outside rating ----
+
+const { withHistory, longTermRating, blendScores, STAT_KEYS } = mod;
+
+test('session history matches the Python reference', () => {
+  golden.cases.forEach((c, n) => {
+    const S = { sl: c.visible.sl, role: c.visible.role, team: c.visible.team };
+    for (const k of STAT_KEYS) S[k] = [];
+    for (let i = 0; i < c.visible.sl.length; i++) {
+      const now = Object.fromEntries(STAT_KEYS.map((k) => [k, c.visible[k][i]]));
+      const rounds = c.hist.olds.map((o) => Object.fromEntries(STAT_KEYS.map((k) => [k, o[k][i]])));
+      const s = withHistory(now, rounds);
+      for (const k of STAT_KEYS) S[k].push(s[k]);
+    }
+    assert.deepEqual(planTeams(S, 'k6', c.slGroups).team, c.hist.team, `case ${n}`);
+  });
+  assert.deepEqual(withHistory({ kills: 3 }, []), { kills: 3 }, 'no earlier rounds: this match as it is');
+});
+
+test('outside rating and blend match the Python reference', () => {
+  golden.cases.forEach((c, n) => {
+    const L = longTermRating(c.mss.tot, c.mss.known);
+    L.forEach((v, i) => {
+      if (c.mss.L[i] === null) assert.ok(Number.isNaN(v), `case ${n} L[${i}] should be empty`);
+      else assert.ok(Math.abs(v - c.mss.L[i]) < 1e-9, `case ${n} L[${i}] ${v} vs ${c.mss.L[i]}`);
+    });
+    closeArrays(blendScores(c.k6.P, L, 0.15), c.mss.P, 1e-9, `case ${n} blended P`);
+    const { team } = planTeams(c.visible, 'k6', c.slGroups, [], (P) => blendScores(P, L, 0.15));
+    assert.deepEqual(team, c.mss.team, `case ${n} team`);
+  });
+  const P = [1, 2, 3];
+  assert.equal(blendScores(P, [NaN, NaN, NaN], 0), P, 'weight 0 leaves the scores alone');
+});
+
+test('plugin: earlier rounds of the session are counted, and can be switched off', async () => {
+  const server = fakeServer(makePlayers());
+  const plugin = new SmartShuffle(server, { autoShuffle: false, minPlayers: 0, historyRounds: 2 });
+  await plugin.mount();
+  for (let round = 0; round < 3; round++) {
+    server.emit('NEW_GAME', {});
+    await playMatch(server);
+    for (const s of plugin.stats.values()) s.minutes = 40;
+    await plugin.onRoundEnded();
+  }
+  server.emit('NEW_GAME', {});
+  assert.equal(plugin.recent('e00').length, 2, 'only the last historyRounds rounds are kept');
+  await playMatch(server);
+  for (const s of plugin.stats.values()) s.minutes = 40;
+  const withIt = (await plugin.plan(false)).P;
+  await plugin.onCommand({ chat: 'ChatAdmin', message: 'history off', eosID: 'admin' });
+  const without = (await plugin.plan(false)).P;
+  assert.notDeepEqual(withIt, without, 'history did not change the scores');
+  await plugin.onCommand({ chat: 'ChatAdmin', message: 'history on', eosID: 'admin' });
+  assert.deepEqual((await plugin.plan(false)).P, withIt);
+
+  // old rounds drop out, and a skipped round (here: too few players) is not kept
+  for (const list of plugin.history.values()) for (const r of list) r.t -= 7 * 3600000;
+  assert.equal(plugin.recent('e00').length, 0);
+  const small = new SmartShuffle(fakeServer(makePlayers()), { minPlayers: 40 });
+  await small.mount();
+  small.server.emit('NEW_GAME', {});
+  await playMatch(small.server);
+  for (const s of small.stats.values()) s.minutes = 40;
+  await small.onRoundEnded();
+  small.server.emit('NEW_GAME', {});
+  assert.equal(small.history.size, 0);
+  const off = new SmartShuffle(fakeServer(makePlayers()), { historyRounds: 0 });
+  assert.equal(off.historyOn, false);
+  await plugin.unmount();
+  await small.unmount();
+});
+
+test('plugin: MySquadStats rating is off by default, needs a token, and never leaks it', async () => {
+  const players = makePlayers().map((p, i) => ({ ...p, steamID: `7656119800000${String(i).padStart(4, '0')}` }));
+  const plain = new SmartShuffle(fakeServer(players), { useMySquadStats: true });
+  assert.equal(plain.outsideOn, false, 'no token, no outside rating');
+  assert.equal(new SmartShuffle(fakeServer(players), { mySquadStatsToken: 'T0KEN' }).outsideOn, false, 'off by default');
+
+  const server = fakeServer(players);
+  const plugin = new SmartShuffle(server, {
+    autoShuffle: true, minPlayers: 0, historyRounds: 0, useMySquadStats: true, mySquadStatsToken: 'T0KEN', mySquadStatsWeight: 0.5
+  });
+  const logs = [];
+  plugin.verbose = (lvl, msg) => logs.push(msg);
+  plugin.outsideGapMs = 0;
+  const asked = [];
+  plugin.getJson = async (url) => {
+    assert.equal(url.host, 'api.mysquadstats.com');
+    assert.equal(url.searchParams.get('accessToken'), 'T0KEN');
+    const id = url.searchParams.get('search');
+    asked.push(id);
+    const i = +id.slice(-4);
+    // the weak team of this match (players 10..19) has the strong all-time numbers
+    return { data: [{ steamID: id, totalKills: i >= 10 ? 900 : 200, totalWounds: 400, totalDeaths: 300, totalRevives: 50 + i }] };
+  };
+  plugin.outsideOn = false;
+  await plugin.mount();
+  server.emit('NEW_GAME', {});
+  await playMatch(server);
+  const before = (await plugin.plan(false)).P;
+  plugin.outsideOn = true;
+  for (let tick = 0; tick < 4; tick++) await plugin.fetchOutside();
+  assert.equal(new Set(asked).size, 20, 'every player is asked once: ' + logs.join(' | '));
+  await plugin.fetchOutside();
+  assert.equal(asked.length, 20, 'answers are cached');
+  const after = (await plugin.plan(false)).P;
+  assert.notDeepEqual(after, before);
+  assert.ok(after[15] > before[15] && after[5] < before[5], 'the all-time rating did not pull the scores');
+  await plugin.onCommand({ chat: 'ChatAdmin', message: 'mss off', eosID: 'admin' });
+  assert.deepEqual((await plugin.plan(false)).P, before);
+  await plugin.onCommand({ chat: 'ChatAdmin', message: 'status', eosID: 'admin' });
+
+  // the API fails: no crash, a pause, and the token is not in any log line or message
+  plugin.outsideOn = true;
+  plugin.outside.clear();
+  plugin.getJson = async (url) => {
+    throw new Error(`HTTP 500 for ${url}`);
+  };
+  await plugin.fetchOutside();
+  assert.ok(plugin.outsidePause > Date.now());
+  assert.ok(logs.some((l) => l.includes('MySquadStats not reachable')));
+  assert.ok(![...logs, ...server.calls].some((l) => l.includes('T0KEN')), 'token leaked');
+  await plugin.unmount();
+});

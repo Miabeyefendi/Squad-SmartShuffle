@@ -345,13 +345,78 @@ export function keepGroups(team, P, groups, sl, cats = null, lam = 1) {
 }
 
 // whole pipeline: S as for buildScores, slGroups per player, groups = friend groups to keep together or []
-export function planTeams(S, formula, slGroups, groups = []) {
+// adjust: optional function P -> P, applied to the scores before the split (outside rating, see blendScores)
+export function planTeams(S, formula, slGroups, groups = [], adjust = null) {
   const f = FORMULAS[formula];
-  const { P, sub } = buildScores(S, f);
+  const scored = buildScores(S, f);
+  const sub = scored.sub;
+  const P = adjust ? adjust(scored.P) : scored.P;
   const dims = f.rateDims ? [...sub, ...rateDims(S), ...kitRows(S.role)] : [...sub, ...kitRows(S.role)];
   let team = balanceMulti(S.sl, P, dims, f.lam, slGroups);
   if (groups.length) team = keepGroups(team, P, groups, S.sl, dims, f.lam);
   return { P, team };
+}
+
+// ---------------------------------------------------------------------------------------------
+// optional inputs: earlier rounds of this session, and an outside long term rating
+// ---------------------------------------------------------------------------------------------
+
+// Session history: this match plus the average of the player's earlier rounds (rounds: array of stat
+// objects). The formula itself is unchanged, it only sees more minutes of the same player.
+export function withHistory(now, rounds) {
+  if (!rounds || !rounds.length) return now;
+  const out = {};
+  for (const k of STAT_KEYS) {
+    let s = 0;
+    for (const r of rounds) s += r[k] || 0;
+    out[k] = ((now && now[k]) || 0) + s / rounds.length;
+  }
+  return out;
+}
+
+function zScores(x, ok) {
+  let n = 0;
+  let m = 0;
+  for (let i = 0; i < x.length; i++) if (ok[i]) { n += 1; m += x[i]; }
+  m /= Math.max(n, 1);
+  let v = 0;
+  for (let i = 0; i < x.length; i++) if (ok[i]) v += (x[i] - m) ** 2;
+  const sd = Math.sqrt(v / Math.max(n, 1));
+  return x.map((value) => (sd > 0 ? (value - m) / sd : 0));
+}
+
+// Long term rating from all-time totals as a stats site gives them (no play time): (kills + wounds) per
+// death and revives per death, each pulled toward the average of the known players with 30 deaths, as
+// z-scores weighted 0.7 / 0.3. tot: { kills, knocks, deaths, revives } arrays, known: bool array.
+// Returns one value per player, NaN where there is no usable data (unknown, or under 30 deaths).
+export function longTermRating(tot, known, priorDeaths = 30, minDeaths = 30) {
+  const n = known.length;
+  const ok = known.map((k, i) => !!k && tot.deaths[i] >= minDeaths);
+  if (ok.filter(Boolean).length < 10) return new Array(n).fill(NaN);
+  let dsum = 0;
+  for (let i = 0; i < n; i++) if (ok[i]) dsum += tot.deaths[i];
+  const out = new Array(n).fill(0);
+  const parts = [[tot.kills.map((v, i) => v + tot.knocks[i]), 0.7], [tot.revives, 0.3]];
+  for (const [arr, weight] of parts) {
+    let asum = 0;
+    for (let i = 0; i < n; i++) if (ok[i]) asum += arr[i];
+    const m0 = asum / Math.max(dsum, 1e-9);
+    const zs = zScores(arr.map((v, i) => (v + priorDeaths * m0) / (tot.deaths[i] + priorDeaths)), ok);
+    for (let i = 0; i < n; i++) out[i] += weight * zs[i];
+  }
+  const L = zScores(out, ok);
+  return L.map((v, i) => (ok[i] ? v : NaN));
+}
+
+// Outside rating on: the score becomes (1 - w) * this match + w * long term, on the scale of P.
+// A player without long term data keeps the score of this match.
+export function blendScores(P, L, w) {
+  if (!(w > 0)) return P;
+  const all = P.map(() => true);
+  const zp = zScores(P, all);
+  const mean = sum(P) / P.length;
+  const sd = Math.sqrt(sum(P.map((v) => (v - mean) ** 2)) / P.length);
+  return P.map((_, i) => Math.max(mean + sd * ((1 - w) * zp[i] + w * (Number.isNaN(L[i]) ? zp[i] : L[i])), 0.02 * mean));
 }
 
 // ---------------------------------------------------------------------------------------------
@@ -423,7 +488,7 @@ export function parseDumpLine(body) {
 export default class SmartShuffle extends BasePlugin {
   static get description() {
     return (
-      'Balances the teams at round end from this match only (kills, wounds, deaths, damage, revives, ' +
+      'Balances the teams at round end from this match and the last rounds of the session (kills, wounds, deaths, damage, revives, ' +
       'deployables, kit, squad leaders, friend groups). After a shuffle, team changes are locked for one round.'
     );
   }
@@ -436,7 +501,7 @@ export default class SmartShuffle extends BasePlugin {
     return {
       command: {
         required: false,
-        description: 'Admin chat command: !<command> [status|now|cancel|preview|auto on|auto off|friends on|friends off|lock 0|lock 1|lock 2|unlock].',
+        description: 'Admin chat command: !<command> [status|now|cancel|preview|auto on|auto off|friends on|friends off|history on|history off|mss on|mss off|lock 0|lock 1|lock 2|unlock].',
         default: 'smartshuffle'
       },
       autoShuffle: {
@@ -483,6 +548,36 @@ export default class SmartShuffle extends BasePlugin {
         required: false,
         description: 'Send the result of a shuffle (moved, not placed, score gap before and after) to the admins online.',
         default: true
+      },
+      historyRounds: {
+        required: false,
+        description: 'Also count each player\'s earlier rounds of this session (kept in memory only): how many rounds back. 0 = only this match. Not used on the hybrid route.',
+        default: 4
+      },
+      historyHours: {
+        required: false,
+        description: 'Earlier rounds older than this many hours are not counted.',
+        default: 6
+      },
+      useMySquadStats: {
+        required: false,
+        description: 'Blend an all-time rating from mysquadstats.com into the score. Needs mySquadStatsToken. Experimental.',
+        default: false
+      },
+      mySquadStatsToken: {
+        required: false,
+        description: 'Access token of your server for the MySquadStats API (the one the MySquadStats plugin uses).',
+        default: ''
+      },
+      mySquadStatsWeight: {
+        required: false,
+        description: 'Share of the all-time rating in the score, 0 to 1.',
+        default: 0.15
+      },
+      mySquadStatsDlc: {
+        required: false,
+        description: 'Which MySquadStats leaderboard to read.',
+        default: 'vanilla'
       },
       kitMedic: {
         required: false,
@@ -544,6 +639,14 @@ export default class SmartShuffle extends BasePlugin {
     this.lockAligned = true; // false from the map change until the team numbers were checked
     this.round = 0; // counts map changes; a shuffle that sees it change stops
     this.moveMs = 0; // slowest time per team change seen so far, used to budget the next shuffle
+    this.historyOn = (+this.options.historyRounds || 0) > 0;
+    this.history = new Map(); // eosID -> [{ t, s }] earlier rounds of this session, newest last
+    this.roundCounts = false; // the round that just ended was a real one (not a skipped layer)
+    this.outsideOn = !!this.options.useMySquadStats && !!this.options.mySquadStatsToken;
+    this.outside = new Map(); // steamID -> { t, kills, knocks, deaths, revives } or { t, none: true }
+    this.outsidePause = 0; // no API call before this time (after an error)
+    this.outsideGapMs = 1000; // pause between two API calls
+    this.outsideBusy = false;
     this.layerClass = null;
     this.announceTimer = null;
     this.busy = false;
@@ -670,6 +773,7 @@ export default class SmartShuffle extends BasePlugin {
     if (this.inMatch) {
       for (const p of this.server.players) if (p.teamID) this.stat(p.eosID).minutes += dt;
     }
+    if (this.outsideOn) this.fetchOutside().catch((err) => this.verbose(1, `MySquadStats: ${err}`));
     if (!this.lock || !this.locking) return;
     const seen = this.server.players.filter((p) => (+p.teamID === 1 || +p.teamID === 2) && this.lock.has(p.eosID));
     if (!this.lockAligned) {
@@ -706,6 +810,7 @@ export default class SmartShuffle extends BasePlugin {
   onNewGame(info) {
     this.round += 1; // a shuffle still running stops here: nobody is moved once the next match loads
     this.lockAligned = !this.lock;
+    this.remember();
     this.layerClass = (info && (info.layerClassname || (info.layer && info.layer.classname))) || null;
     this.stats = new Map();
     this.dump = null;
@@ -773,8 +878,99 @@ export default class SmartShuffle extends BasePlugin {
 
   // ---- round end ----
 
+  // ---- session history ----
+
+  // keep the round that just ended (called at the map change, before the stats are cleared)
+  remember() {
+    const now = Date.now();
+    const depth = Math.max(+this.options.historyRounds || 0, 0);
+    const maxAge = 3600000 * (+this.options.historyHours || 6);
+    if (this.roundCounts && depth > 0) {
+      for (const [id, s] of this.stats) {
+        if (!(s.minutes > 0)) continue;
+        const list = this.history.get(id) || [];
+        list.push({ t: now, s });
+        this.history.set(id, list.slice(-depth));
+      }
+    }
+    for (const [id, list] of this.history) {
+      const fresh = list.filter((r) => now - r.t <= maxAge);
+      if (fresh.length) this.history.set(id, fresh);
+      else this.history.delete(id);
+    }
+    this.roundCounts = false;
+  }
+
+  recent(eosID) {
+    const maxAge = 3600000 * (+this.options.historyHours || 6);
+    const now = Date.now();
+    return (this.history.get(eosID) || []).filter((r) => now - r.t <= maxAge).map((r) => r.s);
+  }
+
+  // ---- outside rating (MySquadStats), optional ----
+
+  // one request per player and never at round end: a few unknown players per tick, answers kept 12 hours
+  async fetchOutside() {
+    const now = Date.now();
+    if (this.outsideBusy || now < this.outsidePause) return;
+    const todo = this.server.players
+      .filter((p) => p.steamID && !(this.outside.has(p.steamID) && now - this.outside.get(p.steamID).t < 43200000))
+      .slice(0, 5);
+    if (!todo.length) return;
+    this.outsideBusy = true;
+    try {
+      for (const p of todo) {
+        const row = await this.fetchPlayer(p.steamID);
+        this.outside.set(p.steamID, { t: Date.now(), ...(row || { none: true }) });
+        if (this.outsideGapMs > 0) await new Promise((r) => setTimeout(r, this.outsideGapMs));
+      }
+    } catch (err) {
+      this.outsidePause = Date.now() + 600000;
+      this.verbose(1, `MySquadStats not reachable, next try in 10 minutes: ${String(err).replace(this.options.mySquadStatsToken, '[token]')}`);
+    } finally {
+      this.outsideBusy = false;
+    }
+  }
+
+  async fetchPlayer(steamID) {
+    const url = new URL('https://api.mysquadstats.com/alltimeleaderboards');
+    url.searchParams.set('dlc', this.options.mySquadStatsDlc || 'vanilla');
+    url.searchParams.set('search', steamID);
+    url.searchParams.set('accessToken', this.options.mySquadStatsToken);
+    const body = await this.getJson(url);
+    const row = body && Array.isArray(body.data) ? body.data.find((r) => String(r.steamID || steamID) === String(steamID)) : null;
+    if (!row) return null;
+    const num = (v) => (Number.isFinite(+v) ? +v : 0);
+    return { kills: num(row.totalKills), knocks: num(row.totalWounds), deaths: num(row.totalDeaths), revives: num(row.totalRevives) };
+  }
+
+  async getJson(url) {
+    const res = await fetch(url, { headers: { 'User-Agent': 'SquadJS-SmartShuffle' }, signal: AbortSignal.timeout(8000) });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.json();
+  }
+
+  // P -> P for planTeams, or null when the outside rating is off or knows too few of the players
+  outsideAdjust(players) {
+    if (!this.outsideOn) return null;
+    const steam = new Map(this.server.players.map((p) => [p.eosID, p.steamID]));
+    const tot = { kills: [], knocks: [], deaths: [], revives: [] };
+    const known = [];
+    for (const p of players) {
+      const row = this.outside.get(steam.get(p.eosID));
+      const has = !!row && !row.none;
+      known.push(has);
+      for (const k of Object.keys(tot)) tot[k].push(has ? row[k] : 0);
+    }
+    const L = longTermRating(tot, known);
+    if (L.every((v) => Number.isNaN(v))) return null;
+    const w = Math.min(Math.max(+this.options.mySquadStatsWeight || 0, 0), 1);
+    return (P) => blendScores(P, L, w);
+  }
+
   async onRoundEnded() {
     this.inMatch = false;
+    this.roundCounts = !this.skipReason();
     this.lock = null;
     const forced = this.pendingNow;
     if (!(this.auto || forced) || this.busy) return;
@@ -849,6 +1045,7 @@ export default class SmartShuffle extends BasePlugin {
     for (const p of players) {
       let s = this.stats.get(p.eosID);
       if (formula === 'v4a') s = { ...s, ...(dumped.get(p.eosID) || dumped.get(`name:${p.name}`) || {}) };
+      else if (this.historyOn) s = withHistory(s, this.recent(p.eosID));
       for (const k of STAT_KEYS) S[k].push((s && s[k]) || 0);
       const kit = this.kitClass(p.role);
       S.sl.push(p.isLeader);
@@ -870,7 +1067,7 @@ export default class SmartShuffle extends BasePlugin {
       groups = [...byParty.values()].filter((g) => g.length >= 2 && g.length <= cap);
     }
 
-    const { P, team } = planTeams(S, formula, slGroups, groups);
+    const { P, team } = planTeams(S, formula, slGroups, groups, this.outsideAdjust(players));
     return { players, team, P, formula };
   }
 
@@ -1041,17 +1238,26 @@ export default class SmartShuffle extends BasePlugin {
       if (['0', '1', '2'].includes(args[1])) this.friends = args[1] === '2';
       if (!this.locking) this.lock = null;
       reply = `Smart Shuffle lock: ${onOff(this.locking)}, friends: ${onOff(this.friends)}.`;
+    } else if (args[0] === 'history' && ['on', 'off'].includes(args[1])) {
+      this.historyOn = args[1] === 'on' && (+this.options.historyRounds || 0) > 0;
+      reply = `Smart Shuffle history (earlier rounds of this session): ${onOff(this.historyOn)}.`;
+      if (args[1] === 'on' && !this.historyOn) reply += ' Set historyRounds above 0 in config.json first.';
+    } else if (args[0] === 'mss' && ['on', 'off'].includes(args[1])) {
+      this.outsideOn = args[1] === 'on' && !!this.options.mySquadStatsToken;
+      reply = `Smart Shuffle MySquadStats rating: ${onOff(this.outsideOn)}.`;
+      if (args[1] === 'on' && !this.outsideOn) reply += ' Set mySquadStatsToken in config.json first.';
     } else if (args[0] === 'unlock') {
       this.lock = null;
       reply = 'Smart Shuffle: lock lifted for this round.';
     } else {
       reply =
         `Smart Shuffle: auto ${onOff(this.auto)}, lock ${onOff(this.locking)}, friends ${onOff(this.friends)}, ` +
+        `history ${onOff(this.historyOn)}, mss ${onOff(this.outsideOn)}, ` +
         `pending ${this.pendingNow ? 1 : 0}, locked now ${this.lock ? 1 : 0}. ` +
         (this.last
           ? `Last shuffle: ${this.last.moved} moved, ${this.last.failed} not placed${this.last.stopped ? ', stopped early' : ''}. `
           : '') +
-        `Use: now | cancel | preview | auto on/off | friends on/off | lock on/off | unlock`;
+        `Use: now | cancel | preview | auto on/off | friends on/off | history on/off | mss on/off | lock on/off | unlock`;
     }
     if (id) await this.server.rcon.warn(id, reply);
   }

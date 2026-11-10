@@ -36,7 +36,7 @@
 ## ✨ Highlights
 
 - **Rates players, not teams** - kills, wounds, deaths, damage, revives and deployables per minute, smoothed for short playtime
-- **Only this match** - no database, no ratings, no Steam IDs kept; every round starts from zero
+- **This session only** - this match plus the last few rounds of the same session, kept in memory; no database, nothing written to disk
 - **Good everywhere beats good at one thing** - a weighted geometric mean, so a pure kill farmer does not outrank a well-rounded player
 - **Even on every axis** - besides total strength, kill rate, damage, deaths, revives, building and kit counts (medic, vehicle crew) are split evenly
 - **Squad leaders split by group** - vehicle SLs, small locked squads and open squads are each divided evenly
@@ -110,6 +110,8 @@ Type these in the in-game **admin chat**:
 !smartshuffle preview    show what a shuffle would do right now, moves nobody
 !smartshuffle cancel     call off the shuffle queued with now
 !smartshuffle friends on keep friend groups (parties) together when shuffling, off splits them
+!smartshuffle history on count each player's earlier rounds of this session, off uses only this match
+!smartshuffle mss on     blend in the all-time rating from MySquadStats (needs a token), off by default
 !smartshuffle auto on    shuffle at the end of every round
 !smartshuffle lock 2     lock after a shuffle and keep friend groups together
 !smartshuffle unlock     lift the lock for the rest of this round
@@ -126,7 +128,7 @@ Players are only moved on the end screen, right after the round ends. If the nex
 ## 🧮 How it works
 
 1. **Collect.** During the match the plugin counts, per player: kills, wounds dealt, deaths, damage, revives,
-   deployables placed, teamkills and minutes played. A new map clears everything.
+   deployables placed, teamkills and minutes played. A new map starts a new count; the last rounds of the session are kept in memory for the score.
 2. **Score.** Each stat becomes a per-minute rate pulled toward the match average (30 minute prior), then a
    z-score squashed to 0..1, half against the whole server and half inside the player's own team. Four
    categories (KDA, Combat, Teamwork, Objective) are combined with a weighted geometric mean, with separate
@@ -139,6 +141,7 @@ Players are only moved on the end screen, right after the round ends. If the nex
 In a 100 player simulation with ticket-based matches, the share of stomps (a gap over 150 tickets) dropped
 from 26% with a random shuffle to 10.4% with the SquadJS formula and 9.3% with the full scoreboard (hybrid).
 These numbers are without friend keeping. With parties of up to 4 kept together the SquadJS formula gives about 11%; keeping every party together, including 9 player stacks, gives about 13%.
+With each player's earlier rounds of the session counted (the default), the SquadJS formula gives about 9.5%.
 
 ---
 
@@ -165,6 +168,12 @@ All options go into the plugin entry in SquadJS `config.json`.
 | `broadcastResult` | `true` | Tell the server after a shuffle how many players were moved |
 | `warnMovedPlayers` | `true` | Tell each moved player in a private message that they changed team |
 | `adminReport` | `true` | Send the result (moved, not placed, score gap before and after) to the admins online |
+| `historyRounds` | `4` | Also count each player's earlier rounds of this session, kept in memory only: how many rounds back. 0 means only this match. Not used on the hybrid route |
+| `historyHours` | `6` | Earlier rounds older than this many hours are not counted |
+| `useMySquadStats` | `false` | Experimental. Blend an all-time rating from [mysquadstats.com](https://mysquadstats.com) into the score. Needs `mySquadStatsToken` |
+| `mySquadStatsToken` | empty | Access token of your server for the MySquadStats API, the one their SquadJS plugin uses. Tokens are given to participating servers on their Discord |
+| `mySquadStatsWeight` | `0.15` | Share of the all-time rating in the score, 0 to 1 |
+| `mySquadStatsDlc` | `vanilla` | Which MySquadStats leaderboard to read |
 | `useScoreboardDump` | `false` | Hybrid route: read the full scoreboard from the server log |
 | `dumpWaitSeconds` | `10` | Hybrid route: how long to wait for the dump at round end |
 
@@ -207,7 +216,7 @@ the match that just ended and splits the teams so total strength and each kind o
 <details>
 <summary><b>Does it keep player history?</b></summary>
 
-No. It only uses the match that just ended and forgets it when the next map loads. Nothing is written to disk.
+No. It uses the match that just ended and, by default, each player's last 4 rounds of the same session (up to 6 hours back). These live in memory only and are gone when SquadJS restarts. Nothing is written to disk. Set `historyRounds` to 0 to use only the match that just ended.
 
 </details>
 

@@ -36,7 +36,7 @@
 ## ✨ Lo destacado
 
 - **Puntúa jugadores, no equipos** - bajas, derribos, muertes, daño, reanimaciones y desplegables por minuto, suavizados para quien juega poco
-- **Solo esta partida** - sin base de datos, sin historial de puntuaciones, sin Steam IDs guardados; cada ronda empieza de cero
+- **Solo esta sesión** - esta partida y las últimas rondas de la misma sesión, guardadas solo en memoria; sin base de datos, no se escribe nada en disco
 - **Bueno en todo vence a bueno en una sola cosa** - media geométrica ponderada, así quien solo acumula bajas no supera a un jugador completo
 - **Equilibrado en cada eje** - además de la fuerza total, se reparten por igual el ritmo de bajas, el daño, las muertes, las reanimaciones, la construcción y los kits (médico, tripulación de vehículo)
 - **Líderes de escuadra repartidos por grupo** - los SL de vehículo, las escuadras pequeñas cerradas y las abiertas se dividen por separado
@@ -110,6 +110,8 @@ Escribe esto en el **chat de administración** del juego:
 !smartshuffle preview    mostrar qué haría una mezcla ahora, sin mover a nadie
 !smartshuffle cancel     anular la mezcla pedida con now
 !smartshuffle friends on mantener juntos a los grupos de amigos (parties) al mezclar, off los separa
+!smartshuffle history on contar también las rondas anteriores de cada jugador en esta sesión, off usa solo esta partida
+!smartshuffle mss on     mezclar la valoración histórica de MySquadStats (necesita token), desactivado por defecto
 !smartshuffle auto on    mezclar al final de cada ronda
 !smartshuffle lock 2     bloquear tras la mezcla y mantener juntos a los grupos de amigos
 !smartshuffle unlock     quitar el bloqueo durante el resto de esta ronda
@@ -126,7 +128,7 @@ Los jugadores solo se mueven en la pantalla final, justo al terminar la ronda. S
 ## 🧮 Cómo funciona
 
 1. **Recoger.** Durante la partida se cuentan, por jugador: bajas, derribos, muertes, daño, reanimaciones,
-   desplegables colocados, bajas aliadas y minutos jugados. Un mapa nuevo lo borra todo.
+   desplegables colocados, bajas aliadas y minutos jugados. Un mapa nuevo empieza la cuenta de nuevo; las últimas rondas de la sesión se guardan en memoria para la puntuación.
 2. **Puntuar.** Cada estadística pasa a un ritmo por minuto atraído hacia la media de la partida (30 minutos
    previos) y luego a una puntuación z comprimida entre 0 y 1, la mitad frente a todo el servidor y la mitad
    dentro del propio equipo. Cuatro categorías (KDA, Combate, Trabajo en equipo, Objetivo) se combinan con una
@@ -141,6 +143,7 @@ En una simulación de 100 jugadores con partidas por tickets, la proporción de 
 diferencia) bajó del 26% con una mezcla aleatoria al 10.4% con la fórmula de SquadJS y al 9.3% con el marcador
 completo (vía híbrida).
 Estas cifras son sin mantener a los amigos juntos. Con parties de hasta 4 juntas, la fórmula de SquadJS da alrededor del 11%; manteniendo todas las parties, incluidos los grupos de 9, alrededor del 13%.
+Contando las rondas anteriores de cada jugador en la sesión (por defecto), la fórmula de SquadJS da alrededor del 9.5%.
 
 ---
 
@@ -167,6 +170,12 @@ Todas las opciones van en la entrada del plugin en el `config.json` de SquadJS.
 | `broadcastResult` | `true` | Avisar al servidor tras la mezcla de cuántos jugadores se movieron |
 | `warnMovedPlayers` | `true` | Avisar a cada jugador movido con un mensaje privado de que cambió de equipo |
 | `adminReport` | `true` | Enviar el resultado (movidos, no colocados, diferencia de puntuación antes y después) a los admins conectados |
+| `historyRounds` | `4` | Contar también las rondas anteriores de cada jugador en esta sesión, solo en memoria: cuántas rondas atrás. 0 significa solo esta partida. No se usa en la vía híbrida |
+| `historyHours` | `6` | Las rondas anteriores con más horas que esto no se cuentan |
+| `useMySquadStats` | `false` | Experimental. Mezclar en la puntuación una valoración histórica de [mysquadstats.com](https://mysquadstats.com). Necesita `mySquadStatsToken` |
+| `mySquadStatsToken` | vacío | Token de acceso de tu servidor para la API de MySquadStats, el que usa su plugin de SquadJS. Los tokens se dan a los servidores participantes en su Discord |
+| `mySquadStatsWeight` | `0.15` | Peso de la valoración histórica en la puntuación, de 0 a 1 |
+| `mySquadStatsDlc` | `vanilla` | Qué clasificación de MySquadStats leer |
 | `useScoreboardDump` | `false` | Vía híbrida: leer el marcador completo del log del servidor |
 | `dumpWaitSeconds` | `10` | Vía híbrida: cuánto esperar el volcado al final de la ronda |
 
@@ -209,7 +218,7 @@ con la partida que acaba de terminar y reparte los equipos para que la fuerza to
 <details>
 <summary><b>¿Guarda historial de jugadores?</b></summary>
 
-No. Solo usa la partida que acaba de terminar y la olvida cuando carga el siguiente mapa. No escribe nada en disco.
+No. Usa la partida que acaba de terminar y, por defecto, las últimas 4 rondas de cada jugador en la misma sesión (hasta 6 horas atrás). Solo viven en memoria y desaparecen cuando SquadJS se reinicia. No escribe nada en disco. Pon `historyRounds` en 0 para usar solo la partida que acaba de terminar.
 
 </details>
 

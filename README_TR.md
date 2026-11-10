@@ -36,7 +36,7 @@
 ## ✨ Öne çıkanlar
 
 - **Takımı değil oyuncuyu puanlar** - dakika başına kill, yere indirme, ölüm, hasar, revive ve kurulan yapı; kısa oynayan için yumuşatılmış
-- **Sadece bu maç** - veritabanı yok, puan geçmişi yok, Steam ID tutulmaz; her tur sıfırdan başlar
+- **Sadece bu oturum** - bu maç ve aynı oturumun son birkaç turu, yalnızca bellekte tutulur; veritabanı yok, diske hiçbir şey yazılmaz
 - **Her alanda iyi olan, tek alanda iyi olanı geçer** - ağırlıklı geometrik ortalama, sadece kill kasan oyuncu çok yönlü oyuncunun önüne geçemez
 - **Her eksende dengeli** - toplam gücün yanında kill hızı, hasar, ölüm, revive, inşa ve kit sayıları (medic, araç mürettebatı) da eşit bölünür
 - **Squad liderleri gruplara göre bölünür** - araç SL'leri, kilitli küçük squad'lar ve açık squad'lar ayrı ayrı eşitlenir
@@ -110,6 +110,8 @@ Oyun içi **admin sohbetine** yaz:
 !smartshuffle preview    şimdi karıştırılsa ne olacağını göster, kimseyi taşımaz
 !smartshuffle cancel     now ile sıraya alınan karıştırmayı iptal et
 !smartshuffle friends on karıştırırken arkadaş gruplarını (party) bir arada tut, off ayırır
+!smartshuffle history on her oyuncunun bu oturumdaki önceki turlarını da say, off sadece bu maçı kullanır
+!smartshuffle mss on     MySquadStats'taki tüm zamanlar puanını kat (token gerekir), varsayılan kapalı
 !smartshuffle auto on    her tur sonunda karıştır
 !smartshuffle lock 2     shuffle sonrası kilitle, arkadaş gruplarını bir arada tut
 !smartshuffle unlock     bu turun geri kalanı için kilidi kaldır
@@ -126,7 +128,7 @@ Oyuncular yalnızca tur biter bitmez, bitiş ekranında taşınır. Sonraki hari
 ## 🧮 Nasıl çalışır
 
 1. **Topla.** Maç boyunca oyuncu başına kill, yere indirme, ölüm, hasar, revive, kurulan yapı, teamkill ve
-   oynanan dakika sayılır. Yeni harita her şeyi siler.
+   oynanan dakika sayılır. Yeni harita sayımı baştan başlatır; oturumun son turları puan için bellekte tutulur.
 2. **Puanla.** Her istatistik maç ortalamasına çekilmiş (30 dakikalık ön değer) dakika başına orana, sonra
    0..1 arasına sıkıştırılmış z-skora çevrilir; yarısı tüm sunucuya, yarısı oyuncunun kendi takımına göre.
    Dört kategori (KDA, Combat, Teamwork, Objective) ağırlıklı geometrik ortalamayla birleşir; squad liderleri,
@@ -139,6 +141,7 @@ Oyuncular yalnızca tur biter bitmez, bitiş ekranında taşınır. Sonraki hari
 Bilet tabanlı maçlarla 100 oyunculuk simülasyonda ezilen maç oranı (150 biletten fazla fark) rastgele
 karıştırmada %26'dan SquadJS formülüyle %10.4'e, tam skorbordla (karma yol) %9.3'e indi.
 Bu sayılar arkadaş koruması kapalıyken geçerli. 4 kişiye kadar party'ler bir arada tutulunca SquadJS formülü yaklaşık %11 veriyor; 9 kişilik gruplar dahil bütün party'ler tutulursa yaklaşık %13.
+Her oyuncunun oturumdaki önceki turları da sayılınca (varsayılan) SquadJS formülü yaklaşık %9.5 veriyor.
 
 ---
 
@@ -165,6 +168,12 @@ Bütün seçenekler SquadJS `config.json` içindeki eklenti girişine yazılır.
 | `broadcastResult` | `true` | Karıştırmadan sonra kaç oyuncunun taşındığını sunucuya duyur |
 | `warnMovedPlayers` | `true` | Taşınan her oyuncuya takımının değiştiğini özel mesajla bildir |
 | `adminReport` | `true` | Sonucu (taşınan, yerleşmeyen, önceki ve sonraki puan farkı) çevrimiçi adminlere gönder |
+| `historyRounds` | `4` | Her oyuncunun bu oturumdaki önceki turlarını da say, yalnızca bellekte tutulur: kaç tur geriye. 0 sadece bu maç demek. Karma yolda kullanılmaz |
+| `historyHours` | `6` | Bu kadar saatten eski turlar sayılmaz |
+| `useMySquadStats` | `false` | Deneysel. [mysquadstats.com](https://mysquadstats.com) üzerindeki tüm zamanlar puanını skora kat. `mySquadStatsToken` gerekir |
+| `mySquadStatsToken` | boş | Sunucunun MySquadStats API erişim token'ı, onların SquadJS eklentisinin kullandığı token. Token katılımcı sunuculara Discord'larında verilir |
+| `mySquadStatsWeight` | `0.15` | Tüm zamanlar puanının skordaki payı, 0 ile 1 arası |
+| `mySquadStatsDlc` | `vanilla` | Hangi MySquadStats sıralaması okunacak |
 | `useScoreboardDump` | `false` | Karma yol: tam skorbordu sunucu logundan oku |
 | `dumpWaitSeconds` | `10` | Karma yol: tur sonunda döküm için kaç saniye beklenir |
 
@@ -207,7 +216,7 @@ oyuncuyu puanlar ve takımları toplam güç ve her katkı türü eşit çıkaca
 <details>
 <summary><b>Oyuncu geçmişi tutuyor mu?</b></summary>
 
-Hayır. Sadece biten maçı kullanır ve yeni harita yüklenince unutur. Diske hiçbir şey yazılmaz.
+Hayır. Biten maçı ve varsayılan olarak her oyuncunun aynı oturumdaki son 4 turunu (en fazla 6 saat geriye) kullanır. Bunlar yalnızca bellekte durur ve SquadJS yeniden başlayınca silinir. Diske hiçbir şey yazılmaz. Sadece biten maçı kullanmak için `historyRounds` değerini 0 yap.
 
 </details>
 
