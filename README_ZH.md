@@ -107,6 +107,8 @@
 ```
 !smartshuffle now        本局结束时分队一次
 !smartshuffle preview    显示现在分队会怎样，不会移动任何人
+!smartshuffle cancel     取消用 now 预定的分队
+!smartshuffle friends on 分队时让好友组（party）留在一起，off 则拆开
 !smartshuffle auto on    每局结束时分队
 !smartshuffle lock 2     分队后锁定，并让好友组留在一起
 !smartshuffle unlock     解除本局剩余时间的锁定
@@ -114,6 +116,8 @@
 ```
 
 每局结束时，插件用 `AdminForceTeamChange` 移动玩家，广播移动了多少人，并保持新队伍直到下一局结束。
+
+只会在对局刚结束的结算界面移动玩家。如果下一张地图先开始，分队会停止：进行中的对局不会移动任何人，所以没有人会因为分队而失去小队、兵种或载具。
 
 ---
 
@@ -128,6 +132,7 @@
 
 在以票数决胜的 100 人模拟中，碾压局（票数差超过 150）的比例从随机分队的 26% 降到 SquadJS 公式的 10.4%，
 使用完整记分板（混合方式）时为 9.3%。
+以上数字未开启好友保留。保留不超过 4 人的 party 时，SquadJS 公式约为 11%；保留所有 party（包括 9 人车队）时约为 13%。
 
 ---
 
@@ -140,6 +145,7 @@
 | `command` | `smartshuffle` | 管理员聊天命令名 |
 | `autoShuffle` | `false` | 每局结束时分队 |
 | `lockMode` | `2` | 0 不锁定，1 严格锁定，2 保持 party 在一起的锁定 |
+| `keepParties` | 跟随 `lockMode` | 分队时让 party 留在一起，与锁定无关：`true` 或 `false`。不填时，`lockMode` 为 2 时开启，为 0 和 1 时关闭 |
 | `kitMedic` | `Medic` | 用于识别医疗兵兵种的角色名正则 |
 | `kitLogistics` | 空 | 后勤兵种类别的正则，为空表示不使用 |
 | `kitCrew` | `Crewman\|Pilot` | 载具乘员兵种的正则；乘员小队长单独成组 |
@@ -147,6 +153,12 @@
 | `maxPartySize` | `4` | 锁定模式 2：不超过此人数的 party 留在一起，更大的会被拆开。0 表示不限制 |
 | `skipLayers` | `["seed", "jensen", "invasion"]` | 自动分队会跳过地图名包含其中任一项的对局。`!smartshuffle now` 始终执行 |
 | `minPlayers` | `40` | 自动分队会跳过人数少于此值的对局。`!smartshuffle now` 始终执行 |
+| `shuffleDelaySeconds` | `0` | 对局结束后移动玩家前等待的秒数（留出看计分板的时间），0 到 25 |
+| `shuffleDeadlineSeconds` | `30` | 对局结束超过这么多秒后不再移动任何人，下一张地图开始后也绝不移动 |
+| `announceMinutes` | `10` | 有分队待执行时，每隔这么多分钟向全服公告一次。0 表示不公告 |
+| `broadcastResult` | `true` | 分队后向全服公告移动了多少玩家 |
+| `warnMovedPlayers` | `true` | 私信告知每个被移动的玩家其队伍已更换 |
+| `adminReport` | `true` | 把结果（已移动、未到位、前后分差）发给在线管理员 |
 | `useScoreboardDump` | `false` | 混合方式：从服务器日志读取完整记分板 |
 | `dumpWaitSeconds` | `10` | 混合方式：每局结束时等待导出的秒数 |
 

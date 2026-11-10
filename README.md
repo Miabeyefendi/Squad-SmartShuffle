@@ -108,6 +108,8 @@ Type these in the in-game **admin chat**:
 ```
 !smartshuffle now        shuffle once at the end of this round
 !smartshuffle preview    show what a shuffle would do right now, moves nobody
+!smartshuffle cancel     call off the shuffle queued with now
+!smartshuffle friends on keep friend groups (parties) together when shuffling, off splits them
 !smartshuffle auto on    shuffle at the end of every round
 !smartshuffle lock 2     lock after a shuffle and keep friend groups together
 !smartshuffle unlock     lift the lock for the rest of this round
@@ -116,6 +118,8 @@ Type these in the in-game **admin chat**:
 
 At round end the plugin moves players with `AdminForceTeamChange`, broadcasts how many were moved, and holds
 the new teams until the next round ends.
+
+Players are only moved on the end screen, right after the round ends. If the next map starts first, the shuffle stops: nobody is moved in a running match, so nobody loses a squad, kit or vehicle claim to the shuffle.
 
 ---
 
@@ -134,6 +138,7 @@ the new teams until the next round ends.
 
 In a 100 player simulation with ticket-based matches, the share of stomps (a gap over 150 tickets) dropped
 from 26% with a random shuffle to 10.4% with the SquadJS formula and 9.3% with the full scoreboard (hybrid).
+These numbers are without friend keeping. With parties of up to 4 kept together the SquadJS formula gives about 11%; keeping every party together, including 9 player stacks, gives about 13%.
 
 ---
 
@@ -146,6 +151,7 @@ All options go into the plugin entry in SquadJS `config.json`.
 | `command` | `smartshuffle` | Admin chat command name |
 | `autoShuffle` | `false` | Shuffle at the end of every round |
 | `lockMode` | `2` | 0 no lock, 1 hard lock, 2 lock that keeps parties together |
+| `keepParties` | follows `lockMode` | Keep parties together when shuffling, independent of the lock: `true` or `false`. Left out, it is on for `lockMode` 2 and off for 0 and 1 |
 | `kitMedic` | `Medic` | Regex on the role name for medic kits |
 | `kitLogistics` | empty | Regex for a logistics kit class, empty means not used |
 | `kitCrew` | `Crewman\|Pilot` | Regex for vehicle crew kits; crew SLs form their own SL group |
@@ -153,6 +159,12 @@ All options go into the plugin entry in SquadJS `config.json`.
 | `maxPartySize` | `4` | Lock mode 2: a party up to this size stays together, a bigger one is split. 0 means no limit |
 | `skipLayers` | `["seed", "jensen", "invasion"]` | Automatic shuffle skips a round whose layer name contains one of these. `!smartshuffle now` always runs |
 | `minPlayers` | `40` | Automatic shuffle skips a round with fewer players. `!smartshuffle now` always runs |
+| `shuffleDelaySeconds` | `0` | Seconds to wait after the round ends before players are moved (time to read the scoreboard), 0 to 25 |
+| `shuffleDeadlineSeconds` | `30` | Nobody is moved later than this many seconds after the round ended, and never after the next map started |
+| `announceMinutes` | `10` | While a shuffle is due, tell the server every this many minutes. 0 turns the announcements off |
+| `broadcastResult` | `true` | Tell the server after a shuffle how many players were moved |
+| `warnMovedPlayers` | `true` | Tell each moved player in a private message that they changed team |
+| `adminReport` | `true` | Send the result (moved, not placed, score gap before and after) to the admins online |
 | `useScoreboardDump` | `false` | Hybrid route: read the full scoreboard from the server log |
 | `dumpWaitSeconds` | `10` | Hybrid route: how long to wait for the dump at round end |
 

@@ -55,11 +55,14 @@ test('v4a scores and teams match the Python reference', () => {
   });
 });
 
-test('group keeping (lock mode 2) matches the Python reference', () => {
+test('group keeping (friends on) matches the Python reference', () => {
   golden.cases.forEach((c, n) => {
-    const t = keepGroups(c.k6.team, c.k6.P, c.groups, c.visible.sl);
-    assert.deepEqual(t, c.keep, `case ${n}`);
+    const t = planTeams(c.visible, 'k6', c.slGroups, c.groups).team;
+    assert.deepEqual(t, c.keep, `case ${n} k6`);
     for (const g of c.groups) assert.equal(new Set(g.map((i) => t[i])).size, 1, `case ${n} group split`);
+    assert.deepEqual(planTeams(c.full, 'v4a', c.slGroups, c.groups).team, c.keepV4a, `case ${n} v4a`);
+    // without the extra dimensions the repair evens out the score sum only
+    assert.deepEqual(keepGroups(c.k6.team, c.k6.P, c.groups, c.visible.sl), c.keepSum, `case ${n} sum`);
   });
 });
 
@@ -179,7 +182,7 @@ test('plugin: auto shuffle moves players at round end, lock moves a switcher bac
   runner.teamID = want === 1 ? 2 : 1;
   await plugin.onPlayerInfo();
   assert.equal(runner.teamID, want);
-  assert.ok(server.calls.some((c) => c.startsWith(`warn ${runner.eosID}`)));
+  assert.ok(server.calls.some((c) => c === `warn ${runner.eosID} Smart Shuffle: team changes are locked until this round ends.`));
 
   // admin lifts the lock: the next switch stays
   await plugin.onCommand({ chat: 'ChatAdmin', message: 'unlock', eosID: 'admin' });
@@ -376,4 +379,211 @@ test('plugin: a lost team change is repeated, one that never lands is reported',
   never.server.rcon.warn = async (id, msg) => status.push(msg);
   await never.plugin.onCommand({ chat: 'ChatAdmin', message: 'status', eosID: 'admin' });
   assert.ok(status[0].includes('1 not placed'), status[0]);
+});
+
+// ---- timing, lock across the map change, messages, switches ----
+
+const switches = (server) => server.calls.filter((c) => c.startsWith('switch')).length;
+
+test('plugin: nobody is moved once the next map has started', async () => {
+  // the map changes after the third move: the shuffle stops there
+  const cut = await runRound({ lockMode: 1 }, makePlayers(), (s) => {
+    const real = s.rcon.switchTeam;
+    let n = 0;
+    s.rcon.switchTeam = async (id) => {
+      await real(id);
+      if (++n === 3) s.emit('NEW_GAME', {});
+    };
+  });
+  assert.equal(switches(cut.server), 3, 'moves went on after the map change');
+  assert.equal(cut.plugin.last.stopped, true);
+  assert.equal(cut.plugin.lock, null, 'a shuffle that stopped early must not lock');
+  const t1 = cut.server.players.filter((p) => p.teamID === 1).length;
+  assert.ok(Math.abs(20 - 2 * t1) <= 2, `team sizes drifted: ${t1} vs ${20 - t1}`);
+  assert.equal(cut.server.calls.filter((c) => c.startsWith('broadcast Smart Shuffle: teams balanced')).length, 0);
+
+  // the map changes while the shuffle is still waiting (shuffleDelaySeconds): no move at all
+  const server = fakeServer(makePlayers());
+  const plugin = new SmartShuffle(server, { autoShuffle: true, minPlayers: 0, shuffleDelaySeconds: 0.05 });
+  await plugin.mount();
+  server.emit('NEW_GAME', {});
+  await playMatch(server);
+  const running = plugin.onRoundEnded();
+  server.emit('NEW_GAME', {});
+  await running;
+  assert.equal(switches(server), 0);
+  assert.equal(plugin.last.stopped, true);
+  await plugin.unmount();
+});
+
+test('plugin: the lock follows the team numbers across the map change', async () => {
+  for (const flip of [true, false]) {
+    const { server, plugin } = await runRound({ lockMode: 1 });
+    const moved = switches(server);
+    assert.ok(moved > 0 && plugin.lock);
+
+    // map load: teams unknown for a moment, then everybody comes back (numbers swapped or not)
+    server.emit('NEW_GAME', {});
+    const real = server.players.map((p) => p.teamID);
+    for (const p of server.players) p.teamID = null;
+    await plugin.onPlayerInfo();
+    server.players.forEach((p, i) => (p.teamID = flip ? 3 - real[i] : real[i]));
+    await plugin.onPlayerInfo();
+    assert.equal(switches(server), moved, `flip=${flip}: players were moved after the map change`);
+
+    // the lock still works: one player who switches by himself is moved back
+    const runner = server.players[5];
+    const want = runner.teamID;
+    runner.teamID = 3 - want;
+    await plugin.onPlayerInfo();
+    assert.equal(runner.teamID, want, `flip=${flip}: switcher not moved back`);
+    await plugin.unmount();
+  }
+});
+
+test('plugin: many players looking switched at once are left alone', async () => {
+  const { server, plugin } = await runRound({ lockMode: 1 });
+  const moved = switches(server);
+  for (const p of server.players.slice(0, 8)) p.teamID = 3 - p.teamID;
+  await plugin.onPlayerInfo();
+  assert.equal(switches(server), moved);
+  await plugin.unmount();
+});
+
+test('plugin: cancel calls off a pending shuffle', async () => {
+  const server = fakeServer(makePlayers());
+  const plugin = new SmartShuffle(server, { autoShuffle: false, minPlayers: 0 });
+  await plugin.mount();
+  server.emit('NEW_GAME', {});
+  await plugin.onCommand({ chat: 'ChatAdmin', message: 'now', eosID: 'admin' });
+  assert.ok(server.calls.some((c) => c === 'broadcast Smart Shuffle: teams will be balanced at the end of this round.'));
+  await plugin.onCommand({ chat: 'ChatAdmin', message: 'cancel', eosID: 'admin' });
+  assert.ok(server.calls.some((c) => c.startsWith('warn admin Smart Shuffle: the shuffle for this round is cancelled')));
+  assert.ok(server.calls.some((c) => c === 'broadcast Smart Shuffle: the shuffle for this round is cancelled.'));
+  await playMatch(server);
+  await plugin.onRoundEnded();
+  assert.equal(switches(server), 0);
+  await plugin.onCommand({ chat: 'ChatAdmin', message: 'cancel', eosID: 'admin' });
+  assert.ok(server.calls.some((c) => c.startsWith('warn admin Smart Shuffle: nothing to cancel')));
+  await plugin.unmount();
+});
+
+test('plugin: moved players, admins and the server are told, and each message can be turned off', async () => {
+  const withAdmin = (s) => {
+    s.players[19].steamID = '76561198000000099';
+    s.getAdminsWithPermission = (perm, type) => (type === 'steamID' ? ['76561198000000099'] : []);
+  };
+  const loud = await runRound({ lockMode: 1 }, makePlayers(), withAdmin);
+  const calls = loud.server.calls;
+  const personal = calls.filter((c) => c.includes('you were moved to the other team'));
+  assert.equal(personal.length, loud.plugin.last.moved, 'every moved player gets one message');
+  assert.ok(calls.some((c) => c.startsWith('broadcast Smart Shuffle: teams balanced')));
+  const report = calls.filter((c) => c.includes('Smart Shuffle report:'));
+  assert.equal(report.length, 1, 'one admin online, one report');
+  assert.ok(report[0].startsWith('warn e19 ') && /score gap \d+% -> \d+%/.test(report[0]), report[0]);
+
+  const quiet = await runRound(
+    { lockMode: 1, warnMovedPlayers: false, adminReport: false, broadcastResult: false, announceMinutes: 0 },
+    makePlayers(),
+    withAdmin
+  );
+  assert.ok(switches(quiet.server) > 0);
+  assert.equal(quiet.server.calls.filter((c) => c.startsWith('warn') || c.startsWith('broadcast')).length, 0);
+  await quiet.plugin.onCommand({ chat: 'ChatAdmin', message: 'now', eosID: 'admin' });
+  assert.equal(quiet.server.calls.filter((c) => c.startsWith('broadcast')).length, 0, 'announceMinutes 0 is silent');
+
+  // the admin who asked for "now" gets the report even without an admin list
+  const server = fakeServer(makePlayers());
+  const plugin = new SmartShuffle(server, { autoShuffle: false, minPlayers: 0 });
+  await plugin.mount();
+  server.emit('NEW_GAME', {});
+  await plugin.onCommand({ chat: 'ChatAdmin', message: 'now', eosID: 'boss' });
+  await playMatch(server);
+  await plugin.onRoundEnded();
+  assert.ok(server.calls.some((c) => c.startsWith('warn boss Smart Shuffle report:')));
+  await plugin.unmount();
+});
+
+test('plugin: lock and friends are separate switches', async () => {
+  const sides = (server, id) => new Set(server.players.filter((p) => p.partyID === id).map((p) => p.teamID)).size;
+
+  // friends kept, no lock
+  const free = await runRound({ lockMode: 0, keepParties: true, maxPartySize: 6 }, bigPartyPlayers());
+  assert.equal(sides(free.server, 'big'), 1);
+  assert.equal(free.plugin.lock, null);
+  assert.ok(!free.server.calls.some((c) => c.includes('locked until')));
+
+  // lock, friends not kept
+  const hard = await runRound({ lockMode: 2, keepParties: false, maxPartySize: 6 }, bigPartyPlayers());
+  assert.equal(sides(hard.server, 'big'), 2);
+  assert.ok(hard.plugin.lock);
+
+  // the same from admin chat
+  const { plugin, server } = await runRound({ lockMode: 2 });
+  const say = async (message) => {
+    await plugin.onCommand({ chat: 'ChatAdmin', message, eosID: 'admin' });
+    return server.calls.filter((c) => c.startsWith('warn admin')).pop();
+  };
+  assert.ok((await say('friends off')).includes('friends (keep parties together): off'));
+  assert.equal(plugin.friends, false);
+  assert.equal(plugin.locking, true);
+  assert.ok((await say('lock off')).includes('lock: off, friends: off'));
+  assert.equal(plugin.lock, null);
+  assert.ok((await say('friends on')).includes(': on'));
+  assert.ok((await say('status')).includes('auto on, lock off, friends on'));
+  await say('lock 2');
+  assert.deepEqual([plugin.locking, plugin.friends], [true, true]);
+  await say('lock 1');
+  assert.deepEqual([plugin.locking, plugin.friends], [true, false]);
+});
+
+test('plugin: announcements only while a shuffle is due', async () => {
+  const server = fakeServer(makePlayers());
+  const plugin = new SmartShuffle(server, { autoShuffle: true, minPlayers: 0 });
+  await plugin.mount();
+  const count = () => server.calls.filter((c) => c.startsWith('broadcast Smart Shuffle: teams will be balanced')).length;
+  server.emit('NEW_GAME', {});
+  await plugin.onAnnounce();
+  assert.equal(count(), 1);
+  server.emit('NEW_GAME', { layerClassname: 'Narva_Invasion_v1' });
+  await plugin.onAnnounce();
+  assert.equal(count(), 1, 'a skipped layer is not announced');
+  server.emit('NEW_GAME', { layerClassname: 'Narva_RAAS_v1' });
+  await plugin.onCommand({ chat: 'ChatAdmin', message: 'auto off', eosID: 'admin' });
+  await plugin.onAnnounce();
+  assert.equal(count(), 1, 'nothing is due with auto off');
+  await plugin.unmount();
+  assert.equal(plugin.announceTimer, null);
+});
+
+test('plugin: the moves finish even with a failing command or a long scoreboard wait', async () => {
+  // one command throws: the others still go out and the check repeats the failed one
+  let thrown = false;
+  const flaky = await runRound({ lockMode: 1 }, makePlayers(), (s) => {
+    const real = s.rcon.switchTeam;
+    s.rcon.switchTeam = async (id) => {
+      if (!thrown) {
+        thrown = true;
+        throw new Error('rcon timeout');
+      }
+      await real(id);
+    };
+  });
+  assert.equal(flaky.plugin.last.stopped, false);
+  assert.equal(flaky.plugin.last.failed, 0);
+  assert.equal(flaky.server.players.filter((p) => p.teamID === 1).length, 10);
+
+  // a slow RCON was measured earlier: the 20 s scoreboard wait is dropped so the moves fit before the deadline
+  const server = fakeServer(makePlayers());
+  const plugin = new SmartShuffle(server, { autoShuffle: true, minPlayers: 0, shuffleDelaySeconds: 20 });
+  plugin.moveMs = 5000;
+  await plugin.mount();
+  server.emit('NEW_GAME', {});
+  await playMatch(server);
+  const t0 = Date.now();
+  await plugin.onRoundEnded();
+  assert.ok(Date.now() - t0 < 2000, 'the wait was not cut');
+  assert.ok(switches(server) > 0);
+  assert.equal(plugin.last.stopped, false);
+  await plugin.unmount();
 });

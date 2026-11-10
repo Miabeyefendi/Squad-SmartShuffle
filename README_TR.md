@@ -108,6 +108,8 @@ Oyun içi **admin sohbetine** yaz:
 ```
 !smartshuffle now        bu turun sonunda bir kez karıştır
 !smartshuffle preview    şimdi karıştırılsa ne olacağını göster, kimseyi taşımaz
+!smartshuffle cancel     now ile sıraya alınan karıştırmayı iptal et
+!smartshuffle friends on karıştırırken arkadaş gruplarını (party) bir arada tut, off ayırır
 !smartshuffle auto on    her tur sonunda karıştır
 !smartshuffle lock 2     shuffle sonrası kilitle, arkadaş gruplarını bir arada tut
 !smartshuffle unlock     bu turun geri kalanı için kilidi kaldır
@@ -116,6 +118,8 @@ Oyun içi **admin sohbetine** yaz:
 
 Tur sonunda eklenti oyuncuları `AdminForceTeamChange` ile taşır, kaç kişinin taşındığını duyurur ve yeni
 takımları bir sonraki tur bitene kadar tutar.
+
+Oyuncular yalnızca tur biter bitmez, bitiş ekranında taşınır. Sonraki harita daha önce başlarsa karıştırma durur: süren maçta kimse taşınmaz, yani kimse karıştırma yüzünden squad'ını, kitini ya da araç hakkını kaybetmez.
 
 ---
 
@@ -134,6 +138,7 @@ takımları bir sonraki tur bitene kadar tutar.
 
 Bilet tabanlı maçlarla 100 oyunculuk simülasyonda ezilen maç oranı (150 biletten fazla fark) rastgele
 karıştırmada %26'dan SquadJS formülüyle %10.4'e, tam skorbordla (karma yol) %9.3'e indi.
+Bu sayılar arkadaş koruması kapalıyken geçerli. 4 kişiye kadar party'ler bir arada tutulunca SquadJS formülü yaklaşık %11 veriyor; 9 kişilik gruplar dahil bütün party'ler tutulursa yaklaşık %13.
 
 ---
 
@@ -146,6 +151,7 @@ Bütün seçenekler SquadJS `config.json` içindeki eklenti girişine yazılır.
 | `command` | `smartshuffle` | Admin sohbet komutunun adı |
 | `autoShuffle` | `false` | Her tur sonunda karıştır |
 | `lockMode` | `2` | 0 kilit yok, 1 sert kilit, 2 party'leri bir arada tutan kilit |
+| `keepParties` | `lockMode`'a uyar | Karıştırırken party'leri bir arada tut, kilitten bağımsız: `true` ya da `false`. Yazılmazsa `lockMode` 2 için açık, 0 ve 1 için kapalıdır |
 | `kitMedic` | `Medic` | Medic kitleri için rol adına uygulanan regex |
 | `kitLogistics` | boş | Lojistik kit sınıfı için regex, boşsa kullanılmaz |
 | `kitCrew` | `Crewman\|Pilot` | Araç mürettebatı kitleri için regex; mürettebat SL'leri ayrı SL grubu olur |
@@ -153,6 +159,12 @@ Bütün seçenekler SquadJS `config.json` içindeki eklenti girişine yazılır.
 | `maxPartySize` | `4` | Kilit modu 2: bu boyuta kadar party bir arada kalır, daha büyüğü bölünür. 0 sınır yok demek |
 | `skipLayers` | `["seed", "jensen", "invasion"]` | Otomatik karıştırma, layer adı bunlardan birini içeren turu atlar. `!smartshuffle now` her zaman çalışır |
 | `minPlayers` | `40` | Otomatik karıştırma, oyuncu sayısı bundan az olan turu atlar. `!smartshuffle now` her zaman çalışır |
+| `shuffleDelaySeconds` | `0` | Tur bittikten sonra oyuncular taşınmadan önce beklenecek saniye (skor tablosunu okumak için), 0 ile 25 arası |
+| `shuffleDeadlineSeconds` | `30` | Tur bittikten bu kadar saniye sonra kimse taşınmaz, sonraki harita başladıktan sonra da asla |
+| `announceMinutes` | `10` | Karıştırma bekliyorken sunucuya bu kadar dakikada bir duyur. 0 duyuruları kapatır |
+| `broadcastResult` | `true` | Karıştırmadan sonra kaç oyuncunun taşındığını sunucuya duyur |
+| `warnMovedPlayers` | `true` | Taşınan her oyuncuya takımının değiştiğini özel mesajla bildir |
+| `adminReport` | `true` | Sonucu (taşınan, yerleşmeyen, önceki ve sonraki puan farkı) çevrimiçi adminlere gönder |
 | `useScoreboardDump` | `false` | Karma yol: tam skorbordu sunucu logundan oku |
 | `dumpWaitSeconds` | `10` | Karma yol: tur sonunda döküm için kaç saniye beklenir |
 

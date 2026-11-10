@@ -108,6 +108,8 @@ Escribe esto en el **chat de administración** del juego:
 ```
 !smartshuffle now        mezclar una vez al final de esta ronda
 !smartshuffle preview    mostrar qué haría una mezcla ahora, sin mover a nadie
+!smartshuffle cancel     anular la mezcla pedida con now
+!smartshuffle friends on mantener juntos a los grupos de amigos (parties) al mezclar, off los separa
 !smartshuffle auto on    mezclar al final de cada ronda
 !smartshuffle lock 2     bloquear tras la mezcla y mantener juntos a los grupos de amigos
 !smartshuffle unlock     quitar el bloqueo durante el resto de esta ronda
@@ -116,6 +118,8 @@ Escribe esto en el **chat de administración** del juego:
 
 Al final de la ronda el plugin mueve a los jugadores con `AdminForceTeamChange`, anuncia cuántos se movieron y
 mantiene los nuevos equipos hasta que termine la siguiente ronda.
+
+Los jugadores solo se mueven en la pantalla final, justo al terminar la ronda. Si el siguiente mapa empieza antes, la mezcla se detiene: no se mueve a nadie en una partida en curso, así que nadie pierde su escuadra, kit o vehículo por la mezcla.
 
 ---
 
@@ -136,6 +140,7 @@ mantiene los nuevos equipos hasta que termine la siguiente ronda.
 En una simulación de 100 jugadores con partidas por tickets, la proporción de palizas (más de 150 tickets de
 diferencia) bajó del 26% con una mezcla aleatoria al 10.4% con la fórmula de SquadJS y al 9.3% con el marcador
 completo (vía híbrida).
+Estas cifras son sin mantener a los amigos juntos. Con parties de hasta 4 juntas, la fórmula de SquadJS da alrededor del 11%; manteniendo todas las parties, incluidos los grupos de 9, alrededor del 13%.
 
 ---
 
@@ -148,6 +153,7 @@ Todas las opciones van en la entrada del plugin en el `config.json` de SquadJS.
 | `command` | `smartshuffle` | Nombre del comando del chat de administración |
 | `autoShuffle` | `false` | Mezclar al final de cada ronda |
 | `lockMode` | `2` | 0 sin bloqueo, 1 bloqueo estricto, 2 bloqueo que mantiene juntas las parties |
+| `keepParties` | sigue a `lockMode` | Mantener juntas las parties al mezclar, independiente del bloqueo: `true` o `false`. Si se omite, está activo con `lockMode` 2 y desactivado con 0 y 1 |
 | `kitMedic` | `Medic` | Regex sobre el nombre del rol para kits de médico |
 | `kitLogistics` | vacío | Regex para una clase de kit de logística, vacío significa sin usar |
 | `kitCrew` | `Crewman\|Pilot` | Regex para kits de tripulación; los SL de tripulación forman su propio grupo |
@@ -155,6 +161,12 @@ Todas las opciones van en la entrada del plugin en el `config.json` de SquadJS.
 | `maxPartySize` | `4` | Modo de bloqueo 2: una party de hasta este tamaño se queda junta, una más grande se divide. 0 significa sin límite |
 | `skipLayers` | `["seed", "jensen", "invasion"]` | La mezcla automática se salta una ronda cuyo nombre de layer contenga alguno de estos. `!smartshuffle now` siempre se ejecuta |
 | `minPlayers` | `40` | La mezcla automática se salta una ronda con menos jugadores. `!smartshuffle now` siempre se ejecuta |
+| `shuffleDelaySeconds` | `0` | Segundos de espera tras el final de la ronda antes de mover jugadores (tiempo para ver el marcador), de 0 a 25 |
+| `shuffleDeadlineSeconds` | `30` | No se mueve a nadie pasados estos segundos desde el final de la ronda, y nunca después de que empiece el siguiente mapa |
+| `announceMinutes` | `10` | Mientras haya una mezcla pendiente, avisar al servidor cada tantos minutos. 0 desactiva los avisos |
+| `broadcastResult` | `true` | Avisar al servidor tras la mezcla de cuántos jugadores se movieron |
+| `warnMovedPlayers` | `true` | Avisar a cada jugador movido con un mensaje privado de que cambió de equipo |
+| `adminReport` | `true` | Enviar el resultado (movidos, no colocados, diferencia de puntuación antes y después) a los admins conectados |
 | `useScoreboardDump` | `false` | Vía híbrida: leer el marcador completo del log del servidor |
 | `dumpWaitSeconds` | `10` | Vía híbrida: cuánto esperar el volcado al final de la ronda |
 
