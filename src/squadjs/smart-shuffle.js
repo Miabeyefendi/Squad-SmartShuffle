@@ -420,7 +420,7 @@ export default class SmartShuffle extends BasePlugin {
     return {
       command: {
         required: false,
-        description: 'Admin chat command: !<command> [status|now|auto on|auto off|lock 0|lock 1|lock 2|unlock].',
+        description: 'Admin chat command: !<command> [status|now|preview|auto on|auto off|lock 0|lock 1|lock 2|unlock].',
         default: 'smartshuffle'
       },
       autoShuffle: {
@@ -453,6 +453,21 @@ export default class SmartShuffle extends BasePlugin {
         description: 'A locked squad up to this size counts as a friend squad; its SL is split as its own group.',
         default: 3
       },
+      maxPartySize: {
+        required: false,
+        description: 'Lock mode 2: a friend group (party) up to this size stays together; a bigger party is split like everyone else. 0 = no limit.',
+        default: 4
+      },
+      skipLayers: {
+        required: false,
+        description: 'Auto shuffle skips a round whose layer name contains one of these (case insensitive). An admin "now" always runs.',
+        default: ['seed', 'jensen', 'invasion']
+      },
+      minPlayers: {
+        required: false,
+        description: 'Auto shuffle skips a round with fewer players than this. An admin "now" always runs.',
+        default: 40
+      },
       useScoreboardDump: {
         required: false,
         description: 'Hybrid route: read the full scoreboard written to the server log by the ModLoader ruleset.',
@@ -478,6 +493,12 @@ export default class SmartShuffle extends BasePlugin {
     this.stats = new Map();
     this.dump = null;
     this.reverting = new Set();
+    this.last = null; // result of the latest shuffle: { moved, failed }
+    this.skipLayers = []
+      .concat(this.options.skipLayers || [])
+      .flatMap((s) => String(s).split(','))
+      .map((s) => s.trim().toLowerCase())
+      .filter(Boolean);
     this.re = {
       medic: this.options.kitMedic ? new RegExp(this.options.kitMedic, 'i') : null,
       logi: this.options.kitLogistics ? new RegExp(this.options.kitLogistics, 'i') : null,
@@ -626,7 +647,13 @@ export default class SmartShuffle extends BasePlugin {
   async onRoundEnded() {
     this.inMatch = false;
     this.lock = null;
-    if (!(this.auto || this.pendingNow) || this.busy) return;
+    const forced = this.pendingNow;
+    if (!(this.auto || forced) || this.busy) return;
+    const skip = forced ? null : this.skipReason();
+    if (skip) {
+      this.verbose(1, `Auto shuffle skipped: ${skip}.`);
+      return;
+    }
     this.pendingNow = false;
     this.busy = true;
     try {
@@ -638,6 +665,22 @@ export default class SmartShuffle extends BasePlugin {
     }
   }
 
+  // why an automatic shuffle should not run this round (null = run it)
+  skipReason() {
+    const layer = this.server.currentLayer;
+    const text = (
+      layer && typeof layer === 'object'
+        ? [layer.name, layer.classname, layer.layerid, layer.gamemode].filter(Boolean).join(' ')
+        : String(layer || '')
+    ).toLowerCase();
+    const hit = this.skipLayers.find((s) => text.includes(s));
+    if (hit) return `layer "${text}" matches "${hit}"`;
+    const count = this.server.players.length;
+    const min = +this.options.minPlayers || 0;
+    if (count < min) return `${count} players, minimum is ${min}`;
+    return null;
+  }
+
   kitClass(role) {
     if (this.re.medic && this.re.medic.test(role)) return 1;
     if (this.re.logi && this.re.logi.test(role)) return 2;
@@ -645,9 +688,11 @@ export default class SmartShuffle extends BasePlugin {
     return 0;
   }
 
-  async shuffle() {
+  // the plan for the players on the server right now; changes nothing. wait: wait for the scoreboard dump
+  // (round end only; a preview in mid-match has none and uses the SquadJS numbers)
+  async plan(wait) {
     const players = parseListPlayers(await this.server.rcon.execute('ListPlayers'));
-    if (players.length < 2) return;
+    if (players.length < 2) return null;
     const [squads] = await this.server.rcon.getSquads();
     const lockedSmall = new Set(
       squads
@@ -657,7 +702,7 @@ export default class SmartShuffle extends BasePlugin {
 
     let formula = 'k6';
     let dumped = null;
-    if (this.options.useScoreboardDump) {
+    if (this.options.useScoreboardDump && wait) {
       const recs = await this.waitForDump();
       if (recs && recs.length) {
         dumped = new Map();
@@ -689,23 +734,73 @@ export default class SmartShuffle extends BasePlugin {
         if (!byParty.has(p.partyID)) byParty.set(p.partyID, []);
         byParty.get(p.partyID).push(i);
       });
-      groups = [...byParty.values()].filter((g) => g.length >= 2);
+      // a party bigger than maxPartySize is not kept together: it is split like free players
+      const cap = +this.options.maxPartySize > 0 ? +this.options.maxPartySize : Infinity;
+      groups = [...byParty.values()].filter((g) => g.length >= 2 && g.length <= cap);
     }
 
-    const { team } = planTeams(S, formula, slGroups, groups);
+    const { P, team } = planTeams(S, formula, slGroups, groups);
+    return { players, team, P, formula };
+  }
+
+  async shuffle() {
+    const plan = await this.plan(true);
+    if (!plan) return;
+    const { players, team, formula } = plan;
     let moved = 0;
     for (let i = 0; i < players.length; i++) {
       if (team[i] + 1 === players[i].teamID) continue;
       await this.server.rcon.switchTeam(players[i].eosID);
       moved += 1;
     }
-    // the lock check compares against server.players; refresh it first so a poll that started
-    // before the moves cannot look like players switching back
-    await this.server.updatePlayerList();
+    const failed = await this.settle(players, team);
     if (this.lockMode > 0) this.lock = new Map(players.map((p, i) => [p.eosID, team[i] + 1]));
+    const landed = moved - failed;
+    this.last = { moved: landed, failed };
     const lockText = this.lockMode > 0 ? ' Team changes are locked until the next round ends.' : '';
-    await this.server.rcon.broadcast(`Smart Shuffle: teams balanced (${moved} players moved).${lockText}`);
-    this.verbose(1, `Shuffled with ${formula}: ${players.length} players, ${moved} moved, lock ${this.lockMode}.`);
+    await this.server.rcon.broadcast(`Smart Shuffle: teams balanced (${landed} players moved).${lockText}`);
+    this.verbose(1, `Shuffled with ${formula}: ${players.length} players, ${landed} moved, ${failed} not placed, lock ${this.lockMode}.`);
+  }
+
+  // AdminForceTeamChange toggles and a command can be lost, so read the teams back after the moves and
+  // toggle whoever is still on the wrong side (at most twice). Returns how many are still wrong.
+  // The refresh also keeps the lock check (it compares against server.players) from reading a poll that
+  // started before the moves as players switching back.
+  async settle(players, team) {
+    let wrong = [];
+    for (let attempt = 0; attempt <= 2; attempt++) {
+      await this.server.updatePlayerList();
+      const now = new Map(this.server.players.map((p) => [p.eosID, p.teamID]));
+      wrong = players.filter((p, i) => now.has(p.eosID) && now.get(p.eosID) !== team[i] + 1);
+      if (!wrong.length || attempt === 2) break;
+      for (const p of wrong) await this.server.rcon.switchTeam(p.eosID);
+    }
+    return wrong.length;
+  }
+
+  // what a shuffle would do with this match so far; moves nobody. The reply is short (it goes out as an
+  // in-game warning), the names of the players who would move go to the SquadJS log.
+  async preview() {
+    const plan = await this.plan(false);
+    if (!plan) return 'Smart Shuffle preview: not enough players.';
+    const { players, team, P } = plan;
+    const gap = (isTeam2) => {
+      let a = 0;
+      let b = 0;
+      P.forEach((v, i) => (isTeam2(i) ? (b += v) : (a += v)));
+      return a + b > 0 ? (100 * Math.abs(a - b)) / (a + b) : 0;
+    };
+    const now = gap((i) => players[i].teamID === 2);
+    const after = gap((i) => team[i] === 1);
+    const moves = [];
+    players.forEach((p, i) => {
+      if (team[i] + 1 !== p.teamID) moves.push(`${p.name} -> team ${team[i] + 1}`);
+    });
+    this.verbose(1, `Preview moves (${moves.length}): ${moves.join(', ')}`);
+    return (
+      `Smart Shuffle preview (this match so far): ${moves.length} of ${players.length} would move, ` +
+      `score gap ${now.toFixed(0)}% -> ${after.toFixed(0)}%. Names are in the SquadJS log.`
+    );
   }
 
   // ---- admin chat command ----
@@ -717,6 +812,8 @@ export default class SmartShuffle extends BasePlugin {
     if (args[0] === 'now') {
       this.pendingNow = true;
       reply = 'Smart Shuffle will run at the end of this round.';
+    } else if (args[0] === 'preview') {
+      reply = await this.preview();
     } else if (args[0] === 'auto' && ['on', 'off'].includes(args[1])) {
       this.auto = args[1] === 'on';
       reply = `Smart Shuffle auto: ${this.auto ? 'on' : 'off'}.`;
@@ -731,7 +828,8 @@ export default class SmartShuffle extends BasePlugin {
       reply =
         `Smart Shuffle: auto ${this.auto ? 1 : 0}, lock ${this.lockMode}, ` +
         `pending ${this.pendingNow ? 1 : 0}, locked now ${this.lock ? 1 : 0}. ` +
-        `Use: now | auto on/off | lock 0/1/2 | unlock`;
+        (this.last ? `Last shuffle: ${this.last.moved} moved, ${this.last.failed} not placed. ` : '') +
+        `Use: now | preview | auto on/off | lock 0/1/2 | unlock`;
     }
     const id = info.eosID || (info.player && info.player.eosID);
     if (id) await this.server.rcon.warn(id, reply);

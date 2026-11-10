@@ -107,6 +107,7 @@ Oyun içi **admin sohbetine** yaz:
 
 ```
 !smartshuffle now        bu turun sonunda bir kez karıştır
+!smartshuffle preview    şimdi karıştırılsa ne olacağını göster, kimseyi taşımaz
 !smartshuffle auto on    her tur sonunda karıştır
 !smartshuffle lock 2     shuffle sonrası kilitle, arkadaş gruplarını bir arada tut
 !smartshuffle unlock     bu turun geri kalanı için kilidi kaldır
@@ -149,6 +150,9 @@ Bütün seçenekler SquadJS `config.json` içindeki eklenti girişine yazılır.
 | `kitLogistics` | boş | Lojistik kit sınıfı için regex, boşsa kullanılmaz |
 | `kitCrew` | `Crewman\|Pilot` | Araç mürettebatı kitleri için regex; mürettebat SL'leri ayrı SL grubu olur |
 | `lockedSquadMaxSize` | `3` | Bu boyuta kadar kilitli squad arkadaş squad'ı sayılır |
+| `maxPartySize` | `4` | Kilit modu 2: bu boyuta kadar party bir arada kalır, daha büyüğü bölünür. 0 sınır yok demek |
+| `skipLayers` | `["seed", "jensen", "invasion"]` | Otomatik karıştırma, layer adı bunlardan birini içeren turu atlar. `!smartshuffle now` her zaman çalışır |
+| `minPlayers` | `40` | Otomatik karıştırma, oyuncu sayısı bundan az olan turu atlar. `!smartshuffle now` her zaman çalışır |
 | `useScoreboardDump` | `false` | Karma yol: tam skorbordu sunucu logundan oku |
 | `dumpWaitSeconds` | `10` | Karma yol: tur sonunda döküm için kaç saniye beklenir |
 

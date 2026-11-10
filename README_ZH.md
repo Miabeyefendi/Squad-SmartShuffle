@@ -106,6 +106,7 @@
 
 ```
 !smartshuffle now        本局结束时分队一次
+!smartshuffle preview    显示现在分队会怎样，不会移动任何人
 !smartshuffle auto on    每局结束时分队
 !smartshuffle lock 2     分队后锁定，并让好友组留在一起
 !smartshuffle unlock     解除本局剩余时间的锁定
@@ -143,6 +144,9 @@
 | `kitLogistics` | 空 | 后勤兵种类别的正则，为空表示不使用 |
 | `kitCrew` | `Crewman\|Pilot` | 载具乘员兵种的正则；乘员小队长单独成组 |
 | `lockedSquadMaxSize` | `3` | 不超过此人数的上锁小队视为好友小队 |
+| `maxPartySize` | `4` | 锁定模式 2：不超过此人数的 party 留在一起，更大的会被拆开。0 表示不限制 |
+| `skipLayers` | `["seed", "jensen", "invasion"]` | 自动分队会跳过地图名包含其中任一项的对局。`!smartshuffle now` 始终执行 |
+| `minPlayers` | `40` | 自动分队会跳过人数少于此值的对局。`!smartshuffle now` 始终执行 |
 | `useScoreboardDump` | `false` | 混合方式：从服务器日志读取完整记分板 |
 | `dumpWaitSeconds` | `10` | 混合方式：每局结束时等待导出的秒数 |
 

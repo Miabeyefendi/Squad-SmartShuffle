@@ -163,7 +163,7 @@ async function playMatch(server) {
 
 test('plugin: auto shuffle moves players at round end, lock moves a switcher back, unlock lifts it', async () => {
   const server = fakeServer(makePlayers());
-  const plugin = new SmartShuffle(server, { autoShuffle: true, lockMode: 1 });
+  const plugin = new SmartShuffle(server, { autoShuffle: true, lockMode: 1, minPlayers: 0 });
   await plugin.mount();
   server.emit('NEW_GAME', {});
   await playMatch(server);
@@ -217,7 +217,7 @@ test('plugin: lock mode 2 keeps a party on one side', async () => {
   const players = makePlayers();
   for (const i of [2, 3, 12, 13]) players[i].partyID = 'p1';
   const server = fakeServer(players);
-  const plugin = new SmartShuffle(server, { autoShuffle: true, lockMode: 2 });
+  const plugin = new SmartShuffle(server, { autoShuffle: true, lockMode: 2, minPlayers: 0 });
   await plugin.mount();
   server.emit('NEW_GAME', {});
   await playMatch(server);
@@ -229,7 +229,7 @@ test('plugin: lock mode 2 keeps a party on one side', async () => {
 
 test('plugin: hybrid dump switches to v4a when the dump covers the players', async () => {
   const server = fakeServer(makePlayers());
-  const plugin = new SmartShuffle(server, { autoShuffle: true, useScoreboardDump: true, dumpWaitSeconds: 1 });
+  const plugin = new SmartShuffle(server, { autoShuffle: true, useScoreboardDump: true, dumpWaitSeconds: 1, minPlayers: 0 });
   await plugin.mount();
   assert.equal(server.rules.length, 1);
   server.emit('NEW_GAME', {});
@@ -249,4 +249,131 @@ test('plugin: hybrid dump switches to v4a when the dump covers the players', asy
   assert.ok(logs.some((l) => l.startsWith('Shuffled with v4a')), logs.join('\n'));
   await plugin.unmount();
   assert.equal(server.rules.length, 0);
+});
+
+// ---- party size cap, skip rules, preview, move check ----
+
+// every player of the party is a strong player of team 1, so a balanced plan has to cut the party in two
+// unless it is kept together
+function bigPartyPlayers() {
+  const players = makePlayers();
+  for (const i of [1, 2, 3, 4, 5, 6]) players[i].partyID = 'big';
+  return players;
+}
+
+async function runRound(options, players = makePlayers(), prepare = () => {}) {
+  const server = fakeServer(players);
+  prepare(server);
+  const plugin = new SmartShuffle(server, { autoShuffle: true, lockMode: 2, minPlayers: 0, ...options });
+  await plugin.mount();
+  server.emit('NEW_GAME', {});
+  await playMatch(server);
+  await plugin.onRoundEnded();
+  return { server, plugin };
+}
+
+test('plugin: maxPartySize keeps small parties together and splits bigger ones', async () => {
+  const sides = (server) => new Set(server.players.filter((p) => p.partyID === 'big').map((p) => p.teamID)).size;
+  const capped = await runRound({ maxPartySize: 4 }, bigPartyPlayers());
+  assert.equal(sides(capped.server), 2, 'a party of 6 over the cap of 4 must be split');
+  const wide = await runRound({ maxPartySize: 6 }, bigPartyPlayers());
+  assert.equal(sides(wide.server), 1, 'a party of 6 within the cap of 6 stays together');
+  const none = await runRound({ maxPartySize: 0 }, bigPartyPlayers());
+  assert.equal(sides(none.server), 1, '0 means no limit');
+});
+
+test('plugin: auto shuffle skips small servers and skipped layers, an admin now does not', async () => {
+  const switched = (server) => server.calls.filter((c) => c.startsWith('switch')).length;
+
+  const small = await runRound({ minPlayers: 40 });
+  assert.equal(switched(small.server), 0, '20 players is under the default minimum of 40');
+
+  const invasion = await runRound({}, makePlayers(), (s) => {
+    s.currentLayer = { name: 'Narva Invasion v1', classname: 'Narva_Invasion_v1', gamemode: 'Invasion' };
+  });
+  assert.equal(switched(invasion.server), 0, 'invasion is skipped by default');
+
+  const seed = await runRound({}, makePlayers(), (s) => {
+    s.currentLayer = { name: 'Jensen Training Range', classname: 'JensensRange_ADF-US' };
+  });
+  assert.equal(switched(seed.server), 0, 'jensen is skipped by default');
+
+  const raas = await runRound({}, makePlayers(), (s) => {
+    s.currentLayer = { name: 'Narva RAAS v1', classname: 'Narva_RAAS_v1', gamemode: 'RAAS' };
+  });
+  assert.ok(switched(raas.server) > 0, 'RAAS is shuffled');
+
+  const custom = await runRound({ skipLayers: 'raas' }, makePlayers(), (s) => {
+    s.currentLayer = { name: 'Narva RAAS v1', classname: 'Narva_RAAS_v1' };
+  });
+  assert.equal(switched(custom.server), 0, 'skipLayers accepts a comma separated string');
+
+  // an admin "now" ignores both rules
+  const server = fakeServer(makePlayers());
+  server.currentLayer = { name: 'Narva Invasion v1' };
+  const plugin = new SmartShuffle(server, { autoShuffle: false, minPlayers: 40 });
+  await plugin.mount();
+  server.emit('NEW_GAME', {});
+  await plugin.onCommand({ chat: 'ChatAdmin', message: 'now', eosID: 'admin' });
+  await playMatch(server);
+  await plugin.onRoundEnded();
+  assert.ok(switched(server) > 0, 'now must run on an invasion layer with few players');
+});
+
+test('plugin: preview changes nothing and answers the admin', async () => {
+  const server = fakeServer(makePlayers());
+  const plugin = new SmartShuffle(server, { autoShuffle: true });
+  const logs = [];
+  plugin.verbose = (lvl, msg) => logs.push(msg);
+  await plugin.mount();
+  server.emit('NEW_GAME', {});
+  await playMatch(server);
+  const before = server.players.map((p) => p.teamID).join('');
+  await plugin.onCommand({ chat: 'ChatAdmin', message: 'preview', eosID: 'admin' });
+  assert.equal(server.players.map((p) => p.teamID).join(''), before, 'preview must not move anyone');
+  assert.equal(server.calls.filter((c) => c.startsWith('switch') || c.startsWith('broadcast')).length, 0);
+  const reply = server.calls.find((c) => c.startsWith('warn admin Smart Shuffle preview'));
+  assert.ok(reply && /\d+ of 20 would move, score gap \d+% -> \d+%/.test(reply), reply);
+  assert.ok(logs.some((l) => l.startsWith('Preview moves')), 'names go to the log');
+  assert.equal(plugin.lock, null);
+  await plugin.unmount();
+});
+
+test('plugin: a lost team change is repeated, one that never lands is reported', async () => {
+  // the first command is swallowed once
+  const lost = await runRound({ lockMode: 1 }, makePlayers(), (s) => {
+    const real = s.rcon.switchTeam;
+    let dropped = false;
+    s.rcon.switchTeam = async (id) => {
+      if (!dropped) {
+        dropped = true;
+        s.calls.push(`switch ${id} (lost)`);
+        return;
+      }
+      await real(id);
+    };
+  });
+  assert.equal(lost.server.players.filter((p) => p.teamID === 1).length, 10, 'teams not even after the retry');
+  assert.equal(lost.plugin.last.failed, 0);
+
+  // one player never moves
+  let stuck = null;
+  const never = await runRound({ lockMode: 1 }, makePlayers(), (s) => {
+    const real = s.rcon.switchTeam;
+    s.rcon.switchTeam = async (id) => {
+      stuck = stuck || id;
+      if (id === stuck) {
+        s.calls.push(`switch ${id} (stuck)`);
+        return;
+      }
+      await real(id);
+    };
+  });
+  assert.equal(never.plugin.last.failed, 1);
+  const text = never.server.calls.find((c) => c.startsWith('broadcast Smart Shuffle'));
+  assert.ok(text.includes(`(${never.plugin.last.moved} players moved)`), text);
+  const status = [];
+  never.server.rcon.warn = async (id, msg) => status.push(msg);
+  await never.plugin.onCommand({ chat: 'ChatAdmin', message: 'status', eosID: 'admin' });
+  assert.ok(status[0].includes('1 not placed'), status[0]);
 });

@@ -107,6 +107,7 @@ Escribe esto en el **chat de administración** del juego:
 
 ```
 !smartshuffle now        mezclar una vez al final de esta ronda
+!smartshuffle preview    mostrar qué haría una mezcla ahora, sin mover a nadie
 !smartshuffle auto on    mezclar al final de cada ronda
 !smartshuffle lock 2     bloquear tras la mezcla y mantener juntos a los grupos de amigos
 !smartshuffle unlock     quitar el bloqueo durante el resto de esta ronda
@@ -151,6 +152,9 @@ Todas las opciones van en la entrada del plugin en el `config.json` de SquadJS.
 | `kitLogistics` | vacío | Regex para una clase de kit de logística, vacío significa sin usar |
 | `kitCrew` | `Crewman\|Pilot` | Regex para kits de tripulación; los SL de tripulación forman su propio grupo |
 | `lockedSquadMaxSize` | `3` | Una escuadra cerrada de hasta este tamaño cuenta como escuadra de amigos |
+| `maxPartySize` | `4` | Modo de bloqueo 2: una party de hasta este tamaño se queda junta, una más grande se divide. 0 significa sin límite |
+| `skipLayers` | `["seed", "jensen", "invasion"]` | La mezcla automática se salta una ronda cuyo nombre de layer contenga alguno de estos. `!smartshuffle now` siempre se ejecuta |
+| `minPlayers` | `40` | La mezcla automática se salta una ronda con menos jugadores. `!smartshuffle now` siempre se ejecuta |
 | `useScoreboardDump` | `false` | Vía híbrida: leer el marcador completo del log del servidor |
 | `dumpWaitSeconds` | `10` | Vía híbrida: cuánto esperar el volcado al final de la ronda |
 

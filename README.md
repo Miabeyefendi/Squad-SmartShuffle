@@ -107,6 +107,7 @@ Type these in the in-game **admin chat**:
 
 ```
 !smartshuffle now        shuffle once at the end of this round
+!smartshuffle preview    show what a shuffle would do right now, moves nobody
 !smartshuffle auto on    shuffle at the end of every round
 !smartshuffle lock 2     lock after a shuffle and keep friend groups together
 !smartshuffle unlock     lift the lock for the rest of this round
@@ -149,6 +150,9 @@ All options go into the plugin entry in SquadJS `config.json`.
 | `kitLogistics` | empty | Regex for a logistics kit class, empty means not used |
 | `kitCrew` | `Crewman\|Pilot` | Regex for vehicle crew kits; crew SLs form their own SL group |
 | `lockedSquadMaxSize` | `3` | A locked squad up to this size counts as a friend squad |
+| `maxPartySize` | `4` | Lock mode 2: a party up to this size stays together, a bigger one is split. 0 means no limit |
+| `skipLayers` | `["seed", "jensen", "invasion"]` | Automatic shuffle skips a round whose layer name contains one of these. `!smartshuffle now` always runs |
+| `minPlayers` | `40` | Automatic shuffle skips a round with fewer players. `!smartshuffle now` always runs |
 | `useScoreboardDump` | `false` | Hybrid route: read the full scoreboard from the server log |
 | `dumpWaitSeconds` | `10` | Hybrid route: how long to wait for the dump at round end |
 
