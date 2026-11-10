@@ -123,6 +123,121 @@
 
 ---
 
+## 📘 分步指南
+
+从空服务器到能用的分队。你需要一个正在运行的 SquadJS 和服务器管理员权限。不需要会写代码。
+
+### 1. 安装
+
+从[最新版本](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest)下载 `smart-shuffle.js`，复制到 `SquadJS/squad-server/plugins/`。
+
+打开 `SquadJS/config.json`，找到 `"plugins": [` 列表并加入下面这一项。注意各项之间的逗号。
+
+```json
+{
+  "plugin": "SmartShuffle",
+  "enabled": true,
+  "autoShuffle": false
+}
+```
+
+重启 SquadJS。没写的设置都保持默认值，所以这段简短的配置就够了。
+
+### 2. 确认已加载
+
+进入服务器，在**管理员聊天**（不是全体聊天）里输入：
+
+```
+!smartshuffle status
+```
+
+你会收到一条类似这样的私信：
+
+```
+Smart Shuffle: auto off, lock on, friends on, history on, mss off, pending 0, locked now 0.
+```
+
+没有回应？按顺序检查：文件在 `plugins` 文件夹里，配置项写了 `"enabled": true`，名称正好是 `SmartShuffle`，你是在管理员聊天里输入的，SquadJS 启动日志里没有报错。
+
+### 3. 先试一下，不移动任何人
+
+对局进行中：
+
+```
+!smartshuffle preview
+```
+
+```
+Smart Shuffle preview (this match so far): 41 of 96 would move, score gap 18% -> 1%.
+```
+
+不会移动任何人。你会收到一条摘要，SquadJS 日志里会列出谁会去哪边（`Preview moves`）。
+
+### 4. 执行第一次真正的分队
+
+```
+!smartshuffle now
+```
+
+全服会收到将要平衡队伍的公告。对局结束时，玩家在结算界面、下一张地图加载之前被移动。你会收到一份报告：
+
+```
+Smart Shuffle report: 44 moved, 0 not placed, score gap 21% -> 1%, done in 3.2 s.
+```
+
+对局结束前改主意了？`!smartshuffle cancel`。
+
+### 5. 设为自动
+
+`!smartshuffle auto on` 会在每局结束时分队，直到 SquadJS 重启。想在重启后仍然生效，在 `config.json` 里写 `"autoShuffle": true`。
+
+### 6. 修改默认设置
+
+有两种方式。聊天命令立即生效，持续到 SquadJS 重启。`config.json` 里的一行是永久的，需要重启。常见选择：
+
+| 我想要 | 在 `config.json` 里 | 在管理员聊天里 |
+|---|---|---|
+| 每局都分队 | `"autoShuffle": true` | `auto on` |
+| 纯粹的平衡，不保留好友组 | `"keepParties": false` | `friends off` |
+| 保留更大的好友组 | `"maxPartySize": 6` | - |
+| 分队后不锁定 | `"lockMode": 0`，想继续保留好友再加 `"keepParties": true` | `lock off` |
+| 只用刚结束的对局 | `"historyRounds": 0` | `history off` |
+| 先留时间看计分板 | `"shuffleDelaySeconds": 15` | - |
+| 不给玩家发消息 | `"announceMinutes": 0`、`"warnMovedPlayers": false`、`"broadcastResult": false` | - |
+| Invasion 也分队 | `"skipLayers": ["seed", "jensen"]` | - |
+| 人数较少的服务器 | `"minPlayers": 20` | - |
+
+包含多项修改的配置如下。完整列表见[配置](#️-配置)。
+
+```json
+{
+  "plugin": "SmartShuffle",
+  "enabled": true,
+  "autoShuffle": true,
+  "maxPartySize": 3,
+  "shuffleDelaySeconds": 15,
+  "minPlayers": 30
+}
+```
+
+### 7. 可选：MySquadStats 评分
+
+默认关闭，属于实验功能：在模拟中它没有改善平衡，而且尚未对真实 API 运行过。想试用的话：
+
+1. 获取 token。MySquadStats 会给每个参与的服务器发一个，见 [mysquadstats.com/participate](https://mysquadstats.com/participate)。如果你已经在用他们的 SquadJS 插件，就是那个插件配置里的 `accessToken`。
+2. 在 `config.json` 的 SmartShuffle 配置项里加上这两行：
+
+   ```json
+   "useMySquadStats": true,
+   "mySquadStatsToken": "YOUR_TOKEN"
+   ```
+
+3. 重启 SquadJS。`!smartshuffle status` 现在会显示 `mss on`。玩家会在对局中分批查询，评分在最初几分钟内补齐。
+
+请保管好 token：不要公开发布你的 `config.json`。`!smartshuffle mss off` 可以不重启就关闭评分。
+
+---
+
 ## 🧮 工作原理
 
 1. **收集。** 对局中按玩家统计：击杀、击倒、死亡、伤害、救起、放置的部署物、误杀队友和游戏分钟数。换新地图时重新计数；本次会话最近的几局保留在内存中用于评分。
@@ -136,6 +251,15 @@
 使用完整记分板（混合方式）时为 9.3%。
 以上数字未开启好友保留。保留不超过 4 人的 party 时，SquadJS 公式约为 11%；保留所有 party（包括 9 人车队）时约为 13%。
 计入每个玩家在本次会话中之前的对局时（默认），SquadJS 公式约为 9.5%。
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/sim-chart-dark.svg">
+    <img src="./assets/sim-chart.svg" width="92%" alt="模拟中碾压局比例的条形图：随机分队 26.6%，只用历史统计 12.6%，只用这一局 10.3%，这一局加本次会话的对局 9.5%">
+  </picture>
+</p>
+
+四种给玩家评分的方式，每种都在 43,200 场模拟对局中测试。蓝色条是 Smart Shuffle 默认使用的方法。
 
 ---
 

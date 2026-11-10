@@ -125,6 +125,121 @@ Los jugadores solo se mueven en la pantalla final, justo al terminar la ronda. S
 
 ---
 
+## 📘 Guía paso a paso
+
+De un servidor vacío a una mezcla que funciona. Necesitas SquadJS en marcha y permisos de admin en el servidor. No hace falta programar.
+
+### 1. Instalar
+
+Descarga `smart-shuffle.js` de la [última versión](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest) y cópialo en `SquadJS/squad-server/plugins/`.
+
+Abre `SquadJS/config.json`, busca la lista `"plugins": [` y añade esta entrada. Cuidado con la coma entre entradas.
+
+```json
+{
+  "plugin": "SmartShuffle",
+  "enabled": true,
+  "autoShuffle": false
+}
+```
+
+Reinicia SquadJS. Cada ajuste que no escribas conserva su valor por defecto, así que esta entrada corta basta.
+
+### 2. Comprobar que se cargó
+
+Entra al servidor y escribe esto en el **chat de admins** (no en el chat general):
+
+```
+!smartshuffle status
+```
+
+Recibes un mensaje privado como este:
+
+```
+Smart Shuffle: auto off, lock on, friends on, history on, mss off, pending 0, locked now 0.
+```
+
+¿Sin respuesta? Revisa en orden: el archivo está en la carpeta `plugins`, la entrada dice `"enabled": true`, el nombre es exactamente `SmartShuffle`, escribiste en el chat de admins y el log de SquadJS no muestra errores al iniciar.
+
+### 3. Probar sin mover a nadie
+
+En mitad de una partida:
+
+```
+!smartshuffle preview
+```
+
+```
+Smart Shuffle preview (this match so far): 41 of 96 would move, score gap 18% -> 1%.
+```
+
+No se mueve a nadie. Recibes un resumen, y el log de SquadJS lista quién iría a dónde (`Preview moves`).
+
+### 4. Lanzar la primera mezcla real
+
+```
+!smartshuffle now
+```
+
+Se avisa al servidor de que se equilibrarán los equipos. Al terminar la ronda, los jugadores se mueven en la pantalla final, antes de que cargue el siguiente mapa. Recibes un informe:
+
+```
+Smart Shuffle report: 44 moved, 0 not placed, score gap 21% -> 1%, done in 3.2 s.
+```
+
+¿Cambiaste de idea antes del final de la ronda? `!smartshuffle cancel`.
+
+### 5. Hacerlo automático
+
+`!smartshuffle auto on` mezcla al final de cada ronda hasta que SquadJS se reinicie. Para conservarlo tras un reinicio, pon `"autoShuffle": true` en `config.json`.
+
+### 6. Cambiar los valores por defecto
+
+Hay dos formas. Un comando de chat actúa al instante y dura hasta que SquadJS se reinicie. Una línea en `config.json` es permanente y necesita reinicio. Opciones habituales:
+
+| Quiero | En `config.json` | En el chat de admins |
+|---|---|---|
+| Mezclar cada ronda | `"autoShuffle": true` | `auto on` |
+| Equilibrio puro, sin mantener juntos a los amigos | `"keepParties": false` | `friends off` |
+| Mantener juntos grupos de amigos más grandes | `"maxPartySize": 6` | - |
+| Sin bloqueo tras la mezcla | `"lockMode": 0`, más `"keepParties": true` para seguir manteniendo a los amigos | `lock off` |
+| Solo la partida que acaba de terminar | `"historyRounds": 0` | `history off` |
+| Tiempo para leer el marcador antes | `"shuffleDelaySeconds": 15` | - |
+| Sin mensajes a los jugadores | `"announceMinutes": 0`, `"warnMovedPlayers": false`, `"broadcastResult": false` | - |
+| Mezclar también en Invasion | `"skipLayers": ["seed", "jensen"]` | - |
+| Un servidor más pequeño | `"minPlayers": 20` | - |
+
+Una entrada con varios cambios queda así. La lista completa está en [Configuración](#️-configuración).
+
+```json
+{
+  "plugin": "SmartShuffle",
+  "enabled": true,
+  "autoShuffle": true,
+  "maxPartySize": 3,
+  "shuffleDelaySeconds": 15,
+  "minPlayers": 30
+}
+```
+
+### 7. Opcional: valoración de MySquadStats
+
+Desactivada por defecto y experimental: en la simulación no mejoró el equilibrio, y aún no se ha probado contra la API real. Para probarla:
+
+1. Consigue un token. MySquadStats da uno a cada servidor participante, ver [mysquadstats.com/participate](https://mysquadstats.com/participate). Si ya usas su plugin de SquadJS, es el `accessToken` de la entrada de ese plugin.
+2. Añade estas dos líneas a la entrada de SmartShuffle en `config.json`:
+
+   ```json
+   "useMySquadStats": true,
+   "mySquadStatsToken": "YOUR_TOKEN"
+   ```
+
+3. Reinicia SquadJS. `!smartshuffle status` muestra ahora `mss on`. Los jugadores se consultan poco a poco durante la partida, así que la valoración se completa en los primeros minutos.
+
+Mantén el token en privado: no publiques tu `config.json`. `!smartshuffle mss off` desactiva la valoración sin reiniciar.
+
+---
+
 ## 🧮 Cómo funciona
 
 1. **Recoger.** Durante la partida se cuentan, por jugador: bajas, derribos, muertes, daño, reanimaciones,
@@ -144,6 +259,15 @@ diferencia) bajó del 26% con una mezcla aleatoria al 10.4% con la fórmula de S
 completo (vía híbrida).
 Estas cifras son sin mantener a los amigos juntos. Con parties de hasta 4 juntas, la fórmula de SquadJS da alrededor del 11%; manteniendo todas las parties, incluidos los grupos de 9, alrededor del 13%.
 Contando las rondas anteriores de cada jugador en la sesión (por defecto), la fórmula de SquadJS da alrededor del 9.5%.
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/sim-chart-dark.svg">
+    <img src="./assets/sim-chart.svg" width="92%" alt="Gráfico de barras de partidas aplastantes en simulación: mezcla aleatoria 26,6%, solo estadísticas históricas 12,6%, solo esta partida 10,3%, esta partida más rondas de la sesión 9,5%">
+  </picture>
+</p>
+
+Cuatro formas de valorar a los jugadores, cada una probada en 43.200 partidas simuladas. La barra azul es el método que Smart Shuffle usa por defecto.
 
 ---
 

@@ -125,6 +125,121 @@ Oyuncular yalnızca tur biter bitmez, bitiş ekranında taşınır. Sonraki hari
 
 ---
 
+## 📘 Adım adım rehber
+
+Boş sunucudan çalışan karıştırmaya. Çalışan bir SquadJS ve sunucuda admin yetkisi yeterli. Kod bilmek gerekmez.
+
+### 1. Kur
+
+`smart-shuffle.js` dosyasını [son sürümden](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest) indir ve `SquadJS/squad-server/plugins/` klasörüne kopyala.
+
+`SquadJS/config.json` dosyasını aç, `"plugins": [` listesini bul ve şu girdiyi ekle. Girdiler arasındaki virgüle dikkat et.
+
+```json
+{
+  "plugin": "SmartShuffle",
+  "enabled": true,
+  "autoShuffle": false
+}
+```
+
+SquadJS'i yeniden başlat. Yazmadığın her ayar varsayılanında kalır, bu kısa girdi yeterli.
+
+### 2. Yüklendiğini kontrol et
+
+Sunucuya gir ve **admin sohbetine** (genel sohbete değil) şunu yaz:
+
+```
+!smartshuffle status
+```
+
+Şuna benzer bir özel mesaj gelir:
+
+```
+Smart Shuffle: auto off, lock on, friends on, history on, mss off, pending 0, locked now 0.
+```
+
+Cevap yok mu? Sırayla bak: dosya `plugins` klasöründe mi, girdide `"enabled": true` var mı, ad tam olarak `SmartShuffle` mı, admin sohbetine mi yazdın, SquadJS log'unda açılışta hata var mı.
+
+### 3. Kimseyi taşımadan dene
+
+Maçın ortasında:
+
+```
+!smartshuffle preview
+```
+
+```
+Smart Shuffle preview (this match so far): 41 of 96 would move, score gap 18% -> 1%.
+```
+
+Kimse taşınmaz. Bir özet gelir, kimin nereye gideceği SquadJS log'una yazılır (`Preview moves`).
+
+### 4. İlk gerçek karıştırmayı çalıştır
+
+```
+!smartshuffle now
+```
+
+Sunucuya takımların dengeleneceği duyurulur. Tur bitince oyuncular bitiş ekranında, sonraki harita yüklenmeden taşınır. Sana bir rapor gelir:
+
+```
+Smart Shuffle report: 44 moved, 0 not placed, score gap 21% -> 1%, done in 3.2 s.
+```
+
+Tur bitmeden vazgeçtin mi? `!smartshuffle cancel`.
+
+### 5. Otomatiğe al
+
+`!smartshuffle auto on`, SquadJS yeniden başlayana kadar her tur sonunda karıştırır. Yeniden başlatmadan sonra da kalsın istersen `config.json` içine `"autoShuffle": true` yaz.
+
+### 6. Varsayılanları değiştir
+
+İki yol var. Sohbet komutu hemen çalışır ve SquadJS yeniden başlayana kadar geçerlidir. `config.json` satırı kalıcıdır ve yeniden başlatma ister. Sık yapılan seçimler:
+
+| İstediğim | `config.json` içinde | Admin sohbetinde |
+|---|---|---|
+| Her tur karıştırma | `"autoShuffle": true` | `auto on` |
+| Saf denge, arkadaşlar bir arada tutulmasın | `"keepParties": false` | `friends off` |
+| Daha büyük arkadaş grupları bir arada kalsın | `"maxPartySize": 6` | - |
+| Karıştırmadan sonra kilit olmasın | `"lockMode": 0`, arkadaşlar yine tutulsun dersen `"keepParties": true` | `lock off` |
+| Sadece biten maç sayılsın | `"historyRounds": 0` | `history off` |
+| Önce skor tablosu okunsun | `"shuffleDelaySeconds": 15` | - |
+| Oyunculara mesaj gitmesin | `"announceMinutes": 0`, `"warnMovedPlayers": false`, `"broadcastResult": false` | - |
+| Invasion'da da karıştır | `"skipLayers": ["seed", "jensen"]` | - |
+| Daha küçük sunucu | `"minPlayers": 20` | - |
+
+Birkaç değişiklik içeren bir girdi şöyle görünür. Tam liste [Yapılandırma](#️-yapılandırma) bölümünde.
+
+```json
+{
+  "plugin": "SmartShuffle",
+  "enabled": true,
+  "autoShuffle": true,
+  "maxPartySize": 3,
+  "shuffleDelaySeconds": 15,
+  "minPlayers": 30
+}
+```
+
+### 7. İsteğe bağlı: MySquadStats puanı
+
+Varsayılan olarak kapalı ve deneysel: simülasyonda dengeyi iyileştirmedi ve henüz gerçek API'ye karşı çalıştırılmadı. Denemek için:
+
+1. Token al. MySquadStats her katılımcı sunucuya bir token verir, bkz. [mysquadstats.com/participate](https://mysquadstats.com/participate). Onların SquadJS eklentisini zaten kullanıyorsan, o eklentinin girdisindeki `accessToken` değeridir.
+2. `config.json` içindeki SmartShuffle girdisine şu iki satırı ekle:
+
+   ```json
+   "useMySquadStats": true,
+   "mySquadStatsToken": "YOUR_TOKEN"
+   ```
+
+3. SquadJS'i yeniden başlat. `!smartshuffle status` artık `mss on` gösterir. Oyuncular maç sırasında azar azar sorgulanır, puan ilk dakikalarda dolar.
+
+Token'ı gizli tut: `config.json` dosyanı herkese açık yerde paylaşma. `!smartshuffle mss off`, yeniden başlatmadan puanı kapatır.
+
+---
+
 ## 🧮 Nasıl çalışır
 
 1. **Topla.** Maç boyunca oyuncu başına kill, yere indirme, ölüm, hasar, revive, kurulan yapı, teamkill ve
@@ -142,6 +257,15 @@ Bilet tabanlı maçlarla 100 oyunculuk simülasyonda ezilen maç oranı (150 bil
 karıştırmada %26'dan SquadJS formülüyle %10.4'e, tam skorbordla (karma yol) %9.3'e indi.
 Bu sayılar arkadaş koruması kapalıyken geçerli. 4 kişiye kadar party'ler bir arada tutulunca SquadJS formülü yaklaşık %11 veriyor; 9 kişilik gruplar dahil bütün party'ler tutulursa yaklaşık %13.
 Her oyuncunun oturumdaki önceki turları da sayılınca (varsayılan) SquadJS formülü yaklaşık %9.5 veriyor.
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/sim-chart-dark.svg">
+    <img src="./assets/sim-chart.svg" width="92%" alt="Simülasyonda ezici maç oranı çubuk grafiği: rastgele karıştırma %26,6, sadece tüm zamanlar istatistiği %12,6, sadece bu maç %10,3, bu maç ve oturum turları %9,5">
+  </picture>
+</p>
+
+Oyuncuları puanlamanın dört yolu, her biri 43.200 simüle maçta denendi. Mavi çubuk, Smart Shuffle'ın varsayılan olarak kullandığı yöntem.
 
 ---
 

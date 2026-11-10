@@ -125,6 +125,121 @@ Players are only moved on the end screen, right after the round ends. If the nex
 
 ---
 
+## 📘 Step-by-step guide
+
+From an empty server to a working shuffle. You need a running SquadJS and admin rights on the server. No coding.
+
+### 1. Install
+
+Download `smart-shuffle.js` from the [latest release](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest) and copy it into `SquadJS/squad-server/plugins/`.
+
+Open `SquadJS/config.json`, find the `"plugins": [` list and add this entry. Mind the comma between entries.
+
+```json
+{
+  "plugin": "SmartShuffle",
+  "enabled": true,
+  "autoShuffle": false
+}
+```
+
+Restart SquadJS. Every setting you do not write keeps its default, so this short entry is enough.
+
+### 2. Check that it loaded
+
+Join the server and type this in the **admin chat** (not all chat):
+
+```
+!smartshuffle status
+```
+
+You get a private message like this:
+
+```
+Smart Shuffle: auto off, lock on, friends on, history on, mss off, pending 0, locked now 0.
+```
+
+No answer? Check these in order: the file is in the `plugins` folder, the entry says `"enabled": true`, the name is exactly `SmartShuffle`, you typed in admin chat, and the SquadJS log shows no error at start.
+
+### 3. Try it without moving anyone
+
+In the middle of a match:
+
+```
+!smartshuffle preview
+```
+
+```
+Smart Shuffle preview (this match so far): 41 of 96 would move, score gap 18% -> 1%.
+```
+
+Nobody is moved. You get a summary, and the SquadJS log lists who would go where (`Preview moves`).
+
+### 4. Run the first real shuffle
+
+```
+!smartshuffle now
+```
+
+The server is told that teams will be balanced. When the round ends, players are moved on the end screen, before the next map loads. You get a report:
+
+```
+Smart Shuffle report: 44 moved, 0 not placed, score gap 21% -> 1%, done in 3.2 s.
+```
+
+Changed your mind before the round ends? `!smartshuffle cancel`.
+
+### 5. Make it automatic
+
+`!smartshuffle auto on` shuffles at the end of every round until SquadJS restarts. To keep it after a restart, set `"autoShuffle": true` in `config.json`.
+
+### 6. Change the defaults
+
+There are two ways. A chat command works at once and lasts until SquadJS restarts. A line in `config.json` is permanent and needs a restart. Common choices:
+
+| I want | In `config.json` | In admin chat |
+|---|---|---|
+| A shuffle every round | `"autoShuffle": true` | `auto on` |
+| Pure balance, friends not kept together | `"keepParties": false` | `friends off` |
+| Bigger friend groups kept together | `"maxPartySize": 6` | - |
+| No lock after a shuffle | `"lockMode": 0`, plus `"keepParties": true` to still keep friends | `lock off` |
+| Only the match that just ended | `"historyRounds": 0` | `history off` |
+| Time to read the scoreboard first | `"shuffleDelaySeconds": 15` | - |
+| No messages to players | `"announceMinutes": 0`, `"warnMovedPlayers": false`, `"broadcastResult": false` | - |
+| Shuffle on Invasion too | `"skipLayers": ["seed", "jensen"]` | - |
+| A smaller server | `"minPlayers": 20` | - |
+
+An entry with several changes looks like this. The full list is under [Configuration](#️-configuration).
+
+```json
+{
+  "plugin": "SmartShuffle",
+  "enabled": true,
+  "autoShuffle": true,
+  "maxPartySize": 3,
+  "shuffleDelaySeconds": 15,
+  "minPlayers": 30
+}
+```
+
+### 7. Optional: MySquadStats rating
+
+Off by default and experimental: in the simulation it did not improve the balance, and it has not been run against the live API yet. To try it:
+
+1. Get a token. MySquadStats gives one to every participating server, see [mysquadstats.com/participate](https://mysquadstats.com/participate). If you already run their SquadJS plugin, it is the `accessToken` in that plugin's entry.
+2. Add these two lines to the SmartShuffle entry in `config.json`:
+
+   ```json
+   "useMySquadStats": true,
+   "mySquadStatsToken": "YOUR_TOKEN"
+   ```
+
+3. Restart SquadJS. `!smartshuffle status` now shows `mss on`. Players are looked up a few at a time during the match, so the rating fills in over the first minutes.
+
+Keep the token private: do not post your `config.json` in public. `!smartshuffle mss off` turns the rating off again without a restart.
+
+---
+
 ## 🧮 How it works
 
 1. **Collect.** During the match the plugin counts, per player: kills, wounds dealt, deaths, damage, revives,
@@ -142,6 +257,15 @@ In a 100 player simulation with ticket-based matches, the share of stomps (a gap
 from 26% with a random shuffle to 10.4% with the SquadJS formula and 9.3% with the full scoreboard (hybrid).
 These numbers are without friend keeping. With parties of up to 4 kept together the SquadJS formula gives about 11%; keeping every party together, including 9 player stacks, gives about 13%.
 With each player's earlier rounds of the session counted (the default), the SquadJS formula gives about 9.5%.
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/sim-chart-dark.svg">
+    <img src="./assets/sim-chart.svg" width="92%" alt="Bar chart of stomped matches in simulation: random shuffle 26.6%, all-time stats only 12.6%, this match only 10.3%, this match plus session rounds 9.5%">
+  </picture>
+</p>
+
+Four ways to rate the players, each tested over 43,200 simulated matches. The blue bar is the method Smart Shuffle uses by default.
 
 ---
 

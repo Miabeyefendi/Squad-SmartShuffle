@@ -32,6 +32,43 @@ The three routes are released separately, each with its own tag: `squadjs-vX.Y.Z
 
 ---
 
+## [SquadJS 1.1.0] - 2026-11-11
+
+### Added
+
+- Session history: each player's last rounds of the same session are counted together with the match that
+  just ended (`historyRounds`, default 4, `historyHours`, default 6). Kept in memory only, nothing is written to
+  disk. In the simulation stomped matches drop from 10.3% to 9.5%.
+- `!smartshuffle preview` shows what a shuffle would do without moving anyone, `!smartshuffle cancel` calls off a
+  queued shuffle.
+- Friend keeping is its own switch (`keepParties`, `!smartshuffle friends on/off`) with a size cap
+  (`maxPartySize`, default 4): bigger parties are split like everyone else.
+- Automatic shuffles skip Seed, Jensen's Range and Invasion layers (`skipLayers`) and servers under
+  `minPlayers` (default 40). `!smartshuffle now` always runs.
+- Messages, each with its own switch: a notice while a shuffle is due (`announceMinutes`), a private message to
+  every moved player (`warnMovedPlayers`), the result for the server (`broadcastResult`) and a report for the
+  admins online (`adminReport`).
+- Optional, off by default and experimental: an all-time rating from MySquadStats blended into the score
+  (`useMySquadStats`, `mySquadStatsToken`, `mySquadStatsWeight`).
+- Step-by-step guide and a simulation chart in the README.
+
+### Changed
+
+- Players are only moved on the end screen, right after the round ends, and never once the next map has
+  started. The optional scoreboard wait (`shuffleDelaySeconds`) shortens itself so the moves finish in time.
+- After the moves the plugin reads the teams back and repeats a team change that did not land.
+  `!smartshuffle status` shows how many players were moved and how many could not be placed.
+- With friends kept together, the balance repair now evens out every dimension, not only the score sum. In the
+  party simulation stomped matches drop from 13.8% to 11.1%.
+
+### Fixed
+
+- The lock follows the team numbers when the game swaps them at a map change. Before, it could move players
+  back in the first minute of the next match.
+- One failed team change command no longer stops the rest of the shuffle.
+
+---
+
 ## [Hybrid 0.2.0] - 2026-11-07
 
 ### Added
@@ -94,6 +131,7 @@ The three routes are released separately, each with its own tag: `squadjs-vX.Y.Z
 <!-- Keep this link block at the bottom and add one line per release. -->
 
 [Hybrid 0.2.0]: https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/hybrid-v0.2.0
+[SquadJS 1.1.0]: https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/squadjs-v1.1.0
 [SquadJS 1.0.1]: https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/squadjs-v1.0.1
 [SquadJS 1.0.0]: https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/squadjs-v1.0.0
 [Hybrid 0.1.0]: https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/hybrid-v0.1.0
