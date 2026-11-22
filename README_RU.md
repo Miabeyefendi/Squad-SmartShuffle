@@ -84,7 +84,7 @@
 
 1. Установите вариант SquadJS выше и задайте `"useScoreboardDump": true`.
 2. Установите на сервер [ModLoader](https://steamcommunity.com/sharedfiles/filedetails/?id=3516838562) и [элемент SmartShuffle из Мастерской](https://steamcommunity.com/sharedfiles/filedetails/?id=3835528773) (ID 3835528773).
-3. Добавьте `/SmartShuffle/BP_SmartShuffleDump.BP_SmartShuffleDump_C` в список `rulesets` в `Saved/ModLoader/ModLoader.json`. Сам Blueprint описан в [`src/hybrid/BP_SmartShuffleDump.md`](./src/hybrid/BP_SmartShuffleDump.md).
+3. В `Saved/ModLoader/ModLoader.json` (версия 2) добавьте `"/SmartShuffle/BP_SmartShuffleDump.BP_SmartShuffleDump_C": true` в раздел `rulesets`. Старый вид списком преобразуется автоматически. Загрузка проверена 2026-11-22 на локальном выделенном сервере Windows: ModLoader добавляет `BP_SmartShuffleDump` как ruleset. Сам Blueprint описан в [`src/hybrid/BP_SmartShuffleDump.md`](./src/hybrid/BP_SmartShuffleDump.md).
 
 Если строки выгрузки не приходят, плагин сам возвращается к данным SquadJS.
 

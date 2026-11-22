@@ -84,7 +84,7 @@
 
 1. Install the SquadJS route above and set `"useScoreboardDump": true`.
 2. On the server, install [ModLoader](https://steamcommunity.com/sharedfiles/filedetails/?id=3516838562) and the [SmartShuffle Workshop item](https://steamcommunity.com/sharedfiles/filedetails/?id=3835528773) (ID 3835528773).
-3. Add `/SmartShuffle/BP_SmartShuffleDump.BP_SmartShuffleDump_C` to the `rulesets` list in `Saved/ModLoader/ModLoader.json`. The Blueprint itself is described in [`src/hybrid/BP_SmartShuffleDump.md`](./src/hybrid/BP_SmartShuffleDump.md).
+3. In `Saved/ModLoader/ModLoader.json` (version 2) add `"/SmartShuffle/BP_SmartShuffleDump.BP_SmartShuffleDump_C": true` under `rulesets`. An older list form is converted automatically. Loading was checked on a local Windows dedicated server on 2026-11-22: ModLoader adds `BP_SmartShuffleDump` as a ruleset. The Blueprint itself is described in [`src/hybrid/BP_SmartShuffleDump.md`](./src/hybrid/BP_SmartShuffleDump.md).
 
 When the dump lines do not arrive, the plugin falls back to the SquadJS data on its own.
 

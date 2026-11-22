@@ -32,6 +32,13 @@ The three routes are released separately, each with its own tag: `squadjs-vX.Y.Z
 
 ---
 
+## [Unreleased]
+
+### Changed
+
+- Hybrid route docs now use the version 2 form of `ModLoader.json` (`"rulesets": { "<path>": true }`). The older list form still works, ModLoader converts it.
+- The hybrid ruleset was loaded on a local Windows dedicated server with ModLoader: it mounts and is added as a ruleset. The end of match dump itself still needs a played match to be checked.
+
 ## [SquadJS 1.1.0] - 2026-11-11
 
 ### Added

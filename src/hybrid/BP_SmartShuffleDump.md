@@ -64,9 +64,15 @@ class `SQGameRuleSet`. The graph as built (96 nodes):
 5. `Log Error` with the finished "SmartShuffleDump P ..." line, once per player.
 6. After the loop (`Completed`), `Log Error` with "SmartShuffleDump END".
 
-Register it with ModLoader: add `/SmartShuffle/BP_SmartShuffleDump.BP_SmartShuffleDump_C` to the "rulesets"
-list in `Saved/ModLoader/ModLoader.json` (SquadJSLogger uses the same form:
-`/SquadJSLogger/BP_SquadJSLogger.BP_SquadJSLogger_C`).
+Register it with ModLoader: in `SquadGame/Saved/ModLoader/ModLoader.json` (version 2) add
+`"/SmartShuffle/BP_SmartShuffleDump.BP_SmartShuffleDump_C": true` under `rulesets`. An older list form
+(`"rulesets": [ "..." ]`) is converted automatically and the file is rewritten. Actor mods such as SquadJSLogger
+(`/SquadJSLogger/BP_SquadJSLogger.BP_SquadJSLogger_C`) go under `mods`, not `rulesets`: ModLoader reports
+`Failed to cast to ruleset` otherwise. Put the `ModLoader_v1` layer first in the rotation.
+
+Checked on a local Windows dedicated server (2026-11-22, Squad 10.6): the mod mounts, ModLoader logs
+`Loaded Actor Class:BP_SmartShuffleDump_C` and `Added modded Ruleset:BP_SmartShuffleDump_C`. The dump itself
+(the end of match lines) is still unchecked, it needs a played match.
 
 ## Check on the first test server (not verified yet)
 
