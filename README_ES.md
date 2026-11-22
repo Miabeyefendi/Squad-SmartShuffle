@@ -84,7 +84,7 @@
 
 1. Instala la vía SquadJS de arriba y pon `"useScoreboardDump": true`.
 2. En el servidor, instala [ModLoader](https://steamcommunity.com/sharedfiles/filedetails/?id=3516838562) y el [elemento SmartShuffle del Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3835528773) (ID 3835528773).
-3. Añade `/SmartShuffle/BP_SmartShuffleDump.BP_SmartShuffleDump_C` a la lista `rulesets` de `Saved/ModLoader/ModLoader.json`. El Blueprint se describe en [`src/hybrid/BP_SmartShuffleDump.md`](./src/hybrid/BP_SmartShuffleDump.md).
+3. En `Saved/ModLoader/ModLoader.json` (versión 2) añade `"/SmartShuffle/BP_SmartShuffleDump.BP_SmartShuffleDump_C": true` bajo `rulesets`. La forma antigua en lista se convierte sola. La carga se comprobó el 2026-11-22 en un servidor dedicado local de Windows: ModLoader añade `BP_SmartShuffleDump` como ruleset. El Blueprint se describe en [`src/hybrid/BP_SmartShuffleDump.md`](./src/hybrid/BP_SmartShuffleDump.md).
 
 Si las líneas del volcado no llegan, el plugin vuelve por sí solo a los datos de SquadJS.
 

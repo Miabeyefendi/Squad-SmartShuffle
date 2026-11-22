@@ -84,7 +84,7 @@
 
 1. Yukarıdaki SquadJS yolunu kur ve `"useScoreboardDump": true` yap.
 2. Sunucuya [ModLoader](https://steamcommunity.com/sharedfiles/filedetails/?id=3516838562) ve [SmartShuffle Workshop öğesini](https://steamcommunity.com/sharedfiles/filedetails/?id=3835528773) (ID 3835528773) kur.
-3. `/SmartShuffle/BP_SmartShuffleDump.BP_SmartShuffleDump_C` yolunu `Saved/ModLoader/ModLoader.json` içindeki `rulesets` listesine ekle. Blueprint'in kendisi [`src/hybrid/BP_SmartShuffleDump.md`](./src/hybrid/BP_SmartShuffleDump.md) dosyasında anlatılıyor.
+3. `Saved/ModLoader/ModLoader.json` içinde (sürüm 2) `rulesets` altına `"/SmartShuffle/BP_SmartShuffleDump.BP_SmartShuffleDump_C": true` satırını ekle. Eski liste biçimi otomatik dönüştürülür. Yükleme 2026-11-22'de yerel bir Windows dedicated sunucuda denendi: ModLoader `BP_SmartShuffleDump` dosyasını ruleset olarak ekliyor. Blueprint'in kendisi [`src/hybrid/BP_SmartShuffleDump.md`](./src/hybrid/BP_SmartShuffleDump.md) dosyasında anlatılıyor.
 
 Döküm satırları gelmezse eklenti kendiliğinden SquadJS verisine döner.
 

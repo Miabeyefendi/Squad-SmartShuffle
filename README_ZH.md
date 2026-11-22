@@ -84,7 +84,7 @@
 
 1. 先按上面安装 SquadJS 方式，并设置 `"useScoreboardDump": true`。
 2. 在服务器上安装 [ModLoader](https://steamcommunity.com/sharedfiles/filedetails/?id=3516838562) 和 [SmartShuffle 创意工坊物品](https://steamcommunity.com/sharedfiles/filedetails/?id=3835528773)（ID 3835528773）。
-3. 将 `/SmartShuffle/BP_SmartShuffleDump.BP_SmartShuffleDump_C` 加入 `Saved/ModLoader/ModLoader.json` 的 `rulesets` 列表。蓝图本身的说明见 [`src/hybrid/BP_SmartShuffleDump.md`](./src/hybrid/BP_SmartShuffleDump.md)。
+3. 在 `Saved/ModLoader/ModLoader.json`（版本 2）的 `rulesets` 下加入 `"/SmartShuffle/BP_SmartShuffleDump.BP_SmartShuffleDump_C": true`。旧的列表写法会被自动转换。加载已于 2026-11-22 在本地 Windows 专用服务器上验证：ModLoader 会把 `BP_SmartShuffleDump` 作为 ruleset 加入。蓝图本身的说明见 [`src/hybrid/BP_SmartShuffleDump.md`](./src/hybrid/BP_SmartShuffleDump.md)。
 
 如果导出行没有出现，插件会自动退回使用 SquadJS 数据。
 
