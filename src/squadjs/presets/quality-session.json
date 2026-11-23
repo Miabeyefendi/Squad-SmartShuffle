@@ -1,0 +1,9 @@
+{
+  "plugin": "SmartShuffle",
+  "enabled": true,
+  "autoShuffle": false,
+  "lockMode": 1,
+  "keepParties": false,
+  "historyRounds": 8,
+  "historyHours": 12
+}

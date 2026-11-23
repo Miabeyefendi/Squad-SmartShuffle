@@ -28,7 +28,7 @@ All notable changes to **Squad-SmartShuffle** are recorded here. The format foll
 [English](./CHANGELOG.md) · [README](./README.md)
 
 The three routes are released separately, each with its own tag: `squadjs-vX.Y.Z`, `hybrid-vX.Y.Z` and
-`modloader-vX.Y.Z`.
+`modloader-vX.Y.Z`. The preset zips of the SquadJS route use `presets-vX.Y.Z`.
 
 ---
 
@@ -38,6 +38,17 @@ The three routes are released separately, each with its own tag: `squadjs-vX.Y.Z
 
 - Hybrid route docs now use the version 2 form of `ModLoader.json` (`"rulesets": { "<path>": true }`). The older list form still works, ModLoader converts it.
 - The hybrid ruleset was loaded on a local Windows dedicated server with ModLoader: it mounts and is added as a ruleset. The end of match dump itself still needs a played match to be checked.
+
+## [Presets 1.0.0] - 2026-11-24
+
+### Added
+
+- Five ready-made preset zips for the SquadJS route, each with the unchanged `smart-shuffle.js`, a
+  `config.json` entry and a short README: `friends-small` (duos and trios stay together), `friends-squad`
+  (parties up to 6 stay together), `quality-max`, `quality-session` and `quality-fresh` (parties ignored,
+  different session history). In a simulation of 21,600 matches per preset in three worlds, all five cut
+  stomped matches from about 29% to 10 to 13%; the three quality presets beat the current default by 0.4 to
+  1 point. Table and details in the README.
 
 ## [SquadJS 1.1.0] - 2026-11-11
 
@@ -137,6 +148,7 @@ The three routes are released separately, each with its own tag: `squadjs-vX.Y.Z
 
 <!-- Keep this link block at the bottom and add one line per release. -->
 
+[Presets 1.0.0]: https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v1.0.0
 [Hybrid 0.2.0]: https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/hybrid-v0.2.0
 [SquadJS 1.1.0]: https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/squadjs-v1.1.0
 [SquadJS 1.0.1]: https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/squadjs-v1.0.1

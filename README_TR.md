@@ -101,6 +101,44 @@ adla test edilmiş bir karşılığı var.
 
 ---
 
+## 🎛️ Hazır presetler
+
+SquadJS yolu için beş hazır zip: ikisi oyuncuların arkadaşıyla kalmak istediği sunucular için, üçü sadece dengeli takım hedefliyor. Her zip'te aynı, değiştirilmemiş `smart-shuffle.js`, `config.json` için eklenti girdisi ve kısa bir `README.txt` var. Sadece ayarlar farklı, preset değiştirmek için `config.json` yeterli.
+
+**İndir:** [presets-v1.0.0 sürümü](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v1.0.0)
+
+| Preset | Tür | `lockMode` | `maxPartySize` | `historyRounds` | Ezilen maç (ana / sinerjisiz / dalgalı) | Birlikte kalan parti |
+|---|---|---|---|---|---|---|
+| `friends-small` | Arkadaş: ikili ve üçlü | 2 | 3 | 2 | 10.6% / 10.3% / 12.0% | 60% |
+| `friends-squad` | Arkadaş: 6 kişiye kadar squad | 2 | 6 | 4 | 11.0% / 10.8% / 12.6% | 88% |
+| `quality-max` | Kalite: en dengeli | 1 | - | 4 | **9.9%** / 10.1% / **11.2%** | - |
+| `quality-session` | Kalite: uzun oturum | 1 | - | 8 (12 h) | 10.2% / **9.9%** / 11.3% | - |
+| `quality-fresh` | Kalite: bu akşamın formu | 1 | - | 2 (3 h) | 10.2% / 9.9% / 11.8% | - |
+| | Rastgele karıştırma (karşılaştırma) | | | | 29.0% / 27.8% / 31.5% | 24% |
+| | Şu anki varsayılan (`lockMode` 2, sınır 4, geçmiş 4) | | | | 10.9% / 10.6% / 12.2% | 84% |
+| | Her parti birlikte, boyut sınırı yok (karşılaştırma) | | | | 14.3% / 12.8% / 17.2% | 99% |
+
+**Hangisini seçmeli.** Oyuncular sürekli bir arkadaşıyla kalmak istiyorsa: `friends-small`. Klanlar ve arkadaş grupları bütün bir squad olarak oynuyorsa: `friends-squad`. Arkadaşlık önemli değil, en dengeli takımlar isteniyorsa: `quality-max`. Aynı düzenli oyuncular saatlerce oynuyorsa: `quality-session`. Oyuncuların sık girip çıktığı herkese açık sunucu: `quality-fresh`.
+
+### Preset simülasyonu
+
+Her preset üç simüle dünyada, her birinde 7.200 maç (preset başına 21.600) oynatıldı: 100 oyuncu, maç başına 2 ila 4 kişilik 6 ila 10 küçük parti ve 6 ila 9 kişilik 1 ya da 2 büyük grup, önceki turların bilet modeli ve her turda oyuncuların %20'sinin yeni olduğu aynı oturum geçmişi. Bilet farkı 150'yi geçen maç ezilmiş sayılır.
+
+- **ana:** bu akşamın formu değişiyor (%15) ve parti üyeleri birlikte daha iyi oynuyor (parti sinerjisi %15)
+- **sinerjisiz:** partiler birlikte daha güçlü değil
+- **dalgalı:** bu akşamın formu iki kat değişiyor (%30)
+
+Sonuçlar:
+
+- Beş preset de ezilen maçı yaklaşık %29'dan (rastgele) %10 ila 13'e indiriyor.
+- Üç kalite preseti her dünyada şu anki varsayılandan 0,4 ila 1 puan daha iyi. Partileri yok sayıp 4 turluk geçmişi saymak (`quality-max`) ortalamada en az ezilmeyi veriyor.
+- Arkadaşları birlikte tutmak dengeden götürüyor, grup büyüdükçe daha çok: ikili ve üçlüler neredeyse hiçbir şey kaybettirmiyor, 6 kişiye kadar partiler şu anki varsayılan kadar, 7 ila 9 kişilik her grubu tutmak ezilmeyi %14'e (dalgalı dünyada %17'ye) çıkarıyor. Bu yüzden hiçbir preset her partiyi tutmuyor.
+- İki yeni denge yöntemi denendi ve eklenmedi: 8 farklı başlangıçtan arama (kâğıt üstünde daha dar puan farkı, ama ezilme azalmıyor) ve mevcut takımlardan başlayıp "en az oyuncu taşıyan" bölme (oyuncuların yaklaşık %46'sı yerine %19'unu taşıyor, ama ezilme biraz artıyor). Eklenti kodu değişmedi.
+
+Bunlar model sonuçları, canlı veri değil.
+
+---
+
 ## 🚀 Hızlı başlangıç
 
 Oyun içi **admin sohbetine** yaz:

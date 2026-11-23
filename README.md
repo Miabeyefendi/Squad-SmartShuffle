@@ -101,6 +101,44 @@ the same name in `smart-shuffle.js`.
 
 ---
 
+## 🎛️ Ready-made presets
+
+Five ready zips for the SquadJS route, two for servers where players want to stay with friends and three that only aim for even teams. Every zip holds the same unchanged `smart-shuffle.js`, the plugin entry for `config.json` and a short `README.txt`. Only the settings differ, so you can switch presets by changing `config.json` alone.
+
+**Download:** [presets-v1.0.0 release](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v1.0.0)
+
+| Preset | Kind | `lockMode` | `maxPartySize` | `historyRounds` | Stomped matches (main / no synergy / volatile) | Parties kept |
+|---|---|---|---|---|---|---|
+| `friends-small` | Friends: duos and trios | 2 | 3 | 2 | 10.6% / 10.3% / 12.0% | 60% |
+| `friends-squad` | Friends: whole squads up to 6 | 2 | 6 | 4 | 11.0% / 10.8% / 12.6% | 88% |
+| `quality-max` | Quality: maximum balance | 1 | - | 4 | **9.9%** / 10.1% / **11.2%** | - |
+| `quality-session` | Quality: long session | 1 | - | 8 (12 h) | 10.2% / **9.9%** / 11.3% | - |
+| `quality-fresh` | Quality: tonight's form | 1 | - | 2 (3 h) | 10.2% / 9.9% / 11.8% | - |
+| | Random shuffle (for comparison) | | | | 29.0% / 27.8% / 31.5% | 24% |
+| | Current default (`lockMode` 2, cap 4, history 4) | | | | 10.9% / 10.6% / 12.2% | 84% |
+| | Every party kept, any size (for comparison) | | | | 14.3% / 12.8% / 17.2% | 99% |
+
+**How to pick.** Players keep asking to stay with a friend: `friends-small`. Clans and friend groups play as a whole squad: `friends-squad`. Friends do not matter and you want the most even teams: `quality-max`. The same regulars play for many hours: `quality-session`. A public server where many players come and go: `quality-fresh`.
+
+### Preset simulation
+
+Each preset was played in three simulated worlds, 7,200 matches each (21,600 per preset), with 100 players, 6 to 10 small parties of 2 to 4 and 1 or 2 stacks of 6 to 9 per match, the ticket model of the earlier rounds and the same session history with 20% of players new each round. A match counts as stomped when the ticket gap is over 150.
+
+- **main:** tonight's form varies (15%) and party members play better together (party synergy 15%)
+- **no synergy:** parties are not stronger together
+- **volatile:** tonight's form varies twice as much (30%)
+
+What it showed:
+
+- All five presets cut stomped matches from about 29% (random) to 10 to 13%.
+- The three quality presets beat the current default by 0.4 to 1 point in every world. Ignoring parties and counting 4 rounds of history (`quality-max`) has the fewest stomps on average.
+- Keeping friends costs balance, and bigger kept groups cost more: duos and trios cost almost nothing, parties up to 6 cost about the same as the current default, keeping every stack of 7 to 9 raises stomps to 14% (17% in the volatile world). That is why no preset keeps every party.
+- Two new balance methods were tested and left out: a search from 8 starting splits (tighter score gap on paper, no fewer stomps) and a "fewest moves" split that starts from the current teams (moves 19% of players instead of about 46%, but slightly more stomps). The plugin code is unchanged.
+
+These are model results, not live data.
+
+---
+
 ## 🚀 Quick Start
 
 Type these in the in-game **admin chat**:
