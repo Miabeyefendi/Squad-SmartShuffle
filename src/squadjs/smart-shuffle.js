@@ -344,9 +344,65 @@ export function keepGroups(team, P, groups, sl, cats = null, lam = 1) {
   return multiSwaps(t, P, cats, lam, [...Array(n).keys()].filter(free));
 }
 
+// fewer moves: first swap the two team labels if more than half of the players would change side (same
+// split), then move players back to their current side in pairs (one each way, the pair that keeps the
+// balance target lowest first) while the target stays within (1 + slack) of the balanced split.
+// Squad leaders and kept friend groups are not moved back. current: 0/1 side each player is on now.
+export function moveBack(team, P, cats, lam, sl, groups, current, slack) {
+  const n = P.length;
+  let t = team.slice();
+  let moved = 0;
+  for (let i = 0; i < n; i++) if (t[i] !== current[i]) moved += 1;
+  if (moved > n / 2) t = t.map((x) => 1 - x);
+  if (!(slack > 0)) return t;
+  const kept = new Array(n).fill(false);
+  groups.forEach((g) => g.forEach((i) => (kept[i] = true)));
+  const D = cats.length;
+  const tp = sum(P);
+  const tc = cats.map((row) => Math.max(sum(row), 1e-9));
+  const sideSum = (row, s) => {
+    let v = 0;
+    for (let i = 0; i < n; i++) if (t[i] === s) v += row[i];
+    return v;
+  };
+  let dP = sideSum(P, 0) - sideSum(P, 1);
+  let dC = cats.map((row) => sideSum(row, 0) - sideSum(row, 1));
+  const costOf = (np, nc) => {
+    let m = 0;
+    for (let d = 0; d < D; d++) m += Math.abs(nc[d]) / tc[d];
+    return Math.abs(np) / tp + lam * (m / D);
+  };
+  const limit = (1 + slack) * costOf(dP, dC);
+  const nC = new Array(D);
+  for (let it = 0; it < 200; it++) {
+    const A = [];
+    const B = [];
+    for (let i = 0; i < n; i++) {
+      if (sl[i] || kept[i] || t[i] === current[i]) continue;
+      (t[i] === 0 ? A : B).push(i);
+    }
+    let best = null;
+    for (const a of A) {
+      for (const b of B) {
+        const np = dP - 2 * (P[a] - P[b]);
+        for (let d = 0; d < D; d++) nC[d] = dC[d] - 2 * (cats[d][a] - cats[d][b]);
+        const cost = costOf(np, nC);
+        if (cost <= limit && (best === null || cost < best.cost)) best = { cost, a, b, np, nc: nC.slice() };
+      }
+    }
+    if (best === null) break;
+    t[best.a] = 1;
+    t[best.b] = 0;
+    dP = best.np;
+    dC = best.nc;
+  }
+  return t;
+}
+
 // whole pipeline: S as for buildScores, slGroups per player, groups = friend groups to keep together or []
 // adjust: optional function P -> P, applied to the scores before the split (outside rating, see blendScores)
-export function planTeams(S, formula, slGroups, groups = [], adjust = null) {
+// fewerMoves: 0 = off; above 0 the split moves fewer players, allowing the balance target to grow by that share
+export function planTeams(S, formula, slGroups, groups = [], adjust = null, fewerMoves = 0) {
   const f = FORMULAS[formula];
   const scored = buildScores(S, f);
   const sub = scored.sub;
@@ -354,6 +410,7 @@ export function planTeams(S, formula, slGroups, groups = [], adjust = null) {
   const dims = f.rateDims ? [...sub, ...rateDims(S), ...kitRows(S.role)] : [...sub, ...kitRows(S.role)];
   let team = balanceMulti(S.sl, P, dims, f.lam, slGroups);
   if (groups.length) team = keepGroups(team, P, groups, S.sl, dims, f.lam);
+  if (fewerMoves > 0) team = moveBack(team, P, dims, f.lam, S.sl, groups, S.team, fewerMoves);
   return { P, team };
 }
 
@@ -603,6 +660,11 @@ export default class SmartShuffle extends BasePlugin {
         required: false,
         description: 'Lock mode 2: a friend group (party) up to this size stays together; a bigger party is split like everyone else. 0 = no limit.',
         default: 4
+      },
+      fewerMoves: {
+        required: false,
+        description: 'Move fewer players: 0 = off. Above 0 the shuffle keeps more players on their current side and allows the balance gap to grow by that share (0.1 = 10 percent: about a third fewer players moved, same balance in simulation). 0 to 1.',
+        default: 0
       },
       skipLayers: {
         required: false,
@@ -1067,7 +1129,8 @@ export default class SmartShuffle extends BasePlugin {
       groups = [...byParty.values()].filter((g) => g.length >= 2 && g.length <= cap);
     }
 
-    const { P, team } = planTeams(S, formula, slGroups, groups, this.outsideAdjust(players));
+    const fewer = Math.min(Math.max(+this.options.fewerMoves || 0, 0), 1);
+    const { P, team } = planTeams(S, formula, slGroups, groups, this.outsideAdjust(players), fewer);
     return { players, team, P, formula };
   }
 

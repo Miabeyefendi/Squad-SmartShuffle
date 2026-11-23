@@ -5,5 +5,6 @@
   "lockMode": 1,
   "keepParties": false,
   "historyRounds": 4,
-  "historyHours": 6
+  "historyHours": 6,
+  "fewerMoves": 0.1
 }

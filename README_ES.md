@@ -103,20 +103,20 @@ mismo nombre en `smart-shuffle.js`.
 
 ## 🎛️ Presets listos
 
-Cinco zips listos para la ruta SquadJS: dos para servidores donde los jugadores quieren quedarse con sus amigos y tres que solo buscan equipos parejos. Cada zip tiene el mismo `smart-shuffle.js` sin cambios, la entrada del plugin para `config.json` y un `README.txt` corto. Solo cambian los ajustes, así que basta con cambiar `config.json` para pasar de un preset a otro.
+Cinco zips listos para la ruta SquadJS: dos para servidores donde los jugadores quieren quedarse con sus amigos y tres que solo buscan equipos parejos. Cada zip tiene el mismo `smart-shuffle.js` (SquadJS 1.2.0), la entrada del plugin para `config.json` y un `README.txt` corto. Solo cambian los ajustes, así que basta con cambiar `config.json` para pasar de un preset a otro. Desde 1.1.0 cada preset también pone `fewerMoves` en `0.1`, así que una mezcla mueve cerca de un tercio del servidor en lugar de la mitad.
 
-**Descarga:** [versión presets-v1.0.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v1.0.0)
+**Descarga:** [versión presets-v1.1.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v1.1.0)
 
-| Preset | Tipo | `lockMode` | `maxPartySize` | `historyRounds` | Partidas aplastantes (principal / sin sinergia / volátil) | Grupos que se mantienen |
-|---|---|---|---|---|---|---|
-| `friends-small` | Amigos: dúos y tríos | 2 | 3 | 2 | 10.6% / 10.3% / 12.0% | 60% |
-| `friends-squad` | Amigos: escuadras de hasta 6 | 2 | 6 | 4 | 11.0% / 10.8% / 12.6% | 88% |
-| `quality-max` | Calidad: máximo equilibrio | 1 | - | 4 | **9.9%** / 10.1% / **11.2%** | - |
-| `quality-session` | Calidad: sesión larga | 1 | - | 8 (12 h) | 10.2% / **9.9%** / 11.3% | - |
-| `quality-fresh` | Calidad: la forma de esta noche | 1 | - | 2 (3 h) | 10.2% / 9.9% / 11.8% | - |
-| | Mezcla aleatoria (comparación) | | | | 29.0% / 27.8% / 31.5% | 24% |
-| | Predeterminado actual (`lockMode` 2, límite 4, historial 4) | | | | 10.9% / 10.6% / 12.2% | 84% |
-| | Todos los grupos juntos, sin límite (comparación) | | | | 14.3% / 12.8% / 17.2% | 99% |
+| Preset | Tipo | `lockMode` | `maxPartySize` | `historyRounds` | Partidas aplastantes (principal / sin sinergia / volátil) | Jugadores movidos | Grupos que se mantienen |
+|---|---|---|---|---|---|---|---|
+| `friends-small` | Amigos: dúos y tríos | 2 | 3 | 2 | 10.6% / 10.2% / 12.4% | 36% | 60% |
+| `friends-squad` | Amigos: escuadras de hasta 6 | 2 | 6 | 4 | 11.0% / 10.8% / 12.8% | 36% | 88% |
+| `quality-max` | Calidad: máximo equilibrio | 1 | - | 4 | 10.0% / 10.5% / 11.4% | 33% | - |
+| `quality-session` | Calidad: sesión larga | 1 | - | 8 (12 h) | 10.4% / 10.1% / 11.7% | 33% | - |
+| `quality-fresh` | Calidad: la forma de esta noche | 1 | - | 2 (3 h) | 10.4% / 10.1% / 11.7% | 33% | - |
+| | Mezcla aleatoria (comparación) | | | | 28.3% / 27.4% / 31.8% | 50% | 24% |
+| | Predeterminado actual (`lockMode` 2, límite 4, historial 4) | | | | 10.7% / 10.7% / 12.1% | 50% | 84% |
+| | Todos los grupos juntos, sin límite (comparación) | | | | 14.3% / 12.8% / 17.2% | 50% | 99% |
 
 **Cuál elegir.** Los jugadores piden quedarse con un amigo: `friends-small`. Clanes y grupos de amigos juegan como una escuadra entera: `friends-squad`. Los amigos no importan y quieres los equipos más parejos: `quality-max`. Los mismos habituales juegan durante horas: `quality-session`. Servidor público donde entran y salen muchos jugadores: `quality-fresh`.
 
@@ -130,10 +130,11 @@ Cada preset se jugó en tres mundos simulados, 7.200 partidas en cada uno (21.60
 
 Lo que mostró:
 
-- Los cinco presets bajan las partidas aplastantes de cerca del 29% (aleatorio) al 10 a 13%.
-- Los tres presets de calidad superan al predeterminado actual por 0,4 a 1 punto en todos los mundos. Ignorar los grupos y contar 4 rondas de historial (`quality-max`) da la menor cantidad media de partidas aplastantes.
+- Los cinco presets bajan las partidas aplastantes de cerca del 28% (aleatorio) al 10 a 13% y mueven del 33 al 36% de los jugadores por mezcla en lugar del 50%.
+- Los tres presets de calidad superan al predeterminado actual por 0,3 a 0,8 puntos en todos los mundos.
 - Mantener amigos juntos cuesta equilibrio, y más cuanto mayor es el grupo: dúos y tríos casi no cuestan nada, grupos de hasta 6 cuestan lo mismo que el predeterminado actual, mantener todos los grupos de 7 a 9 sube las partidas aplastantes al 14% (17% en el mundo volátil). Por eso ningún preset mantiene todos los grupos.
-- Se probaron y descartaron dos métodos nuevos: una búsqueda desde 8 repartos iniciales (menor diferencia de puntuación en teoría, pero no menos partidas aplastantes) y un reparto de "mínimos movimientos" que parte de los equipos actuales (mueve al 19% de los jugadores en lugar de cerca del 46%, pero con algo más de partidas aplastantes). El código del plugin no cambia.
+- **Menos movimientos.** El plugin elige los dos lados sin mirar dónde está cada uno ahora, así que movía cerca de la mitad del servidor en cada mezcla. `fewerMoves` primero intercambia las etiquetas de los lados cuando eso ahorra movimientos, y luego devuelve jugadores a su lado actual por parejas mientras el equilibrio se mantenga dentro de esa proporción del mejor reparto. El punto medio es `0.1`: se mueve el 33% de los jugadores y la proporción de partidas aplastantes es la misma dentro del ruido. `0.2` mueve el 27% pero añade cerca de 0,5 puntos de partidas aplastantes. Un reparto que parte de los equipos actuales mueve solo el 19%, pero añade de 0,5 a 1 punto, así que se descartó.
+- También se probó y descartó una búsqueda desde 8 repartos iniciales: menor diferencia de puntuación en teoría, pero no menos partidas aplastantes.
 
 Son resultados de un modelo, no datos en vivo.
 
@@ -326,6 +327,7 @@ Todas las opciones van en la entrada del plugin en el `config.json` de SquadJS.
 | `maxPartySize` | `4` | Modo de bloqueo 2: una party de hasta este tamaño se queda junta, una más grande se divide. 0 significa sin límite |
 | `skipLayers` | `["seed", "jensen", "invasion"]` | La mezcla automática se salta una ronda cuyo nombre de layer contenga alguno de estos. `!smartshuffle now` siempre se ejecuta |
 | `minPlayers` | `40` | La mezcla automática se salta una ronda con menos jugadores. `!smartshuffle now` siempre se ejecuta |
+| `fewerMoves` | `0` | Mover menos jugadores. 0 está apagado. Por encima de 0 más jugadores se quedan en su lado actual y la diferencia de equilibrio puede crecer como mucho esa proporción. `0.1` mueve cerca de un tercio menos de jugadores (del 50% al 33% en la simulación) con la misma proporción de partidas aplastantes |
 | `shuffleDelaySeconds` | `0` | Segundos de espera tras el final de la ronda antes de mover jugadores (tiempo para ver el marcador), de 0 a 25 |
 | `shuffleDeadlineSeconds` | `30` | No se mueve a nadie pasados estos segundos desde el final de la ronda, y nunca después de que empiece el siguiente mapa |
 | `announceMinutes` | `10` | Mientras haya una mezcla pendiente, avisar al servidor cada tantos minutos. 0 desactiva los avisos |

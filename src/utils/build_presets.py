@@ -16,7 +16,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 PLUGIN = ROOT / "src" / "squadjs" / "smart-shuffle.js"
 PRESETS = ROOT / "src" / "squadjs" / "presets"
-STAMP = (2026, 11, 24, 0, 0, 0)
+STAMP = (2026, 11, 24, 12, 0, 0)
 
 # id: (title, who it is for, what it does, stomps in the three simulated worlds, parties kept)
 INFO = {
@@ -36,7 +36,7 @@ INFO = {
         "Quality: maximum balance",
         "Servers that want the most even teams and do not keep friends together.",
         "Parties are ignored, everyone is placed by strength. Hard lock for one round. Counts each\n"
-        "player's last 4 rounds of the session. Fewest stomped matches in the main simulation.",
+        "player's last 4 rounds of the session.",
     ),
     "quality-session": (
         "Quality: long session",
@@ -72,6 +72,9 @@ def readme(pid, version, entry, sim):
         "2. Open SquadJS config.json and put the entry from config-entry.json into the \"plugins\" list.",
         "   If you already have a SmartShuffle entry, replace it. Keep only one.",
         "3. Restart SquadJS. Type !smartshuffle status in admin chat to check it is running.",
+        "",
+        "Every preset moves fewer players (fewerMoves = 0.1): about a third of the server instead of",
+        "half, with the same balance in the simulation. Set fewerMoves to 0 for the old behaviour.",
         "",
         "The plugin file is the same in every preset. Only the settings differ, so you can switch",
         "presets by changing config.json alone. Every setting can still be changed by hand, see",

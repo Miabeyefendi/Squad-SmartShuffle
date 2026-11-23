@@ -103,20 +103,20 @@ adla test edilmiş bir karşılığı var.
 
 ## 🎛️ Hazır presetler
 
-SquadJS yolu için beş hazır zip: ikisi oyuncuların arkadaşıyla kalmak istediği sunucular için, üçü sadece dengeli takım hedefliyor. Her zip'te aynı, değiştirilmemiş `smart-shuffle.js`, `config.json` için eklenti girdisi ve kısa bir `README.txt` var. Sadece ayarlar farklı, preset değiştirmek için `config.json` yeterli.
+SquadJS yolu için beş hazır zip: ikisi oyuncuların arkadaşıyla kalmak istediği sunucular için, üçü sadece dengeli takım hedefliyor. Her zip'te aynı `smart-shuffle.js` (SquadJS 1.2.0), `config.json` için eklenti girdisi ve kısa bir `README.txt` var. Sadece ayarlar farklı, preset değiştirmek için `config.json` yeterli. 1.1.0'dan beri her preset `fewerMoves` ayarını da `0.1` yapıyor, böylece bir karıştırma sunucunun yarısı yerine yaklaşık üçte birini taşıyor.
 
-**İndir:** [presets-v1.0.0 sürümü](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v1.0.0)
+**İndir:** [presets-v1.1.0 sürümü](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v1.1.0)
 
-| Preset | Tür | `lockMode` | `maxPartySize` | `historyRounds` | Ezilen maç (ana / sinerjisiz / dalgalı) | Birlikte kalan parti |
-|---|---|---|---|---|---|---|
-| `friends-small` | Arkadaş: ikili ve üçlü | 2 | 3 | 2 | 10.6% / 10.3% / 12.0% | 60% |
-| `friends-squad` | Arkadaş: 6 kişiye kadar squad | 2 | 6 | 4 | 11.0% / 10.8% / 12.6% | 88% |
-| `quality-max` | Kalite: en dengeli | 1 | - | 4 | **9.9%** / 10.1% / **11.2%** | - |
-| `quality-session` | Kalite: uzun oturum | 1 | - | 8 (12 h) | 10.2% / **9.9%** / 11.3% | - |
-| `quality-fresh` | Kalite: bu akşamın formu | 1 | - | 2 (3 h) | 10.2% / 9.9% / 11.8% | - |
-| | Rastgele karıştırma (karşılaştırma) | | | | 29.0% / 27.8% / 31.5% | 24% |
-| | Şu anki varsayılan (`lockMode` 2, sınır 4, geçmiş 4) | | | | 10.9% / 10.6% / 12.2% | 84% |
-| | Her parti birlikte, boyut sınırı yok (karşılaştırma) | | | | 14.3% / 12.8% / 17.2% | 99% |
+| Preset | Tür | `lockMode` | `maxPartySize` | `historyRounds` | Ezilen maç (ana / sinerjisiz / dalgalı) | Taşınan oyuncu | Birlikte kalan parti |
+|---|---|---|---|---|---|---|---|
+| `friends-small` | Arkadaş: ikili ve üçlü | 2 | 3 | 2 | 10.6% / 10.2% / 12.4% | 36% | 60% |
+| `friends-squad` | Arkadaş: 6 kişiye kadar squad | 2 | 6 | 4 | 11.0% / 10.8% / 12.8% | 36% | 88% |
+| `quality-max` | Kalite: en dengeli | 1 | - | 4 | 10.0% / 10.5% / 11.4% | 33% | - |
+| `quality-session` | Kalite: uzun oturum | 1 | - | 8 (12 h) | 10.4% / 10.1% / 11.7% | 33% | - |
+| `quality-fresh` | Kalite: bu akşamın formu | 1 | - | 2 (3 h) | 10.4% / 10.1% / 11.7% | 33% | - |
+| | Rastgele karıştırma (karşılaştırma) | | | | 28.3% / 27.4% / 31.8% | 50% | 24% |
+| | Şu anki varsayılan (`lockMode` 2, sınır 4, geçmiş 4) | | | | 10.7% / 10.7% / 12.1% | 50% | 84% |
+| | Her parti birlikte, boyut sınırı yok (karşılaştırma) | | | | 14.3% / 12.8% / 17.2% | 50% | 99% |
 
 **Hangisini seçmeli.** Oyuncular sürekli bir arkadaşıyla kalmak istiyorsa: `friends-small`. Klanlar ve arkadaş grupları bütün bir squad olarak oynuyorsa: `friends-squad`. Arkadaşlık önemli değil, en dengeli takımlar isteniyorsa: `quality-max`. Aynı düzenli oyuncular saatlerce oynuyorsa: `quality-session`. Oyuncuların sık girip çıktığı herkese açık sunucu: `quality-fresh`.
 
@@ -130,10 +130,11 @@ Her preset üç simüle dünyada, her birinde 7.200 maç (preset başına 21.600
 
 Sonuçlar:
 
-- Beş preset de ezilen maçı yaklaşık %29'dan (rastgele) %10 ila 13'e indiriyor.
-- Üç kalite preseti her dünyada şu anki varsayılandan 0,4 ila 1 puan daha iyi. Partileri yok sayıp 4 turluk geçmişi saymak (`quality-max`) ortalamada en az ezilmeyi veriyor.
+- Beş preset de ezilen maçı yaklaşık %28'den (rastgele) %10 ila 13'e indiriyor ve her karıştırmada oyuncuların %50'si yerine %33 ila 36'sını taşıyor.
+- Üç kalite preseti her dünyada şu anki varsayılandan 0,3 ila 0,8 puan daha iyi.
 - Arkadaşları birlikte tutmak dengeden götürüyor, grup büyüdükçe daha çok: ikili ve üçlüler neredeyse hiçbir şey kaybettirmiyor, 6 kişiye kadar partiler şu anki varsayılan kadar, 7 ila 9 kişilik her grubu tutmak ezilmeyi %14'e (dalgalı dünyada %17'ye) çıkarıyor. Bu yüzden hiçbir preset her partiyi tutmuyor.
-- İki yeni denge yöntemi denendi ve eklenmedi: 8 farklı başlangıçtan arama (kâğıt üstünde daha dar puan farkı, ama ezilme azalmıyor) ve mevcut takımlardan başlayıp "en az oyuncu taşıyan" bölme (oyuncuların yaklaşık %46'sı yerine %19'unu taşıyor, ama ezilme biraz artıyor). Eklenti kodu değişmedi.
+- **Daha az taşıma.** Eklenti iki tarafı kimin nerede olduğuna bakmadan seçtiği için her karıştırmada sunucunun yaklaşık yarısını taşıyordu. `fewerMoves` önce, taşımayı azaltıyorsa iki tarafın etiketini değiştiriyor, sonra denge en iyi bölmenin o oranı içinde kaldıkça oyuncuları çiftler halinde mevcut takımlarına geri bırakıyor. Orta yol `0.1`: oyuncuların %33'ü taşınıyor, ezilen maç oranı gürültü içinde aynı. `0.2` %27 taşıyor ama ezilmeyi yaklaşık 0,5 puan artırıyor. Mevcut takımlardan başlayan bölme sadece %19 taşıyor ama ezilmeyi 0,5 ila 1 puan artırıyor, bu yüzden eklenmedi.
+- 8 farklı başlangıçtan arama da denendi ve eklenmedi: kâğıt üstünde daha dar puan farkı, ama ezilme azalmıyor.
 
 Bunlar model sonuçları, canlı veri değil.
 
@@ -324,6 +325,7 @@ Bütün seçenekler SquadJS `config.json` içindeki eklenti girişine yazılır.
 | `maxPartySize` | `4` | Kilit modu 2: bu boyuta kadar party bir arada kalır, daha büyüğü bölünür. 0 sınır yok demek |
 | `skipLayers` | `["seed", "jensen", "invasion"]` | Otomatik karıştırma, layer adı bunlardan birini içeren turu atlar. `!smartshuffle now` her zaman çalışır |
 | `minPlayers` | `40` | Otomatik karıştırma, oyuncu sayısı bundan az olan turu atlar. `!smartshuffle now` her zaman çalışır |
+| `fewerMoves` | `0` | Daha az oyuncu taşı. 0 kapalı. 0'dan büyükse daha çok oyuncu mevcut takımında kalır, denge farkı en fazla bu oran kadar büyüyebilir. `0.1` taşınan oyuncuyu yaklaşık üçte bir azaltır (simülasyonda %50'den %33'e), ezilen maç oranı aynı kalır |
 | `shuffleDelaySeconds` | `0` | Tur bittikten sonra oyuncular taşınmadan önce beklenecek saniye (skor tablosunu okumak için), 0 ile 25 arası |
 | `shuffleDeadlineSeconds` | `30` | Tur bittikten bu kadar saniye sonra kimse taşınmaz, sonraki harita başladıktan sonra da asla |
 | `announceMinutes` | `10` | Karıştırma bekliyorken sunucuya bu kadar dakikada bir duyur. 0 duyuruları kapatır |

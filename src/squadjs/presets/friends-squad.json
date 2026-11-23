@@ -6,5 +6,6 @@
   "keepParties": true,
   "maxPartySize": 6,
   "historyRounds": 4,
-  "historyHours": 6
+  "historyHours": 6,
+  "fewerMoves": 0.1
 }

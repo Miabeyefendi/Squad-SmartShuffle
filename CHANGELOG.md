@@ -39,6 +39,25 @@ The three routes are released separately, each with its own tag: `squadjs-vX.Y.Z
 - Hybrid route docs now use the version 2 form of `ModLoader.json` (`"rulesets": { "<path>": true }`). The older list form still works, ModLoader converts it.
 - The hybrid ruleset was loaded on a local Windows dedicated server with ModLoader: it mounts and is added as a ruleset. The end of match dump itself still needs a played match to be checked.
 
+## [Presets 1.1.0] - 2026-11-24
+
+### Changed
+
+- Every preset now sets `fewerMoves` to `0.1` and ships the SquadJS 1.2.0 plugin: a shuffle moves 33 to 36% of
+  the players instead of 50%, with the same share of stomped matches within noise in the simulation. The README
+  table has a new "Players moved" column.
+
+## [SquadJS 1.2.0] - 2026-11-24
+
+### Added
+
+- `fewerMoves` (default `0`, off): move fewer players. The plugin first swaps the two side labels when that saves
+  moves, then moves players back to their current side in pairs while the balance stays within that share of the
+  best split. Squad leaders and kept parties are not moved back. With `0.1` a shuffle moves about a third of the
+  server instead of half (50% down to 33% in a simulation of 21,600 matches, and on the 20 reference matches of the
+  tests), with the same share of stomped matches within noise. While `fewerMoves` is `0` the split is exactly the
+  same as in 1.1.0.
+
 ## [Presets 1.0.0] - 2026-11-24
 
 ### Added
@@ -148,6 +167,8 @@ The three routes are released separately, each with its own tag: `squadjs-vX.Y.Z
 
 <!-- Keep this link block at the bottom and add one line per release. -->
 
+[Presets 1.1.0]: https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v1.1.0
+[SquadJS 1.2.0]: https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/squadjs-v1.2.0
 [Presets 1.0.0]: https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v1.0.0
 [Hybrid 0.2.0]: https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/hybrid-v0.2.0
 [SquadJS 1.1.0]: https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/squadjs-v1.1.0
