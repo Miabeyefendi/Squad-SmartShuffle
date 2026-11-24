@@ -1,0 +1,6 @@
+{
+  "plugin": "SmartShuffle",
+  "enabled": true,
+  "autoShuffle": false,
+  "lockMode": 2
+}

@@ -81,21 +81,23 @@
 
 ### 🎛️ 现成预设
 
-**[Presets 3.0.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v3.0.0)** 版本是一个十级阶梯。第 1 级队伍最平衡；之后每一级移动的玩家更少，保持完整的朋友组更多，代价是碾压局更多。每个 zip 都包含 **[SquadJS 1.3.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/squadjs-v1.3.0)** 的 `smart-shuffle.js`，以及一个完整的 `config.json` 条目（锁定、组队、历史和少移动设置）。[`SmartShuffle-all-presets.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-all-presets.zip) 包含全部十个。
+**[Smart Shuffle 2.0.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/v2.0.0)** 版本包含所有预设。`<名称>.zip` 只需要 SquadJS；`Modloader-<名称>.zip` 是同一预设的混合方式（SquadJS + ModLoader + SmartShuffle 创意工坊物品，完整计分板）。每个 zip 都包含 `smart-shuffle.js`（SquadJS 1.3.0）和一个完整的 `config.json` 条目（锁定、组队、历史和少移动设置）。[`All-presets.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/All-presets.zip) 包含全部预设。
+
+十个级别构成一个阶梯：第 1 级队伍最平衡；之后每一级移动的玩家更少，保持完整的朋友组更多，代价是碾压局更多。
 
 | 级别 | 版本文件 | 碾压局 | 被移动的玩家 | 保持完整的组队 | 最适合 |
 |:---:|---|:---:|:---:|:---:|---|
-| **1** | [`SmartShuffle-01-strict.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-01-strict.zip) | **10.7%** | **33%** | **42%** | 最平衡的队伍，两人组保留 |
-| | *不用预设（插件默认）* | 11.2% | 50% | 84% | |
-| **2** | [`SmartShuffle-02-tight.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-02-tight.zip) | **11.7%** | **22%** | **65%** | 平衡的队伍，三人组保留 |
-| **3** | [`SmartShuffle-03-balanced.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-03-balanced.zip) | **12.5%** | **18%** | **85%** | 大多数服务器 |
-| **4** | [`SmartShuffle-04-steady.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-04-steady.zip) | **13.1%** | **15%** | **86%** | 大多数服务器，移动更少 |
-| **5** | [`SmartShuffle-05-calm.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-05-calm.zip) | **14.2%** | **13%** | **86%** | 不喜欢被移动的玩家 |
-| **6** | [`SmartShuffle-06-squads.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-06-squads.zip) | **14.6%** | **12%** | **89%** | 最多 6 人的朋友小队 |
-| **7** | [`SmartShuffle-07-relaxed.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-07-relaxed.zip) | **16.6%** | **11%** | **90%** | 宁可少移动也不要严格平衡 |
-| **8** | [`SmartShuffle-08-easy.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-08-easy.zip) | **19.0%** | **9%** | **90%** | 只修正明显的失衡 |
-| **9** | [`SmartShuffle-09-together.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-09-together.zip) | **21.7%** | **9%** | **99%** | 战队和大组队 |
-| **10** | [`SmartShuffle-10-light.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-10-light.zip) | **24.0%** | **8%** | **99%** | 最小的打乱 |
+| **1** | [`Strict.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Strict.zip) · [`Modloader-Strict.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Strict.zip) | **10.7%** | **33%** | **42%** | 最平衡的队伍，两人组保留 |
+| | [`Default.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Default.zip) · [`Modloader-Default.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Default.zip) *(插件自带设置)* | 11.2% | 50% | 84% | |
+| **2** | [`Tight.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Tight.zip) · [`Modloader-Tight.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Tight.zip) | **11.7%** | **22%** | **65%** | 平衡的队伍，三人组保留 |
+| **3** | [`Balanced.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Balanced.zip) · [`Modloader-Balanced.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Balanced.zip) | **12.5%** | **18%** | **85%** | 大多数服务器 |
+| **4** | [`Steady.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Steady.zip) · [`Modloader-Steady.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Steady.zip) | **13.1%** | **15%** | **86%** | 大多数服务器，移动更少 |
+| **5** | [`Calm.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Calm.zip) · [`Modloader-Calm.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Calm.zip) | **14.2%** | **13%** | **86%** | 不喜欢被移动的玩家 |
+| **6** | [`Squads.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Squads.zip) · [`Modloader-Squads.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Squads.zip) | **14.6%** | **12%** | **89%** | 最多 6 人的朋友小队 |
+| **7** | [`Relaxed.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Relaxed.zip) · [`Modloader-Relaxed.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Relaxed.zip) | **16.6%** | **11%** | **90%** | 宁可少移动也不要严格平衡 |
+| **8** | [`Easy.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Easy.zip) · [`Modloader-Easy.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Easy.zip) | **19.0%** | **9%** | **90%** | 只修正明显的失衡 |
+| **9** | [`Together.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Together.zip) · [`Modloader-Together.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Together.zip) | **21.7%** | **9%** | **99%** | 战队和大组队 |
+| **10** | [`Light.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Light.zip) · [`Modloader-Light.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Light.zip) | **24.0%** | **8%** | **99%** | 最小的打乱 |
 | | *随机打乱（不用插件）* | 29.3% | 50% | 24% | |
 
 碾压局：票数差超过 150 的对局比例，三个模拟世界的平均值。被移动的玩家：一次打乱中换队的玩家比例。详见[工作原理](#-工作原理)。
@@ -111,18 +113,18 @@
 
 | 级别 | 预设 | `maxPartySize` | `fewerMoves` |
 |:---:|---|:---:|:---:|
-| 1 | `01-strict` | 2 | 0.1 |
-| 2 | `02-tight` | 3 | 0.3 |
-| 3 | `03-balanced` | 4 | 0.3 |
-| 4 | `04-steady` | 4 | 0.6 |
-| 5 | `05-calm` | 4 | 1 |
-| 6 | `06-squads` | 6 | 1 |
-| 7 | `07-relaxed` | 6 | 2 |
-| 8 | `08-easy` | 6 | 4 |
-| 9 | `09-together` | 不限 | 2 |
-| 10 | `10-light` | 不限 | 4 |
+| 1 | `Strict` | 2 | 0.1 |
+| 2 | `Tight` | 3 | 0.3 |
+| 3 | `Balanced` | 4 | 0.3 |
+| 4 | `Steady` | 4 | 0.6 |
+| 5 | `Calm` | 4 | 1 |
+| 6 | `Squads` | 6 | 1 |
+| 7 | `Relaxed` | 6 | 2 |
+| 8 | `Easy` | 6 | 4 |
+| 9 | `Together` | 不限 | 2 |
+| 10 | `Light` | 不限 | 4 |
 
-旧的预设仍可在 [Presets 2.0.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v2.0.0) 及更早版本中获取。
+Modloader 预设也做了模拟：结果与上面的 vanilla 数值相差约半个百分点以内，因为混合方式用完整计分板评分，但不计入会话历史。ModLoader 服务器步骤写在各自的 README 中。
 
 <details>
 <summary><b>混合方式（完整记分板）</b></summary>
@@ -317,17 +319,17 @@ Smart Shuffle report: 44 moved, 0 not placed, score gap 21% -> 1%, done in 3.2 s
 
 | 级别 | 预设 | 主要 | 无协同 | 波动 |
 |:---:|---|:---:|:---:|:---:|
-| 1 | `01-strict` | 10.0% | 10.2% | 11.9% |
+| 1 | `Strict` | 10.0% | 10.2% | 11.9% |
 |  | *不用预设（插件默认）* | 10.5% | 11.0% | 12.2% |
-| 2 | `02-tight` | 10.8% | 11.1% | 13.2% |
-| 3 | `03-balanced` | 11.8% | 11.7% | 13.9% |
-| 4 | `04-steady` | 12.2% | 12.3% | 14.8% |
-| 5 | `05-calm` | 13.4% | 12.9% | 16.2% |
-| 6 | `06-squads` | 13.7% | 13.4% | 16.6% |
-| 7 | `07-relaxed` | 15.7% | 15.1% | 19.0% |
-| 8 | `08-easy` | 18.2% | 17.2% | 21.7% |
-| 9 | `09-together` | 21.1% | 17.9% | 26.2% |
-| 10 | `10-light` | 23.2% | 20.3% | 28.6% |
+| 2 | `Tight` | 10.8% | 11.1% | 13.2% |
+| 3 | `Balanced` | 11.8% | 11.7% | 13.9% |
+| 4 | `Steady` | 12.2% | 12.3% | 14.8% |
+| 5 | `Calm` | 13.4% | 12.9% | 16.2% |
+| 6 | `Squads` | 13.7% | 13.4% | 16.6% |
+| 7 | `Relaxed` | 15.7% | 15.1% | 19.0% |
+| 8 | `Easy` | 18.2% | 17.2% | 21.7% |
+| 9 | `Together` | 21.1% | 17.9% | 26.2% |
+| 10 | `Light` | 23.2% | 20.3% | 28.6% |
 |  | *随机打乱（不用插件）* | 28.0% | 27.7% | 32.1% |
 
 结果：

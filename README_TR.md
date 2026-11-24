@@ -81,21 +81,23 @@
 
 ### 🎛️ Hazır presetler
 
-**[Presets 3.0.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v3.0.0)** sürümü on basamaklı bir merdiven. 1. basamak en dengeli takımları verir; her sonraki basamak daha az oyuncu taşır ve daha çok arkadaş grubunu bütün tutar, karşılığında ezilen maç artar. Her zip'te **[SquadJS 1.3.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/squadjs-v1.3.0)** sürümündeki `smart-shuffle.js` ve kilit, parti, geçmiş ve az taşıma ayarlarıyla eksiksiz bir `config.json` girdisi var. [`SmartShuffle-all-presets.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-all-presets.zip) onunu birden içerir.
+**[Smart Shuffle 2.0.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/v2.0.0)** sürümü bütün presetleri içerir. `<Ad>.zip` sadece SquadJS ister; `Modloader-<Ad>.zip` aynı presetin hibrit yoldaki hali (SquadJS + ModLoader + SmartShuffle Workshop öğesi, tam skor tablosu). Her zip'te `smart-shuffle.js` (SquadJS 1.3.0) ve kilit, parti, geçmiş ve az taşıma ayarlarıyla eksiksiz bir `config.json` girdisi var. [`All-presets.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/All-presets.zip) hepsini birden içerir.
+
+On basamak bir merdiven oluşturur: 1. basamak en dengeli takımları verir; her sonraki basamak daha az oyuncu taşır ve daha çok arkadaş grubunu bütün tutar, karşılığında ezilen maç artar.
 
 | Basamak | Sürüm dosyası | Ezilen maç | Taşınan oyuncu | Bütün kalan parti | En uygun |
 |:---:|---|:---:|:---:|:---:|---|
-| **1** | [`SmartShuffle-01-strict.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-01-strict.zip) | **10.7%** | **33%** | **42%** | en dengeli takımlar, ikililer kalır |
-| | *preset yok (eklenti varsayılanı)* | 11.2% | 50% | 84% | |
-| **2** | [`SmartShuffle-02-tight.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-02-tight.zip) | **11.7%** | **22%** | **65%** | dengeli takımlar, üçlüler kalır |
-| **3** | [`SmartShuffle-03-balanced.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-03-balanced.zip) | **12.5%** | **18%** | **85%** | çoğu sunucu |
-| **4** | [`SmartShuffle-04-steady.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-04-steady.zip) | **13.1%** | **15%** | **86%** | çoğu sunucu, daha az taşıma |
-| **5** | [`SmartShuffle-05-calm.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-05-calm.zip) | **14.2%** | **13%** | **86%** | taşınmaktan hoşlanmayan oyuncular |
-| **6** | [`SmartShuffle-06-squads.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-06-squads.zip) | **14.6%** | **12%** | **89%** | 6 kişiye kadar arkadaş squad'ları |
-| **7** | [`SmartShuffle-07-relaxed.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-07-relaxed.zip) | **16.6%** | **11%** | **90%** | sıkı denge yerine az taşıma |
-| **8** | [`SmartShuffle-08-easy.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-08-easy.zip) | **19.0%** | **9%** | **90%** | sadece belirgin dengesizlikler |
-| **9** | [`SmartShuffle-09-together.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-09-together.zip) | **21.7%** | **9%** | **99%** | klanlar ve büyük gruplar |
-| **10** | [`SmartShuffle-10-light.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-10-light.zip) | **24.0%** | **8%** | **99%** | en küçük karıştırma |
+| **1** | [`Strict.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Strict.zip) · [`Modloader-Strict.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Strict.zip) | **10.7%** | **33%** | **42%** | en dengeli takımlar, ikililer kalır |
+| | [`Default.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Default.zip) · [`Modloader-Default.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Default.zip) *(eklentinin kendi ayarları)* | 11.2% | 50% | 84% | |
+| **2** | [`Tight.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Tight.zip) · [`Modloader-Tight.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Tight.zip) | **11.7%** | **22%** | **65%** | dengeli takımlar, üçlüler kalır |
+| **3** | [`Balanced.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Balanced.zip) · [`Modloader-Balanced.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Balanced.zip) | **12.5%** | **18%** | **85%** | çoğu sunucu |
+| **4** | [`Steady.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Steady.zip) · [`Modloader-Steady.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Steady.zip) | **13.1%** | **15%** | **86%** | çoğu sunucu, daha az taşıma |
+| **5** | [`Calm.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Calm.zip) · [`Modloader-Calm.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Calm.zip) | **14.2%** | **13%** | **86%** | taşınmaktan hoşlanmayan oyuncular |
+| **6** | [`Squads.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Squads.zip) · [`Modloader-Squads.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Squads.zip) | **14.6%** | **12%** | **89%** | 6 kişiye kadar arkadaş squad'ları |
+| **7** | [`Relaxed.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Relaxed.zip) · [`Modloader-Relaxed.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Relaxed.zip) | **16.6%** | **11%** | **90%** | sıkı denge yerine az taşıma |
+| **8** | [`Easy.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Easy.zip) · [`Modloader-Easy.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Easy.zip) | **19.0%** | **9%** | **90%** | sadece belirgin dengesizlikler |
+| **9** | [`Together.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Together.zip) · [`Modloader-Together.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Together.zip) | **21.7%** | **9%** | **99%** | klanlar ve büyük gruplar |
+| **10** | [`Light.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Light.zip) · [`Modloader-Light.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Light.zip) | **24.0%** | **8%** | **99%** | en küçük karıştırma |
 | | *rastgele karıştırma (eklenti yok)* | 29.3% | 50% | 24% | |
 
 Ezilen maç: bilet farkı 150'yi geçen maçların oranı, üç simüle dünyanın ortalaması. Taşınan oyuncu: karıştırmada takım değiştiren oyuncuların oranı. Ayrıntılar [Nasıl çalışır](#-nasıl-çalışır) bölümünde.
@@ -111,18 +113,18 @@ Ezilen maç: bilet farkı 150'yi geçen maçların oranı, üç simüle dünyan�
 
 | Basamak | Preset | `maxPartySize` | `fewerMoves` |
 |:---:|---|:---:|:---:|
-| 1 | `01-strict` | 2 | 0.1 |
-| 2 | `02-tight` | 3 | 0.3 |
-| 3 | `03-balanced` | 4 | 0.3 |
-| 4 | `04-steady` | 4 | 0.6 |
-| 5 | `05-calm` | 4 | 1 |
-| 6 | `06-squads` | 6 | 1 |
-| 7 | `07-relaxed` | 6 | 2 |
-| 8 | `08-easy` | 6 | 4 |
-| 9 | `09-together` | sınırsız | 2 |
-| 10 | `10-light` | sınırsız | 4 |
+| 1 | `Strict` | 2 | 0.1 |
+| 2 | `Tight` | 3 | 0.3 |
+| 3 | `Balanced` | 4 | 0.3 |
+| 4 | `Steady` | 4 | 0.6 |
+| 5 | `Calm` | 4 | 1 |
+| 6 | `Squads` | 6 | 1 |
+| 7 | `Relaxed` | 6 | 2 |
+| 8 | `Easy` | 6 | 4 |
+| 9 | `Together` | sınırsız | 2 |
+| 10 | `Light` | sınırsız | 4 |
 
-Önceki presetler [Presets 2.0.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v2.0.0) ve daha eski sürümlerde duruyor.
+Modloader presetleri de simüle edildi: yukarıdaki vanilla değerlerinin yaklaşık yarım puan yakınında kalıyorlar, çünkü hibrit yol tam skor tablosundan puanlıyor ama oturum geçmişini saymıyor. ModLoader sunucu adımları kendi README'lerinde.
 
 <details>
 <summary><b>Karma yol (tam skorbord)</b></summary>
@@ -323,17 +325,17 @@ Her basamak üç simüle dünyada, her birinde 7.200 maç (basamak başına 21.6
 
 | Basamak | Preset | ana | sinerjisiz | dalgalı |
 |:---:|---|:---:|:---:|:---:|
-| 1 | `01-strict` | 10.0% | 10.2% | 11.9% |
+| 1 | `Strict` | 10.0% | 10.2% | 11.9% |
 |  | *preset yok (eklenti varsayılanı)* | 10.5% | 11.0% | 12.2% |
-| 2 | `02-tight` | 10.8% | 11.1% | 13.2% |
-| 3 | `03-balanced` | 11.8% | 11.7% | 13.9% |
-| 4 | `04-steady` | 12.2% | 12.3% | 14.8% |
-| 5 | `05-calm` | 13.4% | 12.9% | 16.2% |
-| 6 | `06-squads` | 13.7% | 13.4% | 16.6% |
-| 7 | `07-relaxed` | 15.7% | 15.1% | 19.0% |
-| 8 | `08-easy` | 18.2% | 17.2% | 21.7% |
-| 9 | `09-together` | 21.1% | 17.9% | 26.2% |
-| 10 | `10-light` | 23.2% | 20.3% | 28.6% |
+| 2 | `Tight` | 10.8% | 11.1% | 13.2% |
+| 3 | `Balanced` | 11.8% | 11.7% | 13.9% |
+| 4 | `Steady` | 12.2% | 12.3% | 14.8% |
+| 5 | `Calm` | 13.4% | 12.9% | 16.2% |
+| 6 | `Squads` | 13.7% | 13.4% | 16.6% |
+| 7 | `Relaxed` | 15.7% | 15.1% | 19.0% |
+| 8 | `Easy` | 18.2% | 17.2% | 21.7% |
+| 9 | `Together` | 21.1% | 17.9% | 26.2% |
+| 10 | `Light` | 23.2% | 20.3% | 28.6% |
 |  | *rastgele karıştırma (eklenti yok)* | 28.0% | 27.7% | 32.1% |
 
 Sonuçlar:

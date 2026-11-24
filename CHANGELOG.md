@@ -28,7 +28,7 @@ All notable changes to **Squad-SmartShuffle** are recorded here. The format foll
 [English](./CHANGELOG.md) · [README](./README.md)
 
 The three routes are released separately, each with its own tag: `squadjs-vX.Y.Z`, `hybrid-vX.Y.Z` and
-`modloader-vX.Y.Z`. The preset zips of the SquadJS route use `presets-vX.Y.Z`.
+`modloader-vX.Y.Z`. The preset zips of the SquadJS route use `presets-vX.Y.Z`. Since 2.0.0 there is one release, tagged `vX.Y.Z`, for all of them.
 
 ---
 
@@ -38,6 +38,20 @@ The three routes are released separately, each with its own tag: `squadjs-vX.Y.Z
 
 - Hybrid route docs now use the version 2 form of `ModLoader.json` (`"rulesets": { "<path>": true }`). The older list form still works, ModLoader converts it.
 - The hybrid ruleset was loaded on a local Windows dedicated server with ModLoader: it mounts and is added as a ruleset. The end of match dump itself still needs a played match to be checked.
+
+## [2.0.0] - 2026-11-24
+
+### Changed
+
+- One release for everything. The release **Smart Shuffle 2.0.0** holds every preset with a simple name:
+  `Default.zip` (the plugin's own settings) and the ten ladder steps `Strict.zip`, `Tight.zip`, `Balanced.zip`,
+  `Steady.zip`, `Calm.zip`, `Squads.zip`, `Relaxed.zip`, `Easy.zip`, `Together.zip` and `Light.zip` (SquadJS
+  only), the same eleven as `Modloader-<Name>.zip` for the hybrid route (SquadJS + ModLoader + the SmartShuffle
+  Workshop item), `All-presets.zip` and `smart-shuffle.js` (SquadJS 1.3.0). The Modloader presets were simulated
+  too and land within about half a point of the vanilla ones.
+- The separate SquadJS, Presets, Hybrid and ModLoader releases were removed; their git tags stay, so the
+  versions below still point to their code. The ModLoader-only Blueprint route is still a recipe
+  (`src/modloader/BP_SmartShuffle.md`) and has no download yet.
 
 ## [Presets 3.0.0] - 2026-11-24
 
@@ -200,6 +214,7 @@ The three routes are released separately, each with its own tag: `squadjs-vX.Y.Z
 
 <!-- Keep this link block at the bottom and add one line per release. -->
 
+[2.0.0]: https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/v2.0.0
 [Presets 3.0.0]: https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v3.0.0
 [Presets 2.0.0]: https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v2.0.0
 [SquadJS 1.3.0]: https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/squadjs-v1.3.0

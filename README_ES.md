@@ -81,21 +81,23 @@
 
 ### 🎛️ Presets listos
 
-La versión **[Presets 3.0.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v3.0.0)** es una escalera de diez pasos. El paso 1 da los equipos más parejos; cada paso siguiente mueve menos jugadores y mantiene enteros más grupos de amigos, a cambio de más partidas aplastantes. Cada zip contiene el `smart-shuffle.js` de **[SquadJS 1.3.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/squadjs-v1.3.0)** y una entrada completa de `config.json` con los ajustes de bloqueo, grupos, historial y menos movimientos. [`SmartShuffle-all-presets.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-all-presets.zip) contiene los diez.
+La versión **[Smart Shuffle 2.0.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/v2.0.0)** contiene todos los presets. `<Nombre>.zip` solo necesita SquadJS; `Modloader-<Nombre>.zip` es el mismo preset en la ruta híbrida (SquadJS + ModLoader + el elemento SmartShuffle del Workshop, marcador completo). Cada zip contiene `smart-shuffle.js` (SquadJS 1.3.0) y una entrada completa de `config.json` con los ajustes de bloqueo, grupos, historial y menos movimientos. [`All-presets.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/All-presets.zip) los contiene todos.
+
+Los diez pasos forman una escalera: el paso 1 da los equipos más parejos; cada paso siguiente mueve menos jugadores y mantiene enteros más grupos de amigos, a cambio de más partidas aplastantes.
 
 | Paso | Archivo de la versión | Partidas aplastantes | Jugadores movidos | Grupos enteros | Ideal para |
 |:---:|---|:---:|:---:|:---:|---|
-| **1** | [`SmartShuffle-01-strict.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-01-strict.zip) | **10.7%** | **33%** | **42%** | los equipos más parejos, los dúos siguen juntos |
-| | *sin preset (predeterminado del plugin)* | 11.2% | 50% | 84% | |
-| **2** | [`SmartShuffle-02-tight.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-02-tight.zip) | **11.7%** | **22%** | **65%** | equipos parejos, los tríos siguen juntos |
-| **3** | [`SmartShuffle-03-balanced.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-03-balanced.zip) | **12.5%** | **18%** | **85%** | la mayoría de servidores |
-| **4** | [`SmartShuffle-04-steady.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-04-steady.zip) | **13.1%** | **15%** | **86%** | la mayoría de servidores, menos movimientos |
-| **5** | [`SmartShuffle-05-calm.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-05-calm.zip) | **14.2%** | **13%** | **86%** | jugadores a los que no les gusta que los muevan |
-| **6** | [`SmartShuffle-06-squads.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-06-squads.zip) | **14.6%** | **12%** | **89%** | escuadras de amigos de hasta 6 |
-| **7** | [`SmartShuffle-07-relaxed.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-07-relaxed.zip) | **16.6%** | **11%** | **90%** | pocos movimientos antes que equilibrio estricto |
-| **8** | [`SmartShuffle-08-easy.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-08-easy.zip) | **19.0%** | **9%** | **90%** | solo corregir desequilibrios claros |
-| **9** | [`SmartShuffle-09-together.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-09-together.zip) | **21.7%** | **9%** | **99%** | clanes y grupos grandes |
-| **10** | [`SmartShuffle-10-light.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-10-light.zip) | **24.0%** | **8%** | **99%** | la mezcla más pequeña |
+| **1** | [`Strict.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Strict.zip) · [`Modloader-Strict.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Strict.zip) | **10.7%** | **33%** | **42%** | los equipos más parejos, los dúos siguen juntos |
+| | [`Default.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Default.zip) · [`Modloader-Default.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Default.zip) *(el plugin tal como viene)* | 11.2% | 50% | 84% | |
+| **2** | [`Tight.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Tight.zip) · [`Modloader-Tight.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Tight.zip) | **11.7%** | **22%** | **65%** | equipos parejos, los tríos siguen juntos |
+| **3** | [`Balanced.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Balanced.zip) · [`Modloader-Balanced.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Balanced.zip) | **12.5%** | **18%** | **85%** | la mayoría de servidores |
+| **4** | [`Steady.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Steady.zip) · [`Modloader-Steady.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Steady.zip) | **13.1%** | **15%** | **86%** | la mayoría de servidores, menos movimientos |
+| **5** | [`Calm.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Calm.zip) · [`Modloader-Calm.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Calm.zip) | **14.2%** | **13%** | **86%** | jugadores a los que no les gusta que los muevan |
+| **6** | [`Squads.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Squads.zip) · [`Modloader-Squads.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Squads.zip) | **14.6%** | **12%** | **89%** | escuadras de amigos de hasta 6 |
+| **7** | [`Relaxed.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Relaxed.zip) · [`Modloader-Relaxed.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Relaxed.zip) | **16.6%** | **11%** | **90%** | pocos movimientos antes que equilibrio estricto |
+| **8** | [`Easy.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Easy.zip) · [`Modloader-Easy.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Easy.zip) | **19.0%** | **9%** | **90%** | solo corregir desequilibrios claros |
+| **9** | [`Together.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Together.zip) · [`Modloader-Together.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Together.zip) | **21.7%** | **9%** | **99%** | clanes y grupos grandes |
+| **10** | [`Light.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Light.zip) · [`Modloader-Light.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Light.zip) | **24.0%** | **8%** | **99%** | la mezcla más pequeña |
 | | *mezcla aleatoria (sin plugin)* | 29.3% | 50% | 24% | |
 
 Partidas aplastantes: proporción de partidas con una diferencia de tickets mayor de 150, media de tres mundos simulados. Jugadores movidos: proporción del servidor que cambia de equipo en una mezcla. Detalles en [Cómo funciona](#-cómo-funciona).
@@ -111,18 +113,18 @@ Partidas aplastantes: proporción de partidas con una diferencia de tickets mayo
 
 | Paso | Preset | `maxPartySize` | `fewerMoves` |
 |:---:|---|:---:|:---:|
-| 1 | `01-strict` | 2 | 0.1 |
-| 2 | `02-tight` | 3 | 0.3 |
-| 3 | `03-balanced` | 4 | 0.3 |
-| 4 | `04-steady` | 4 | 0.6 |
-| 5 | `05-calm` | 4 | 1 |
-| 6 | `06-squads` | 6 | 1 |
-| 7 | `07-relaxed` | 6 | 2 |
-| 8 | `08-easy` | 6 | 4 |
-| 9 | `09-together` | sin límite | 2 |
-| 10 | `10-light` | sin límite | 4 |
+| 1 | `Strict` | 2 | 0.1 |
+| 2 | `Tight` | 3 | 0.3 |
+| 3 | `Balanced` | 4 | 0.3 |
+| 4 | `Steady` | 4 | 0.6 |
+| 5 | `Calm` | 4 | 1 |
+| 6 | `Squads` | 6 | 1 |
+| 7 | `Relaxed` | 6 | 2 |
+| 8 | `Easy` | 6 | 4 |
+| 9 | `Together` | sin límite | 2 |
+| 10 | `Light` | sin límite | 4 |
 
-Los presets anteriores siguen disponibles en [Presets 2.0.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v2.0.0) y versiones más antiguas.
+Los presets Modloader también se simularon: quedan a cerca de medio punto de los valores vanilla de arriba, porque la ruta híbrida puntúa con el marcador completo pero no cuenta el historial de sesión. Su README explica los pasos de ModLoader en el servidor.
 
 <details>
 <summary><b>Vía híbrida (marcador completo)</b></summary>
@@ -325,17 +327,17 @@ Cada paso se jugó en tres mundos simulados, 7.200 partidas en cada uno (21.600 
 
 | Paso | Preset | principal | sin sinergia | volátil |
 |:---:|---|:---:|:---:|:---:|
-| 1 | `01-strict` | 10.0% | 10.2% | 11.9% |
+| 1 | `Strict` | 10.0% | 10.2% | 11.9% |
 |  | *sin preset (predeterminado del plugin)* | 10.5% | 11.0% | 12.2% |
-| 2 | `02-tight` | 10.8% | 11.1% | 13.2% |
-| 3 | `03-balanced` | 11.8% | 11.7% | 13.9% |
-| 4 | `04-steady` | 12.2% | 12.3% | 14.8% |
-| 5 | `05-calm` | 13.4% | 12.9% | 16.2% |
-| 6 | `06-squads` | 13.7% | 13.4% | 16.6% |
-| 7 | `07-relaxed` | 15.7% | 15.1% | 19.0% |
-| 8 | `08-easy` | 18.2% | 17.2% | 21.7% |
-| 9 | `09-together` | 21.1% | 17.9% | 26.2% |
-| 10 | `10-light` | 23.2% | 20.3% | 28.6% |
+| 2 | `Tight` | 10.8% | 11.1% | 13.2% |
+| 3 | `Balanced` | 11.8% | 11.7% | 13.9% |
+| 4 | `Steady` | 12.2% | 12.3% | 14.8% |
+| 5 | `Calm` | 13.4% | 12.9% | 16.2% |
+| 6 | `Squads` | 13.7% | 13.4% | 16.6% |
+| 7 | `Relaxed` | 15.7% | 15.1% | 19.0% |
+| 8 | `Easy` | 18.2% | 17.2% | 21.7% |
+| 9 | `Together` | 21.1% | 17.9% | 26.2% |
+| 10 | `Light` | 23.2% | 20.3% | 28.6% |
 |  | *mezcla aleatoria (sin plugin)* | 28.0% | 27.7% | 32.1% |
 
 Lo que mostró:
