@@ -81,39 +81,39 @@
 
 ### 🎛️ Hazır presetler
 
-**[Presets 1.1.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v1.1.0)** sürümünde her preset için bir zip var. Her zip'te **[SquadJS 1.2.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/squadjs-v1.2.0)** sürümündeki `smart-shuffle.js`, `config.json` girdisi ve kısa bir `README.txt` bulunur: birini aç, eklentiyi kopyala, girdiyi yapıştır. En dengeli takımdan en az dengeliye doğru sıralı:
+**[Presets 2.0.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v2.0.0)** sürümü beş basamaklı bir merdiven. 1. basamak en dengeli takımları verir; her sonraki basamak daha az oyuncu taşır ve daha çok arkadaş grubunu bütün tutar, karşılığında ezilen maç artar. Her zip'te **[SquadJS 1.3.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/squadjs-v1.3.0)** sürümündeki `smart-shuffle.js` ve kilit, parti, geçmiş ve az taşıma ayarlarıyla eksiksiz bir `config.json` girdisi var. [`SmartShuffle-all-presets.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-all-presets.zip) beşini birden içerir.
 
-| Sıra | Sürüm dosyası | Tür | En uygun | Ezilen maç | Taşınan oyuncu | Birlikte kalan parti |
-|:---:|---|---|---|:---:|:---:|:---:|
-| **1** | [`SmartShuffle-quality-max.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v1.1.0/SmartShuffle-quality-max.zip) | Kalite | en dengeli takımlar | **10.6%** | 33% | yok |
-| **2** | [`SmartShuffle-quality-session.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v1.1.0/SmartShuffle-quality-session.zip) | Kalite | saatlerce oynayan aynı oyuncular | **10.7%** | 33% | yok |
-| **3** | [`SmartShuffle-quality-fresh.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v1.1.0/SmartShuffle-quality-fresh.zip) | Kalite | oyuncuların sık girip çıktığı açık sunucu | **10.7%** | 33% | yok |
-| **4** | [`SmartShuffle-friends-small.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v1.1.0/SmartShuffle-friends-small.zip) | Arkadaş | bir iki arkadaşıyla kalmak isteyenler | **11.1%** | 36% | 60% |
-| | *preset yok (eklenti varsayılanı)* | | | 11.2% | 50% | 84% |
-| **5** | [`SmartShuffle-friends-squad.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v1.1.0/SmartShuffle-friends-squad.zip) | Arkadaş | squad olarak oynayan klan ve gruplar | **11.5%** | 36% | 88% |
-| | *rastgele karıştırma (eklenti yok)* | | | 29.2% | 50% | 24% |
+| Basamak | Sürüm dosyası | Ezilen maç | Taşınan oyuncu | Bütün kalan parti | En uygun |
+|:---:|---|:---:|:---:|:---:|---|
+| **1** | [`SmartShuffle-1-strict.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-1-strict.zip) | **10.7%** | **33%** | 30% | en dengeli takımlar, arkadaşlık önemsiz |
+| | *preset yok (eklenti varsayılanı)* | 11.5% | 50% | 84% | |
+| **2** | [`SmartShuffle-2-balanced.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-2-balanced.zip) | **14.1%** | **13%** | 86% | çoğu sunucu: arkadaşlar kalır, az oyuncu taşınır |
+| **3** | [`SmartShuffle-3-relaxed.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-3-relaxed.zip) | **18.2%** | **10%** | 87% | taşınmaktan hiç hoşlanmayan oyuncular |
+| **4** | [`SmartShuffle-4-together.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-4-together.zip) | **21.8%** | **9%** | 99% | klanlar ve büyük arkadaş grupları |
+| **5** | [`SmartShuffle-5-light.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-5-light.zip) | **23.9%** | **8%** | 99% | sadece en kötü eşleşmeleri yumuşatmak |
+| | *rastgele karıştırma (eklenti yok)* | 29.3% | 50% | 24% | |
 
-Ezilen maç: bilet farkı 150'yi geçen maçların oranı, üç simüle dünyanın ortalaması, düşük olan iyi. Taşınan oyuncu: karıştırmada takım değiştiren oyuncuların oranı. Ayrıntılar [Nasıl çalışır](#-nasıl-çalışır) bölümünde.
+Ezilen maç: bilet farkı 150'yi geçen maçların oranı, üç simüle dünyanın ortalaması. Taşınan oyuncu: karıştırmada takım değiştiren oyuncuların oranı. Ayrıntılar [Nasıl çalışır](#-nasıl-çalışır) bölümünde.
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./assets/preset-chart-dark.svg">
-    <img src="./assets/preset-chart.svg" width="92%" alt="Bar chart of stomped matches by preset, best first: 1 quality-max 10.6%, 2 quality-session 10.7%, 3 quality-fresh 10.7%, 4 friends-small 11.1%, no preset 11.2%, 5 friends-squad 11.5%, random shuffle 29.2%">
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/ladder-chart-dark.svg">
+    <img src="./assets/ladder-chart.svg" width="92%" alt="Preset ladder: step 1 strict 10.7% stomped and 33% of players moved, no preset 11.5% and 50%, step 2 balanced 14.1% and 13%, step 3 relaxed 18.2% and 10%, step 4 together 21.8% and 9%, step 5 light 23.9% and 8%, random shuffle 29.3% and 50%">
   </picture>
 </p>
 
-**Her preset neyi değiştiriyor**, aynı sırayla. Gerisi eklentinin varsayılanında kalır.
+**Basamaktan basamağa ne değişiyor.** Beşi de `historyRounds` 4 ve `autoShuffle` false kullanır; gerisi eklentinin varsayılanında kalır.
 
-| Sıra | Preset | `lockMode` | `maxPartySize` | `historyRounds` | `historyHours` | `fewerMoves` |
-|:---:|---|:---:|:---:|:---:|:---:|:---:|
-| 1 | `quality-max` | 1 | - | 4 | 6 | 0.1 |
-| 2 | `quality-session` | 1 | - | 8 | 12 | 0.1 |
-| 3 | `quality-fresh` | 1 | - | 2 | 3 | 0.1 |
-| 4 | `friends-small` | 2 | 3 | 2 | 6 | 0.1 |
-|  | *preset yok (eklenti varsayılanı)* | 2 | 4 | 4 | 6 | 0 |
-| 5 | `friends-squad` | 2 | 6 | 4 | 6 | 0.1 |
+| Basamak | Preset | `lockMode` | `maxPartySize` | `fewerMoves` |
+|:---:|---|:---:|:---:|:---:|
+| 1 | `1-strict` | 1 | partiler yok sayılır | 0.1 |
+|  | *preset yok (eklenti varsayılanı)* | 2 | 4 | 0 |
+| 2 | `2-balanced` | 2 | 4 | 1 |
+| 3 | `3-relaxed` | 2 | 4 | 4 |
+| 4 | `4-together` | 2 | sınırsız | 2 |
+| 5 | `5-light` | 2 | sınırsız | 4 |
 
-Sunucunun yaklaşık yarısının taşındığı eski davranış için [Presets 1.0.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v1.0.0) sürümünü kullan.
+Önceki presetler [Presets 1.1.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v1.1.0) sürümünde duruyor.
 
 <details>
 <summary><b>Karma yol (tam skorbord)</b></summary>
@@ -306,36 +306,28 @@ Oyuncuları puanlamanın dört yolu, her biri 43.200 simüle maçta denendi. Mav
 
 ### Preset simülasyonu
 
-Her preset üç simüle dünyada, her birinde 7.200 maç (preset başına 21.600) oynatıldı: 100 oyuncu, maç başına 2 ila 4 kişilik 6 ila 10 küçük parti ve 6 ila 9 kişilik 1 ya da 2 büyük grup, önceki turların bilet modeli ve her turda oyuncuların %20'sinin yeni olduğu aynı oturum geçmişi. Bilet farkı 150'yi geçen maç ezilmiş sayılır.
+Her basamak üç simüle dünyada, her birinde 7.200 maç (basamak başına 21.600) oynatıldı: 100 oyuncu, maç başına 2 ila 4 kişilik 6 ila 10 küçük parti ve 6 ila 9 kişilik 1 ya da 2 büyük grup, Squad'daki gibi aynı takımda başlayan partiler, önceki turların bilet modeli ve her turda oyuncuların %20'sinin yeni olduğu oturum geçmişi. Bilet farkı 150'yi geçen maç ezilmiş sayılır.
 
 - **ana:** bu akşamın formu değişiyor (%15) ve parti üyeleri birlikte daha iyi oynuyor (parti sinerjisi %15)
 - **sinerjisiz:** partiler birlikte daha güçlü değil
 - **dalgalı:** bu akşamın formu iki kat değişiyor (%30)
 
-| Sıra | Preset | ana | sinerjisiz | dalgalı |
+| Basamak | Preset | ana | sinerjisiz | dalgalı |
 |:---:|---|:---:|:---:|:---:|
-| 1 | `quality-max` | 10.0% | 10.5% | 11.4% |
-| 2 | `quality-session` | 10.4% | 10.1% | 11.7% |
-| 3 | `quality-fresh` | 10.4% | 10.1% | 11.7% |
-| 4 | `friends-small` | 10.6% | 10.2% | 12.4% |
-|  | *preset yok (eklenti varsayılanı)* | 10.7% | 10.7% | 12.1% |
-| 5 | `friends-squad` | 11.0% | 10.8% | 12.8% |
-|  | *rastgele karıştırma (eklenti yok)* | 28.3% | 27.4% | 31.8% |
+| 1 | `1-strict` | 10.3% | 10.1% | 11.8% |
+|  | *preset yok (eklenti varsayılanı)* | 10.8% | 11.0% | 12.6% |
+| 2 | `2-balanced` | 13.5% | 12.9% | 15.8% |
+| 3 | `3-relaxed` | 17.6% | 17.0% | 20.1% |
+| 4 | `4-together` | 21.3% | 18.6% | 25.4% |
+| 5 | `5-light` | 23.6% | 20.5% | 27.7% |
+|  | *rastgele karıştırma (eklenti yok)* | 27.8% | 27.6% | 32.3% |
 
 Sonuçlar:
 
-- Beş preset de ezilen maçı yaklaşık %28'den (rastgele) %10 ila 13'e indiriyor ve her karıştırmada oyuncuların %50'si yerine %33 ila 36'sını taşıyor.
-- Üç kalite preseti her dünyada şu anki varsayılandan 0,3 ila 0,8 puan daha iyi.
-- Arkadaşları birlikte tutmak dengeden götürüyor, grup büyüdükçe daha çok: ikili ve üçlüler neredeyse hiçbir şey kaybettirmiyor, 6 kişiye kadar partiler şu anki varsayılan kadar, 7 ila 9 kişilik her grubu tutmak ezilmeyi %14'e (dalgalı dünyada %17'ye) çıkarıyor. Bu yüzden hiçbir preset her partiyi tutmuyor.
-- **Daha az taşıma.** Eklenti iki tarafı kimin nerede olduğuna bakmadan seçtiği için her karıştırmada sunucunun yaklaşık yarısını taşıyordu. `fewerMoves` önce, taşımayı azaltıyorsa iki tarafın etiketini değiştiriyor, sonra denge en iyi bölmenin o oranı içinde kaldıkça oyuncuları çiftler halinde mevcut takımlarına geri bırakıyor. Orta yol `0.1`: oyuncuların %33'ü taşınıyor, ezilen maç oranı gürültü içinde aynı. `0.2` %27 taşıyor ama ezilmeyi yaklaşık 0,5 puan artırıyor. Mevcut takımlardan başlayan bölme sadece %19 taşıyor ama ezilmeyi 0,5 ila 1 puan artırıyor, bu yüzden eklenmedi.
-- 8 farklı başlangıçtan arama da denendi ve eklenmedi: kâğıt üstünde daha dar puan farkı, ama ezilme azalmıyor.
-
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./assets/moves-chart-dark.svg">
-    <img src="./assets/moves-chart.svg" width="92%" alt="Bar chart of players moved per shuffle: fewerMoves off 50%, 0.1 33% (recommended), 0.2 27%, 0.3 24%, starting from the current teams 19%">
-  </picture>
-</p>
+- Merdiven %10,7'den %23,9 ezilen maça yayılırken taşınan oyuncu oranı %33'ten %8'e iniyor. Son basamak bile rastgele karıştırmanın (%29,3) belirgin biçimde altında.
+- Az taşıma için partilerin yerinde kalması gerekiyor. `fewerMoves` açıkken eklenti tutulan her partiyi şu an oynadığı tarafta bırakıyor (SquadJS 1.3.0'dan beri). Tutulan partileri dengeli bölmenin tarafına koymak, sunucunun en az %19'unu yine taşıyordu.
+- Büyük gruplar dengeden en çok götürüyor: 4. ve 5. basamak her partiyi tuttuğu için dalgalı dünyada en hızlı yükselenler bunlar.
+- Denenip eklenmeyenler: 8 farklı başlangıçtan arama (kâğıt üstünde daha dar puan farkı, ezilme azalmıyor) ve mevcut takımlardan başlayan bölme (1. basamaktan az taşıyor ama 2. basamaktan daha çok taşıyıp daha çok eziliyor).
 
 Bunlar model sonuçları, canlı veri değil.
 
@@ -358,7 +350,7 @@ Bütün seçenekler SquadJS `config.json` içindeki eklenti girişine yazılır.
 | `maxPartySize` | `4` | Kilit modu 2: bu boyuta kadar party bir arada kalır, daha büyüğü bölünür. 0 sınır yok demek |
 | `skipLayers` | `["seed", "jensen", "invasion"]` | Otomatik karıştırma, layer adı bunlardan birini içeren turu atlar. `!smartshuffle now` her zaman çalışır |
 | `minPlayers` | `40` | Otomatik karıştırma, oyuncu sayısı bundan az olan turu atlar. `!smartshuffle now` her zaman çalışır |
-| `fewerMoves` | `0` | Daha az oyuncu taşı. 0 kapalı. 0'dan büyükse daha çok oyuncu mevcut takımında kalır, denge farkı en fazla bu oran kadar büyüyebilir. `0.1` taşınan oyuncuyu yaklaşık üçte bir azaltır (simülasyonda %50'den %33'e), ezilen maç oranı aynı kalır |
+| `fewerMoves` | `0` | Daha az oyuncu taşı. 0 kapalı. 0'dan büyükse daha çok oyuncu mevcut takımında kalır, denge farkı en fazla bu oran kadar büyüyebilir. `0.1` taşınan oyuncuyu yaklaşık üçte bir azaltır (simülasyonda %50'den %33'e), ezilen maç oranı aynı kalır. En fazla `10`; büyük değerler daha da az oyuncu taşır (`4`: yaklaşık onda bir), karşılığında ezilen maç artar. Açıkken tutulan partiler şu an oynadıkları tarafta kalır |
 | `shuffleDelaySeconds` | `0` | Tur bittikten sonra oyuncular taşınmadan önce beklenecek saniye (skor tablosunu okumak için), 0 ile 25 arası |
 | `shuffleDeadlineSeconds` | `30` | Tur bittikten bu kadar saniye sonra kimse taşınmaz, sonraki harita başladıktan sonra da asla |
 | `announceMinutes` | `10` | Karıştırma bekliyorken sunucuya bu kadar dakikada bir duyur. 0 duyuruları kapatır |

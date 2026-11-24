@@ -72,13 +72,31 @@ test('fewerMoves moves fewer players and keeps the balance within the allowed sh
   assert.ok(after < 0.9 * before, `only ${before} -> ${after} moves`);
 });
 
-test('fewerMoves leaves kept friend groups where the group keeping put them', () => {
+test('fewerMoves keeps each friend group whole, on the side it plays on now', () => {
   golden.cases.forEach((c, n) => {
     const S = c.visible;
-    const base = flipped(planTeams(S, 'k6', c.slGroups, c.groups).team, S.team);
     const t = planTeams(S, 'k6', c.slGroups, c.groups, null, 0.2).team;
-    c.groups.flat().forEach((i) => assert.equal(t[i], base[i], `case ${n} party member ${i}`));
+    c.groups.forEach((g, k) => {
+      const on1 = g.filter((i) => S.team[i] === 1).length;
+      const now = 2 * on1 > g.length ? 1 : 2 * on1 < g.length ? 0 : S.team[g[0]];
+      g.forEach((i) => assert.equal(t[i], now, `case ${n} group ${k} member ${i}`));
+    });
   });
+});
+
+test('a larger fewerMoves moves fewer players and allows a larger balance gap', () => {
+  let moves = [0, 0, 0];
+  let gaps = [0, 0, 0];
+  golden.cases.forEach((c) => {
+    const S = c.visible;
+    [0.1, 1, 4].forEach((s, k) => {
+      const t = planTeams(S, 'k6', c.slGroups, c.groups, null, s).team;
+      moves[k] += movedCount(t, S.team);
+      gaps[k] += target(S, t);
+    });
+  });
+  assert.ok(moves[0] > moves[1] && moves[1] > moves[2], `moves ${moves}`);
+  assert.ok(gaps[0] < gaps[2], `gaps ${gaps}`);
 });
 
 test('team labels are swapped when more than half would move', () => {

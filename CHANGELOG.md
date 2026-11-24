@@ -39,6 +39,26 @@ The three routes are released separately, each with its own tag: `squadjs-vX.Y.Z
 - Hybrid route docs now use the version 2 form of `ModLoader.json` (`"rulesets": { "<path>": true }`). The older list form still works, ModLoader converts it.
 - The hybrid ruleset was loaded on a local Windows dedicated server with ModLoader: it mounts and is added as a ruleset. The end of match dump itself still needs a played match to be checked.
 
+## [Presets 2.0.0] - 2026-11-24
+
+### Changed
+
+- The presets are now a ladder of five steps instead of five similar choices: `1-strict`, `2-balanced`,
+  `3-relaxed`, `4-together` and `5-light`. Step 1 gives the most even teams, every next step moves fewer
+  players and keeps more friend groups whole: from 10.7% stomped matches and 33% of players moved (step 1) to
+  23.9% and 8% (step 5), against 29.3% and 50% for a random shuffle. Every zip holds the complete `config.json`
+  entry (lock, parties, history, fewer moves); the new `SmartShuffle-all-presets.zip` holds all five. Needs
+  SquadJS 1.3.0, which every zip includes.
+
+## [SquadJS 1.3.0] - 2026-11-24
+
+### Changed
+
+- With `fewerMoves` on, kept friend groups now stay on the side they play on now instead of moving to the side of
+  the balanced split. In the simulation this cuts the players moved with parties up to 4 kept from about 35% to
+  26% at `0.1`, with the same share of stomped matches. With `fewerMoves` at `0` nothing changes.
+- `fewerMoves` now goes up to `10` (was `1`): larger values move even fewer players for more stomped matches.
+
 ## [Presets 1.1.0] - 2026-11-24
 
 ### Changed
@@ -167,6 +187,8 @@ The three routes are released separately, each with its own tag: `squadjs-vX.Y.Z
 
 <!-- Keep this link block at the bottom and add one line per release. -->
 
+[Presets 2.0.0]: https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v2.0.0
+[SquadJS 1.3.0]: https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/squadjs-v1.3.0
 [Presets 1.1.0]: https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v1.1.0
 [SquadJS 1.2.0]: https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/squadjs-v1.2.0
 [Presets 1.0.0]: https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v1.0.0

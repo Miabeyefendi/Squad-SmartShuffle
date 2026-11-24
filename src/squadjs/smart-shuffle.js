@@ -317,7 +317,9 @@ function swapPhase(team, P, allowed, tol = 0.003, maxIter = 300) {
 // friends on: every friend group (party) goes to its majority side, the most similar free player moves the
 // other way, then swaps among free players only repair the balance: with cats the same target as
 // balanceMulti (score sum and every extra dimension), without cats the score sum alone
-export function keepGroups(team, P, groups, sl, cats = null, lam = 1) {
+// sideOf: optional function group -> side the group should end on (fewerMoves: the side it plays on now);
+// left out, a group goes to its majority side in `team`
+export function keepGroups(team, P, groups, sl, cats = null, lam = 1, sideOf = null) {
   const t = team.slice();
   const n = P.length;
   const gid = new Array(n).fill(-1);
@@ -326,7 +328,8 @@ export function keepGroups(team, P, groups, sl, cats = null, lam = 1) {
     const c0 = g.filter((i) => t[i] === 0).length;
     const c1 = g.length - c0;
     let maj;
-    if (c0 !== c1) maj = c0 > c1 ? 0 : 1;
+    if (sideOf) maj = sideOf(g);
+    else if (c0 !== c1) maj = c0 > c1 ? 0 : 1;
     else maj = t[g.reduce((best, i) => (P[i] > P[best] ? i : best), g[0])];
     for (const m of g.filter((i) => t[i] !== maj)) {
       let j = -1;
@@ -401,7 +404,7 @@ export function moveBack(team, P, cats, lam, sl, groups, current, slack) {
 
 // whole pipeline: S as for buildScores, slGroups per player, groups = friend groups to keep together or []
 // adjust: optional function P -> P, applied to the scores before the split (outside rating, see blendScores)
-// fewerMoves: 0 = off; above 0 the split moves fewer players, allowing the balance target to grow by that share
+// fewerMoves: 0 = off; above 0 the split moves fewer players, allowing the balance target to grow to (1 + fewerMoves) x
 export function planTeams(S, formula, slGroups, groups = [], adjust = null, fewerMoves = 0) {
   const f = FORMULAS[formula];
   const scored = buildScores(S, f);
@@ -409,8 +412,22 @@ export function planTeams(S, formula, slGroups, groups = [], adjust = null, fewe
   const P = adjust ? adjust(scored.P) : scored.P;
   const dims = f.rateDims ? [...sub, ...rateDims(S), ...kitRows(S.role)] : [...sub, ...kitRows(S.role)];
   let team = balanceMulti(S.sl, P, dims, f.lam, slGroups);
-  if (groups.length) team = keepGroups(team, P, groups, S.sl, dims, f.lam);
-  if (fewerMoves > 0) team = moveBack(team, P, dims, f.lam, S.sl, groups, S.team, fewerMoves);
+  if (fewerMoves > 0) {
+    // fewer moves: label the split to the current teams, keep each friend group on the side it plays on now
+    // (its majority there), then move players back while the balance allows it
+    const cur = S.team;
+    let moved = 0;
+    for (let i = 0; i < team.length; i++) if (team[i] !== cur[i]) moved += 1;
+    if (moved > team.length / 2) team = team.map((x) => 1 - x);
+    if (groups.length) {
+      const sideNow = (g) => {
+        const on1 = g.filter((i) => cur[i] === 1).length;
+        return 2 * on1 > g.length ? 1 : 2 * on1 < g.length ? 0 : cur[g[0]];
+      };
+      team = keepGroups(team, P, groups, S.sl, dims, f.lam, sideNow);
+    }
+    team = moveBack(team, P, dims, f.lam, S.sl, groups, cur, fewerMoves);
+  } else if (groups.length) team = keepGroups(team, P, groups, S.sl, dims, f.lam);
   return { P, team };
 }
 
@@ -663,7 +680,7 @@ export default class SmartShuffle extends BasePlugin {
       },
       fewerMoves: {
         required: false,
-        description: 'Move fewer players: 0 = off. Above 0 the shuffle keeps more players on their current side and allows the balance gap to grow by that share (0.1 = 10 percent: about a third fewer players moved, same balance in simulation). 0 to 1.',
+        description: 'Move fewer players: 0 = off. Above 0 the shuffle keeps more players, and every kept friend group, on their current side and allows the balance target to grow by that factor (0.1 = 10 percent: a third fewer players moved, same balance in simulation; 4 = up to 5 times: about one player in ten moved, more stomped matches). 0 to 10.',
         default: 0
       },
       skipLayers: {
@@ -1129,7 +1146,7 @@ export default class SmartShuffle extends BasePlugin {
       groups = [...byParty.values()].filter((g) => g.length >= 2 && g.length <= cap);
     }
 
-    const fewer = Math.min(Math.max(+this.options.fewerMoves || 0, 0), 1);
+    const fewer = Math.min(Math.max(+this.options.fewerMoves || 0, 0), 10);
     const { P, team } = planTeams(S, formula, slGroups, groups, this.outsideAdjust(players), fewer);
     return { players, team, P, formula };
   }

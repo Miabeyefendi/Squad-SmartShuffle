@@ -81,39 +81,39 @@
 
 ### 🎛️ Ready-made presets
 
-The **[Presets 1.1.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v1.1.0)** release has one zip per preset. Each zip holds `smart-shuffle.js` from **[SquadJS 1.2.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/squadjs-v1.2.0)**, the entry for `config.json` and a short `README.txt`: unzip one, copy the plugin, paste the entry. Ranked from the most even teams to the least:
+The **[Presets 2.0.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v2.0.0)** release is a ladder of five steps. Step 1 gives the most even teams; every next step moves fewer players and keeps more friend groups whole, for more stomped matches. Each zip holds `smart-shuffle.js` from **[SquadJS 1.3.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/squadjs-v1.3.0)** and a complete `config.json` entry with the lock, party, history and fewer-moves settings. [`SmartShuffle-all-presets.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-all-presets.zip) holds all five.
 
-| Rank | Release file | Type | Best for | Stomped matches | Players moved | Parties kept |
-|:---:|---|---|---|:---:|:---:|:---:|
-| **1** | [`SmartShuffle-quality-max.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v1.1.0/SmartShuffle-quality-max.zip) | Quality | the most even teams | **10.6%** | 33% | none |
-| **2** | [`SmartShuffle-quality-session.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v1.1.0/SmartShuffle-quality-session.zip) | Quality | the same regulars for hours | **10.7%** | 33% | none |
-| **3** | [`SmartShuffle-quality-fresh.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v1.1.0/SmartShuffle-quality-fresh.zip) | Quality | public servers, many players come and go | **10.7%** | 33% | none |
-| **4** | [`SmartShuffle-friends-small.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v1.1.0/SmartShuffle-friends-small.zip) | Friends | players who stay with one or two friends | **11.1%** | 36% | 60% |
-| | *no preset (plugin default)* | | | 11.2% | 50% | 84% |
-| **5** | [`SmartShuffle-friends-squad.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v1.1.0/SmartShuffle-friends-squad.zip) | Friends | clans and friend groups playing as a squad | **11.5%** | 36% | 88% |
-| | *random shuffle (no plugin)* | | | 29.2% | 50% | 24% |
+| Step | Release file | Stomped matches | Players moved | Parties kept whole | Best for |
+|:---:|---|:---:|:---:|:---:|---|
+| **1** | [`SmartShuffle-1-strict.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-1-strict.zip) | **10.7%** | **33%** | 30% | the most even teams, friends do not matter |
+| | *no preset (plugin default)* | 11.5% | 50% | 84% | |
+| **2** | [`SmartShuffle-2-balanced.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-2-balanced.zip) | **14.1%** | **13%** | 86% | most servers: friends stay, few players move |
+| **3** | [`SmartShuffle-3-relaxed.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-3-relaxed.zip) | **18.2%** | **10%** | 87% | players who hate being moved |
+| **4** | [`SmartShuffle-4-together.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-4-together.zip) | **21.8%** | **9%** | 99% | clans and big friend stacks |
+| **5** | [`SmartShuffle-5-light.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-5-light.zip) | **23.9%** | **8%** | 99% | only softening the worst mismatches |
+| | *random shuffle (no plugin)* | 29.3% | 50% | 24% | |
 
-Stomped matches: share of matches that end with a ticket gap over 150, average of three simulated worlds, lower is better. Players moved: share of the server that changes team at a shuffle. Details in [How it works](#-how-it-works).
+Stomped matches: share of matches with a ticket gap over 150, average of three simulated worlds. Players moved: share of the server that changes team at a shuffle. Details in [How it works](#-how-it-works).
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./assets/preset-chart-dark.svg">
-    <img src="./assets/preset-chart.svg" width="92%" alt="Bar chart of stomped matches by preset, best first: 1 quality-max 10.6%, 2 quality-session 10.7%, 3 quality-fresh 10.7%, 4 friends-small 11.1%, no preset 11.2%, 5 friends-squad 11.5%, random shuffle 29.2%">
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/ladder-chart-dark.svg">
+    <img src="./assets/ladder-chart.svg" width="92%" alt="Preset ladder: step 1 strict 10.7% stomped and 33% of players moved, no preset 11.5% and 50%, step 2 balanced 14.1% and 13%, step 3 relaxed 18.2% and 10%, step 4 together 21.8% and 9%, step 5 light 23.9% and 8%, random shuffle 29.3% and 50%">
   </picture>
 </p>
 
-**What each preset changes**, in the same order. Everything else stays at the plugin default.
+**What changes from step to step.** All five use `historyRounds` 4 and `autoShuffle` false; everything else stays at the plugin default.
 
-| Rank | Preset | `lockMode` | `maxPartySize` | `historyRounds` | `historyHours` | `fewerMoves` |
-|:---:|---|:---:|:---:|:---:|:---:|:---:|
-| 1 | `quality-max` | 1 | - | 4 | 6 | 0.1 |
-| 2 | `quality-session` | 1 | - | 8 | 12 | 0.1 |
-| 3 | `quality-fresh` | 1 | - | 2 | 3 | 0.1 |
-| 4 | `friends-small` | 2 | 3 | 2 | 6 | 0.1 |
-|  | *no preset (plugin default)* | 2 | 4 | 4 | 6 | 0 |
-| 5 | `friends-squad` | 2 | 6 | 4 | 6 | 0.1 |
+| Step | Preset | `lockMode` | `maxPartySize` | `fewerMoves` |
+|:---:|---|:---:|:---:|:---:|
+| 1 | `1-strict` | 1 | parties ignored | 0.1 |
+|  | *no preset (plugin default)* | 2 | 4 | 0 |
+| 2 | `2-balanced` | 2 | 4 | 1 |
+| 3 | `3-relaxed` | 2 | 4 | 4 |
+| 4 | `4-together` | 2 | no limit | 2 |
+| 5 | `5-light` | 2 | no limit | 4 |
 
-For the old behaviour, where about half of the server moves at a shuffle, use the [Presets 1.0.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v1.0.0) release.
+The earlier presets stay available in [Presets 1.1.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v1.1.0).
 
 <details>
 <summary><b>Hybrid route (full scoreboard)</b></summary>
@@ -306,36 +306,28 @@ Four ways to rate the players, each tested over 43,200 simulated matches. The bl
 
 ### Preset simulation
 
-Each preset was played in three simulated worlds, 7,200 matches each (21,600 per preset), with 100 players, 6 to 10 small parties of 2 to 4 and 1 or 2 stacks of 6 to 9 per match, the ticket model of the earlier rounds and the same session history with 20% of players new each round. A match counts as stomped when the ticket gap is over 150.
+Each step was played in three simulated worlds, 7,200 matches each (21,600 per step), with 100 players, 6 to 10 small parties of 2 to 4 and 1 or 2 stacks of 6 to 9 per match, parties starting on one team as they do in Squad, the ticket model of the earlier rounds and the session history with 20% of players new each round. A match counts as stomped when the ticket gap is over 150.
 
 - **main:** tonight's form varies (15%) and party members play better together (party synergy 15%)
 - **no synergy:** parties are not stronger together
 - **volatile:** tonight's form varies twice as much (30%)
 
-| Rank | Preset | main | no synergy | volatile |
+| Step | Preset | main | no synergy | volatile |
 |:---:|---|:---:|:---:|:---:|
-| 1 | `quality-max` | 10.0% | 10.5% | 11.4% |
-| 2 | `quality-session` | 10.4% | 10.1% | 11.7% |
-| 3 | `quality-fresh` | 10.4% | 10.1% | 11.7% |
-| 4 | `friends-small` | 10.6% | 10.2% | 12.4% |
-|  | *no preset (plugin default)* | 10.7% | 10.7% | 12.1% |
-| 5 | `friends-squad` | 11.0% | 10.8% | 12.8% |
-|  | *random shuffle (no plugin)* | 28.3% | 27.4% | 31.8% |
+| 1 | `1-strict` | 10.3% | 10.1% | 11.8% |
+|  | *no preset (plugin default)* | 10.8% | 11.0% | 12.6% |
+| 2 | `2-balanced` | 13.5% | 12.9% | 15.8% |
+| 3 | `3-relaxed` | 17.6% | 17.0% | 20.1% |
+| 4 | `4-together` | 21.3% | 18.6% | 25.4% |
+| 5 | `5-light` | 23.6% | 20.5% | 27.7% |
+|  | *random shuffle (no plugin)* | 27.8% | 27.6% | 32.3% |
 
 What it showed:
 
-- All five presets cut stomped matches from about 28% (random) to 10 to 13% and move 33 to 36% of the players per shuffle instead of 50%.
-- The three quality presets beat the current default by 0.3 to 0.8 points in every world.
-- Keeping friends costs balance, and bigger kept groups cost more: duos and trios cost almost nothing, parties up to 6 cost about the same as the current default, keeping every stack of 7 to 9 raises stomps to 14% (17% in the volatile world). That is why no preset keeps every party.
-- **Fewer moves.** The plugin picks the two sides without looking at who is where now, so it moved about half of the server at every shuffle. `fewerMoves` first swaps the side labels when that saves moves, then moves players back to their current side in pairs while the balance stays within that share of the best split. The middle ground is `0.1`: 33% of players moved and the same share of stomped matches within noise. `0.2` moves 27% but adds about 0.5 points of stomps. A split that starts from the current teams moves only 19%, but adds 0.5 to 1 point, so it was left out.
-- A search from 8 starting splits was also tested and left out: a tighter score gap on paper, no fewer stomps.
-
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./assets/moves-chart-dark.svg">
-    <img src="./assets/moves-chart.svg" width="92%" alt="Bar chart of players moved per shuffle: fewerMoves off 50%, 0.1 33% (recommended), 0.2 27%, 0.3 24%, starting from the current teams 19%">
-  </picture>
-</p>
+- The ladder spreads from 10.7% to 23.9% stomped matches while the share of players moved falls from 33% to 8%. Even the last step stays well under a random shuffle (29.3%).
+- Few moves need the parties to stay where they are. With `fewerMoves` on, the plugin keeps each kept party on the side it plays on now (since SquadJS 1.3.0). Putting kept parties on the balanced side instead still moved at least 19% of the server.
+- Big stacks cost the most balance: steps 4 and 5 keep every party, so they rise fastest in the volatile world.
+- Tested and left out: a search from 8 starting splits (a tighter score gap on paper, no fewer stomps) and a split that starts from the current teams (fewer moves than step 1, but more stomps than step 2 at more moves).
 
 These are model results, not live data.
 
@@ -358,7 +350,7 @@ All options go into the plugin entry in SquadJS `config.json`.
 | `maxPartySize` | `4` | Lock mode 2: a party up to this size stays together, a bigger one is split. 0 means no limit |
 | `skipLayers` | `["seed", "jensen", "invasion"]` | Automatic shuffle skips a round whose layer name contains one of these. `!smartshuffle now` always runs |
 | `minPlayers` | `40` | Automatic shuffle skips a round with fewer players. `!smartshuffle now` always runs |
-| `fewerMoves` | `0` | Move fewer players. 0 is off. Above 0 more players stay on their current side and the balance gap may grow by that share. `0.1` moves about a third fewer players (50% down to 33% in simulation) with the same share of stomped matches |
+| `fewerMoves` | `0` | Move fewer players. 0 is off. Above 0 more players stay on their current side and the balance gap may grow by that share. `0.1` moves about a third fewer players (50% down to 33% in simulation) with the same share of stomped matches. Up to `10`; larger values move even fewer players (`4`: about one in ten) for more stomped matches. While it is on, kept parties stay on the side they play on now |
 | `shuffleDelaySeconds` | `0` | Seconds to wait after the round ends before players are moved (time to read the scoreboard), 0 to 25 |
 | `shuffleDeadlineSeconds` | `30` | Nobody is moved later than this many seconds after the round ended, and never after the next map started |
 | `announceMinutes` | `10` | While a shuffle is due, tell the server every this many minutes. 0 turns the announcements off |

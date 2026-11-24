@@ -81,39 +81,39 @@
 
 ### 🎛️ 现成预设
 
-**[Presets 1.1.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v1.1.0)** 版本中每个预设一个 zip。每个 zip 都包含 **[SquadJS 1.2.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/squadjs-v1.2.0)** 的 `smart-shuffle.js`、`config.json` 的条目和一份简短的 `README.txt`：解压一个，复制插件，粘贴条目。按队伍平衡程度从高到低排列：
+**[Presets 2.0.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v2.0.0)** 版本是一个五级阶梯。第 1 级队伍最平衡；之后每一级移动的玩家更少，保持完整的朋友组更多，代价是碾压局更多。每个 zip 都包含 **[SquadJS 1.3.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/squadjs-v1.3.0)** 的 `smart-shuffle.js`，以及一个完整的 `config.json` 条目（锁定、组队、历史和少移动设置）。[`SmartShuffle-all-presets.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-all-presets.zip) 包含全部五个。
 
-| 排名 | 版本文件 | 类型 | 最适合 | 碾压局 | 被移动的玩家 | 保持在一起的组队 |
-|:---:|---|---|---|:---:|:---:|:---:|
-| **1** | [`SmartShuffle-quality-max.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v1.1.0/SmartShuffle-quality-max.zip) | 质量 | 最平衡的队伍 | **10.6%** | 33% | 无 |
-| **2** | [`SmartShuffle-quality-session.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v1.1.0/SmartShuffle-quality-session.zip) | 质量 | 同一批常客连续玩很多小时 | **10.7%** | 33% | 无 |
-| **3** | [`SmartShuffle-quality-fresh.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v1.1.0/SmartShuffle-quality-fresh.zip) | 质量 | 玩家进出频繁的公共服务器 | **10.7%** | 33% | 无 |
-| **4** | [`SmartShuffle-friends-small.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v1.1.0/SmartShuffle-friends-small.zip) | 朋友 | 想和一两个朋友在一起的玩家 | **11.1%** | 36% | 60% |
-| | *不用预设（插件默认）* | | | 11.2% | 50% | 84% |
-| **5** | [`SmartShuffle-friends-squad.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v1.1.0/SmartShuffle-friends-squad.zip) | 朋友 | 以小队形式一起玩的战队和朋友组 | **11.5%** | 36% | 88% |
-| | *随机打乱（不用插件）* | | | 29.2% | 50% | 24% |
+| 级别 | 版本文件 | 碾压局 | 被移动的玩家 | 保持完整的组队 | 最适合 |
+|:---:|---|:---:|:---:|:---:|---|
+| **1** | [`SmartShuffle-1-strict.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-1-strict.zip) | **10.7%** | **33%** | 30% | 最平衡的队伍，不在乎朋友 |
+| | *不用预设（插件默认）* | 11.5% | 50% | 84% | |
+| **2** | [`SmartShuffle-2-balanced.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-2-balanced.zip) | **14.1%** | **13%** | 86% | 大多数服务器：朋友在一起，少量玩家被移动 |
+| **3** | [`SmartShuffle-3-relaxed.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-3-relaxed.zip) | **18.2%** | **10%** | 87% | 非常讨厌被移动的玩家 |
+| **4** | [`SmartShuffle-4-together.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-4-together.zip) | **21.8%** | **9%** | 99% | 战队和大的朋友组 |
+| **5** | [`SmartShuffle-5-light.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-5-light.zip) | **23.9%** | **8%** | 99% | 只缓和最严重的失衡 |
+| | *随机打乱（不用插件）* | 29.3% | 50% | 24% | |
 
-碾压局：票数差超过 150 的对局比例，三个模拟世界的平均值，越低越好。被移动的玩家：一次打乱中换队的玩家比例。详见[工作原理](#-工作原理)。
+碾压局：票数差超过 150 的对局比例，三个模拟世界的平均值。被移动的玩家：一次打乱中换队的玩家比例。详见[工作原理](#-工作原理)。
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./assets/preset-chart-dark.svg">
-    <img src="./assets/preset-chart.svg" width="92%" alt="Bar chart of stomped matches by preset, best first: 1 quality-max 10.6%, 2 quality-session 10.7%, 3 quality-fresh 10.7%, 4 friends-small 11.1%, no preset 11.2%, 5 friends-squad 11.5%, random shuffle 29.2%">
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/ladder-chart-dark.svg">
+    <img src="./assets/ladder-chart.svg" width="92%" alt="Preset ladder: step 1 strict 10.7% stomped and 33% of players moved, no preset 11.5% and 50%, step 2 balanced 14.1% and 13%, step 3 relaxed 18.2% and 10%, step 4 together 21.8% and 9%, step 5 light 23.9% and 8%, random shuffle 29.3% and 50%">
   </picture>
 </p>
 
-**每个预设改动了什么**，顺序相同。其余设置保持插件默认值。
+**每一级改动了什么。** 五个预设都使用 `historyRounds` 4 和 `autoShuffle` false；其余设置保持插件默认值。
 
-| 排名 | 预设 | `lockMode` | `maxPartySize` | `historyRounds` | `historyHours` | `fewerMoves` |
-|:---:|---|:---:|:---:|:---:|:---:|:---:|
-| 1 | `quality-max` | 1 | - | 4 | 6 | 0.1 |
-| 2 | `quality-session` | 1 | - | 8 | 12 | 0.1 |
-| 3 | `quality-fresh` | 1 | - | 2 | 3 | 0.1 |
-| 4 | `friends-small` | 2 | 3 | 2 | 6 | 0.1 |
-|  | *不用预设（插件默认）* | 2 | 4 | 4 | 6 | 0 |
-| 5 | `friends-squad` | 2 | 6 | 4 | 6 | 0.1 |
+| 级别 | 预设 | `lockMode` | `maxPartySize` | `fewerMoves` |
+|:---:|---|:---:|:---:|:---:|
+| 1 | `1-strict` | 1 | 忽略组队 | 0.1 |
+|  | *不用预设（插件默认）* | 2 | 4 | 0 |
+| 2 | `2-balanced` | 2 | 4 | 1 |
+| 3 | `3-relaxed` | 2 | 4 | 4 |
+| 4 | `4-together` | 2 | 不限 | 2 |
+| 5 | `5-light` | 2 | 不限 | 4 |
 
-如需旧行为（每次打乱移动约一半玩家），请使用 [Presets 1.0.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v1.0.0) 版本。
+旧的预设仍可在 [Presets 1.1.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v1.1.0) 中获取。
 
 <details>
 <summary><b>混合方式（完整记分板）</b></summary>
@@ -300,36 +300,28 @@ Smart Shuffle report: 44 moved, 0 not placed, score gap 21% -> 1%, done in 3.2 s
 
 ### 预设模拟
 
-每个预设都在三个模拟世界中各打了 7,200 局（每个预设共 21,600 局）：100 名玩家，每局 6 到 10 个 2 到 4 人的小组队和 1 到 2 个 6 到 9 人的大组队，使用前几轮的票数模型，以及同样的会话历史（每轮 20% 的玩家是新玩家）。票数差超过 150 的对局算作碾压局。
+每一级都在三个模拟世界中各打了 7,200 局（每级共 21,600 局）：100 名玩家，每局 6 到 10 个 2 到 4 人的小组队和 1 到 2 个 6 到 9 人的大组队，组队像在 Squad 中一样从同一队伍开始，使用前几轮的票数模型，以及每轮 20% 新玩家的会话历史。票数差超过 150 的对局算作碾压局。
 
 - **主要：** 今晚的状态会变化（15%），组队成员一起时表现更好（组队协同 15%）
 - **无协同：** 组队在一起时并不更强
 - **波动：** 今晚的状态变化翻倍（30%）
 
-| 排名 | 预设 | 主要 | 无协同 | 波动 |
+| 级别 | 预设 | 主要 | 无协同 | 波动 |
 |:---:|---|:---:|:---:|:---:|
-| 1 | `quality-max` | 10.0% | 10.5% | 11.4% |
-| 2 | `quality-session` | 10.4% | 10.1% | 11.7% |
-| 3 | `quality-fresh` | 10.4% | 10.1% | 11.7% |
-| 4 | `friends-small` | 10.6% | 10.2% | 12.4% |
-|  | *不用预设（插件默认）* | 10.7% | 10.7% | 12.1% |
-| 5 | `friends-squad` | 11.0% | 10.8% | 12.8% |
-|  | *随机打乱（不用插件）* | 28.3% | 27.4% | 31.8% |
+| 1 | `1-strict` | 10.3% | 10.1% | 11.8% |
+|  | *不用预设（插件默认）* | 10.8% | 11.0% | 12.6% |
+| 2 | `2-balanced` | 13.5% | 12.9% | 15.8% |
+| 3 | `3-relaxed` | 17.6% | 17.0% | 20.1% |
+| 4 | `4-together` | 21.3% | 18.6% | 25.4% |
+| 5 | `5-light` | 23.6% | 20.5% | 27.7% |
+|  | *随机打乱（不用插件）* | 27.8% | 27.6% | 32.3% |
 
 结果：
 
-- 五个预设都把碾压局从约 28%（随机）降到 10% 到 13%，每次打乱移动 33% 到 36% 的玩家，而不是 50%。
-- 三个质量预设在每个世界中都比当前默认好 0.3 到 0.8 个百分点。
-- 保持朋友在一起会牺牲平衡，组越大牺牲越多：两人和三人几乎没有代价，最多 6 人的组队代价与当前默认相当，保留所有 7 到 9 人的大组会把碾压局提高到 14%（波动世界中为 17%）。所以没有预设会保留所有组队。
-- **更少移动。** 插件在选择两边时不看玩家现在在哪一边，所以每次打乱大约移动服务器一半的玩家。`fewerMoves` 先在能减少移动时交换两边的标签，然后在平衡保持在最佳分配的该比例之内时，成对地把玩家放回他们当前的队伍。折中点是 `0.1`：移动 33% 的玩家，碾压局比例在噪声范围内不变。`0.2` 移动 27%，但碾压局增加约 0.5 个百分点。从当前队伍出发的分配只移动 19%，但碾压局增加 0.5 到 1 个百分点，所以没有采用。
-- 还测试过从 8 个初始分配开始的搜索，但没有采用：纸面上分数差更小，但碾压局没有减少。
-
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./assets/moves-chart-dark.svg">
-    <img src="./assets/moves-chart.svg" width="92%" alt="Bar chart of players moved per shuffle: fewerMoves off 50%, 0.1 33% (recommended), 0.2 27%, 0.3 24%, starting from the current teams 19%">
-  </picture>
-</p>
+- 阶梯的碾压局从 10.7% 扩展到 23.9%，被移动的玩家比例从 33% 降到 8%。即使最后一级也明显低于随机打乱（29.3%）。
+- 少移动需要组队留在原地。开启 `fewerMoves` 时，插件会把每个保持的组队留在其当前所在的一边（从 SquadJS 1.3.0 起）。如果把这些组队放到平衡分配的一边，仍会移动至少 19% 的玩家。
+- 大组队对平衡的代价最大：第 4 和第 5 级保留所有组队，因此在波动世界中上升最快。
+- 测试过但没有采用：从 8 个初始分配开始的搜索（纸面上分数差更小，但碾压局没有减少），以及从当前队伍出发的分配（比第 1 级移动更少，但比第 2 级移动更多且碾压局更多）。
 
 这些是模型结果，不是实际数据。
 
@@ -352,7 +344,7 @@ Smart Shuffle report: 44 moved, 0 not placed, score gap 21% -> 1%, done in 3.2 s
 | `maxPartySize` | `4` | 锁定模式 2：不超过此人数的 party 留在一起，更大的会被拆开。0 表示不限制 |
 | `skipLayers` | `["seed", "jensen", "invasion"]` | 自动分队会跳过地图名包含其中任一项的对局。`!smartshuffle now` 始终执行 |
 | `minPlayers` | `40` | 自动分队会跳过人数少于此值的对局。`!smartshuffle now` 始终执行 |
-| `fewerMoves` | `0` | 少移动玩家。0 为关闭。大于 0 时更多玩家留在当前队伍，平衡差距最多按此比例增大。`0.1` 约少移动三分之一的玩家（模拟中从 50% 降到 33%），碾压局比例不变 |
+| `fewerMoves` | `0` | 少移动玩家。0 为关闭。大于 0 时更多玩家留在当前队伍，平衡差距最多按此比例增大。`0.1` 约少移动三分之一的玩家（模拟中从 50% 降到 33%），碾压局比例不变。最大 `10`；数值越大移动的玩家越少（`4`：约十分之一），碾压局越多。开启时，保持的组队留在其当前所在的一边 |
 | `shuffleDelaySeconds` | `0` | 对局结束后移动玩家前等待的秒数（留出看计分板的时间），0 到 25 |
 | `shuffleDeadlineSeconds` | `30` | 对局结束超过这么多秒后不再移动任何人，下一张地图开始后也绝不移动 |
 | `announceMinutes` | `10` | 有分队待执行时，每隔这么多分钟向全服公告一次。0 表示不公告 |
