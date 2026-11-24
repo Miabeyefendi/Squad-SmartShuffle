@@ -79,6 +79,42 @@
 
 4. 重启 SquadJS。
 
+### 🎛️ 现成预设
+
+**[Presets 1.1.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v1.1.0)** 版本中每个预设一个 zip。每个 zip 都包含 **[SquadJS 1.2.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/squadjs-v1.2.0)** 的 `smart-shuffle.js`、`config.json` 的条目和一份简短的 `README.txt`：解压一个，复制插件，粘贴条目。按队伍平衡程度从高到低排列：
+
+| 排名 | 版本文件 | 类型 | 最适合 | 碾压局 | 被移动的玩家 | 保持在一起的组队 |
+|:---:|---|---|---|:---:|:---:|:---:|
+| **1** | [`SmartShuffle-quality-max.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v1.1.0/SmartShuffle-quality-max.zip) | 质量 | 最平衡的队伍 | **10.6%** | 33% | 无 |
+| **2** | [`SmartShuffle-quality-session.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v1.1.0/SmartShuffle-quality-session.zip) | 质量 | 同一批常客连续玩很多小时 | **10.7%** | 33% | 无 |
+| **3** | [`SmartShuffle-quality-fresh.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v1.1.0/SmartShuffle-quality-fresh.zip) | 质量 | 玩家进出频繁的公共服务器 | **10.7%** | 33% | 无 |
+| **4** | [`SmartShuffle-friends-small.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v1.1.0/SmartShuffle-friends-small.zip) | 朋友 | 想和一两个朋友在一起的玩家 | **11.1%** | 36% | 60% |
+| | *不用预设（插件默认）* | | | 11.2% | 50% | 84% |
+| **5** | [`SmartShuffle-friends-squad.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v1.1.0/SmartShuffle-friends-squad.zip) | 朋友 | 以小队形式一起玩的战队和朋友组 | **11.5%** | 36% | 88% |
+| | *随机打乱（不用插件）* | | | 29.2% | 50% | 24% |
+
+碾压局：票数差超过 150 的对局比例，三个模拟世界的平均值，越低越好。被移动的玩家：一次打乱中换队的玩家比例。详见[工作原理](#-工作原理)。
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/preset-chart-dark.svg">
+    <img src="./assets/preset-chart.svg" width="92%" alt="Bar chart of stomped matches by preset, best first: 1 quality-max 10.6%, 2 quality-session 10.7%, 3 quality-fresh 10.7%, 4 friends-small 11.1%, no preset 11.2%, 5 friends-squad 11.5%, random shuffle 29.2%">
+  </picture>
+</p>
+
+**每个预设改动了什么**，顺序相同。其余设置保持插件默认值。
+
+| 排名 | 预设 | `lockMode` | `maxPartySize` | `historyRounds` | `historyHours` | `fewerMoves` |
+|:---:|---|:---:|:---:|:---:|:---:|:---:|
+| 1 | `quality-max` | 1 | - | 4 | 6 | 0.1 |
+| 2 | `quality-session` | 1 | - | 8 | 12 | 0.1 |
+| 3 | `quality-fresh` | 1 | - | 2 | 3 | 0.1 |
+| 4 | `friends-small` | 2 | 3 | 2 | 6 | 0.1 |
+|  | *不用预设（插件默认）* | 2 | 4 | 4 | 6 | 0 |
+| 5 | `friends-squad` | 2 | 6 | 4 | 6 | 0.1 |
+
+如需旧行为（每次打乱移动约一半玩家），请使用 [Presets 1.0.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v1.0.0) 版本。
+
 <details>
 <summary><b>混合方式（完整记分板）</b></summary>
 
@@ -97,59 +133,6 @@
 然后在 `Saved/ModLoader/ModLoader.json` 中注册。每个蓝图函数在 `smart-shuffle.js` 中都有同名且经过测试的对应实现。
 
 </details>
-
----
-
-## 🎛️ 现成预设
-
-为 SquadJS 方式准备的五个现成 zip：两个面向玩家想和朋友待在一起的服务器，三个只追求平衡的队伍。每个 zip 都包含同一个 `smart-shuffle.js`（SquadJS 1.2.0）、`config.json` 的插件条目和一份简短的 `README.txt`。只有设置不同，所以只需修改 `config.json` 就能切换预设。 从 1.1.0 起，每个预设还把 `fewerMoves` 设为 `0.1`，因此一次打乱只移动服务器约三分之一的玩家，而不是一半。
-
-**下载：** [presets-v1.1.0 版本](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v1.1.0)
-
-| 预设 | 类型 | `lockMode` | `maxPartySize` | `historyRounds` | 碾压局（主要 / 无协同 / 波动） | 被移动的玩家 | 保持在一起的组队 |
-|---|---|---|---|---|---|---|---|
-| `friends-small` | 朋友：两人和三人 | 2 | 3 | 2 | 10.6% / 10.2% / 12.4% | 36% | 60% |
-| `friends-squad` | 朋友：最多 6 人的整个小队 | 2 | 6 | 4 | 11.0% / 10.8% / 12.8% | 36% | 88% |
-| `quality-max` | 质量：最平衡 | 1 | - | 4 | 10.0% / 10.5% / 11.4% | 33% | - |
-| `quality-session` | 质量：长时间会话 | 1 | - | 8 (12 h) | 10.4% / 10.1% / 11.7% | 33% | - |
-| `quality-fresh` | 质量：今晚的状态 | 1 | - | 2 (3 h) | 10.4% / 10.1% / 11.7% | 33% | - |
-| | 随机打乱（对比） | | | | 28.3% / 27.4% / 31.8% | 50% | 24% |
-| | 当前默认（`lockMode` 2，上限 4，历史 4） | | | | 10.7% / 10.7% / 12.1% | 50% | 84% |
-| | 所有组队都保持在一起，不限人数（对比） | | | | 14.3% / 12.8% / 17.2% | 50% | 99% |
-
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./assets/preset-chart-dark.svg">
-    <img src="./assets/preset-chart.svg" width="92%" alt="Bar chart of stomped matches by preset: random shuffle 28.3%, current default 10.7%, friends-small 10.6%, friends-squad 11.0%, quality-max 10.0%, quality-session 10.4%, quality-fresh 10.4%">
-  </picture>
-</p>
-
-**如何选择。** 玩家经常要求和一个朋友在一起：`friends-small`。战队和朋友组以整个小队一起玩：`friends-squad`。不在乎朋友，只要最平衡的队伍：`quality-max`。同一批常客连续玩很多小时：`quality-session`。玩家进出频繁的公共服务器：`quality-fresh`。
-
-### 预设模拟
-
-每个预设都在三个模拟世界中各打了 7,200 局（每个预设共 21,600 局）：100 名玩家，每局 6 到 10 个 2 到 4 人的小组队和 1 到 2 个 6 到 9 人的大组队，使用前几轮的票数模型，以及同样的会话历史（每轮 20% 的玩家是新玩家）。票数差超过 150 的对局算作碾压局。
-
-- **主要：** 今晚的状态会变化（15%），组队成员一起时表现更好（组队协同 15%）
-- **无协同：** 组队在一起时并不更强
-- **波动：** 今晚的状态变化翻倍（30%）
-
-结果：
-
-- 五个预设都把碾压局从约 28%（随机）降到 10% 到 13%，每次打乱移动 33% 到 36% 的玩家，而不是 50%。
-- 三个质量预设在每个世界中都比当前默认好 0.3 到 0.8 个百分点。
-- 保持朋友在一起会牺牲平衡，组越大牺牲越多：两人和三人几乎没有代价，最多 6 人的组队代价与当前默认相当，保留所有 7 到 9 人的大组会把碾压局提高到 14%（波动世界中为 17%）。所以没有预设会保留所有组队。
-- **更少移动。** 插件在选择两边时不看玩家现在在哪一边，所以每次打乱大约移动服务器一半的玩家。`fewerMoves` 先在能减少移动时交换两边的标签，然后在平衡保持在最佳分配的该比例之内时，成对地把玩家放回他们当前的队伍。折中点是 `0.1`：移动 33% 的玩家，碾压局比例在噪声范围内不变。`0.2` 移动 27%，但碾压局增加约 0.5 个百分点。从当前队伍出发的分配只移动 19%，但碾压局增加 0.5 到 1 个百分点，所以没有采用。
-- 还测试过从 8 个初始分配开始的搜索，但没有采用：纸面上分数差更小，但碾压局没有减少。
-
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./assets/moves-chart-dark.svg">
-    <img src="./assets/moves-chart.svg" width="92%" alt="Bar chart of players moved per shuffle: fewerMoves off 50%, 0.1 33% (recommended), 0.2 27%, 0.3 24%, starting from the current teams 19%">
-  </picture>
-</p>
-
-这些是模型结果，不是实际数据。
 
 ---
 
@@ -313,6 +296,42 @@ Smart Shuffle report: 44 moved, 0 not placed, score gap 21% -> 1%, done in 3.2 s
 </p>
 
 四种给玩家评分的方式，每种都在 43,200 场模拟对局中测试。蓝色条是 Smart Shuffle 默认使用的方法。
+
+
+### 预设模拟
+
+每个预设都在三个模拟世界中各打了 7,200 局（每个预设共 21,600 局）：100 名玩家，每局 6 到 10 个 2 到 4 人的小组队和 1 到 2 个 6 到 9 人的大组队，使用前几轮的票数模型，以及同样的会话历史（每轮 20% 的玩家是新玩家）。票数差超过 150 的对局算作碾压局。
+
+- **主要：** 今晚的状态会变化（15%），组队成员一起时表现更好（组队协同 15%）
+- **无协同：** 组队在一起时并不更强
+- **波动：** 今晚的状态变化翻倍（30%）
+
+| 排名 | 预设 | 主要 | 无协同 | 波动 |
+|:---:|---|:---:|:---:|:---:|
+| 1 | `quality-max` | 10.0% | 10.5% | 11.4% |
+| 2 | `quality-session` | 10.4% | 10.1% | 11.7% |
+| 3 | `quality-fresh` | 10.4% | 10.1% | 11.7% |
+| 4 | `friends-small` | 10.6% | 10.2% | 12.4% |
+|  | *不用预设（插件默认）* | 10.7% | 10.7% | 12.1% |
+| 5 | `friends-squad` | 11.0% | 10.8% | 12.8% |
+|  | *随机打乱（不用插件）* | 28.3% | 27.4% | 31.8% |
+
+结果：
+
+- 五个预设都把碾压局从约 28%（随机）降到 10% 到 13%，每次打乱移动 33% 到 36% 的玩家，而不是 50%。
+- 三个质量预设在每个世界中都比当前默认好 0.3 到 0.8 个百分点。
+- 保持朋友在一起会牺牲平衡，组越大牺牲越多：两人和三人几乎没有代价，最多 6 人的组队代价与当前默认相当，保留所有 7 到 9 人的大组会把碾压局提高到 14%（波动世界中为 17%）。所以没有预设会保留所有组队。
+- **更少移动。** 插件在选择两边时不看玩家现在在哪一边，所以每次打乱大约移动服务器一半的玩家。`fewerMoves` 先在能减少移动时交换两边的标签，然后在平衡保持在最佳分配的该比例之内时，成对地把玩家放回他们当前的队伍。折中点是 `0.1`：移动 33% 的玩家，碾压局比例在噪声范围内不变。`0.2` 移动 27%，但碾压局增加约 0.5 个百分点。从当前队伍出发的分配只移动 19%，但碾压局增加 0.5 到 1 个百分点，所以没有采用。
+- 还测试过从 8 个初始分配开始的搜索，但没有采用：纸面上分数差更小，但碾压局没有减少。
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/moves-chart-dark.svg">
+    <img src="./assets/moves-chart.svg" width="92%" alt="Bar chart of players moved per shuffle: fewerMoves off 50%, 0.1 33% (recommended), 0.2 27%, 0.3 24%, starting from the current teams 19%">
+  </picture>
+</p>
+
+这些是模型结果，不是实际数据。
 
 ---
 

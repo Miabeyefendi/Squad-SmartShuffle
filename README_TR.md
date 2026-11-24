@@ -79,6 +79,42 @@
 
 4. SquadJS'i yeniden başlat.
 
+### 🎛️ Hazır presetler
+
+**[Presets 1.1.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v1.1.0)** sürümünde her preset için bir zip var. Her zip'te **[SquadJS 1.2.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/squadjs-v1.2.0)** sürümündeki `smart-shuffle.js`, `config.json` girdisi ve kısa bir `README.txt` bulunur: birini aç, eklentiyi kopyala, girdiyi yapıştır. En dengeli takımdan en az dengeliye doğru sıralı:
+
+| Sıra | Sürüm dosyası | Tür | En uygun | Ezilen maç | Taşınan oyuncu | Birlikte kalan parti |
+|:---:|---|---|---|:---:|:---:|:---:|
+| **1** | [`SmartShuffle-quality-max.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v1.1.0/SmartShuffle-quality-max.zip) | Kalite | en dengeli takımlar | **10.6%** | 33% | yok |
+| **2** | [`SmartShuffle-quality-session.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v1.1.0/SmartShuffle-quality-session.zip) | Kalite | saatlerce oynayan aynı oyuncular | **10.7%** | 33% | yok |
+| **3** | [`SmartShuffle-quality-fresh.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v1.1.0/SmartShuffle-quality-fresh.zip) | Kalite | oyuncuların sık girip çıktığı açık sunucu | **10.7%** | 33% | yok |
+| **4** | [`SmartShuffle-friends-small.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v1.1.0/SmartShuffle-friends-small.zip) | Arkadaş | bir iki arkadaşıyla kalmak isteyenler | **11.1%** | 36% | 60% |
+| | *preset yok (eklenti varsayılanı)* | | | 11.2% | 50% | 84% |
+| **5** | [`SmartShuffle-friends-squad.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v1.1.0/SmartShuffle-friends-squad.zip) | Arkadaş | squad olarak oynayan klan ve gruplar | **11.5%** | 36% | 88% |
+| | *rastgele karıştırma (eklenti yok)* | | | 29.2% | 50% | 24% |
+
+Ezilen maç: bilet farkı 150'yi geçen maçların oranı, üç simüle dünyanın ortalaması, düşük olan iyi. Taşınan oyuncu: karıştırmada takım değiştiren oyuncuların oranı. Ayrıntılar [Nasıl çalışır](#-nasıl-çalışır) bölümünde.
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/preset-chart-dark.svg">
+    <img src="./assets/preset-chart.svg" width="92%" alt="Bar chart of stomped matches by preset, best first: 1 quality-max 10.6%, 2 quality-session 10.7%, 3 quality-fresh 10.7%, 4 friends-small 11.1%, no preset 11.2%, 5 friends-squad 11.5%, random shuffle 29.2%">
+  </picture>
+</p>
+
+**Her preset neyi değiştiriyor**, aynı sırayla. Gerisi eklentinin varsayılanında kalır.
+
+| Sıra | Preset | `lockMode` | `maxPartySize` | `historyRounds` | `historyHours` | `fewerMoves` |
+|:---:|---|:---:|:---:|:---:|:---:|:---:|
+| 1 | `quality-max` | 1 | - | 4 | 6 | 0.1 |
+| 2 | `quality-session` | 1 | - | 8 | 12 | 0.1 |
+| 3 | `quality-fresh` | 1 | - | 2 | 3 | 0.1 |
+| 4 | `friends-small` | 2 | 3 | 2 | 6 | 0.1 |
+|  | *preset yok (eklenti varsayılanı)* | 2 | 4 | 4 | 6 | 0 |
+| 5 | `friends-squad` | 2 | 6 | 4 | 6 | 0.1 |
+
+Sunucunun yaklaşık yarısının taşındığı eski davranış için [Presets 1.0.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v1.0.0) sürümünü kullan.
+
 <details>
 <summary><b>Karma yol (tam skorbord)</b></summary>
 
@@ -98,59 +134,6 @@ sonra `Saved/ModLoader/ModLoader.json` içine kaydet. Her Blueprint fonksiyonunu
 adla test edilmiş bir karşılığı var.
 
 </details>
-
----
-
-## 🎛️ Hazır presetler
-
-SquadJS yolu için beş hazır zip: ikisi oyuncuların arkadaşıyla kalmak istediği sunucular için, üçü sadece dengeli takım hedefliyor. Her zip'te aynı `smart-shuffle.js` (SquadJS 1.2.0), `config.json` için eklenti girdisi ve kısa bir `README.txt` var. Sadece ayarlar farklı, preset değiştirmek için `config.json` yeterli. 1.1.0'dan beri her preset `fewerMoves` ayarını da `0.1` yapıyor, böylece bir karıştırma sunucunun yarısı yerine yaklaşık üçte birini taşıyor.
-
-**İndir:** [presets-v1.1.0 sürümü](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v1.1.0)
-
-| Preset | Tür | `lockMode` | `maxPartySize` | `historyRounds` | Ezilen maç (ana / sinerjisiz / dalgalı) | Taşınan oyuncu | Birlikte kalan parti |
-|---|---|---|---|---|---|---|---|
-| `friends-small` | Arkadaş: ikili ve üçlü | 2 | 3 | 2 | 10.6% / 10.2% / 12.4% | 36% | 60% |
-| `friends-squad` | Arkadaş: 6 kişiye kadar squad | 2 | 6 | 4 | 11.0% / 10.8% / 12.8% | 36% | 88% |
-| `quality-max` | Kalite: en dengeli | 1 | - | 4 | 10.0% / 10.5% / 11.4% | 33% | - |
-| `quality-session` | Kalite: uzun oturum | 1 | - | 8 (12 h) | 10.4% / 10.1% / 11.7% | 33% | - |
-| `quality-fresh` | Kalite: bu akşamın formu | 1 | - | 2 (3 h) | 10.4% / 10.1% / 11.7% | 33% | - |
-| | Rastgele karıştırma (karşılaştırma) | | | | 28.3% / 27.4% / 31.8% | 50% | 24% |
-| | Şu anki varsayılan (`lockMode` 2, sınır 4, geçmiş 4) | | | | 10.7% / 10.7% / 12.1% | 50% | 84% |
-| | Her parti birlikte, boyut sınırı yok (karşılaştırma) | | | | 14.3% / 12.8% / 17.2% | 50% | 99% |
-
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./assets/preset-chart-dark.svg">
-    <img src="./assets/preset-chart.svg" width="92%" alt="Bar chart of stomped matches by preset: random shuffle 28.3%, current default 10.7%, friends-small 10.6%, friends-squad 11.0%, quality-max 10.0%, quality-session 10.4%, quality-fresh 10.4%">
-  </picture>
-</p>
-
-**Hangisini seçmeli.** Oyuncular sürekli bir arkadaşıyla kalmak istiyorsa: `friends-small`. Klanlar ve arkadaş grupları bütün bir squad olarak oynuyorsa: `friends-squad`. Arkadaşlık önemli değil, en dengeli takımlar isteniyorsa: `quality-max`. Aynı düzenli oyuncular saatlerce oynuyorsa: `quality-session`. Oyuncuların sık girip çıktığı herkese açık sunucu: `quality-fresh`.
-
-### Preset simülasyonu
-
-Her preset üç simüle dünyada, her birinde 7.200 maç (preset başına 21.600) oynatıldı: 100 oyuncu, maç başına 2 ila 4 kişilik 6 ila 10 küçük parti ve 6 ila 9 kişilik 1 ya da 2 büyük grup, önceki turların bilet modeli ve her turda oyuncuların %20'sinin yeni olduğu aynı oturum geçmişi. Bilet farkı 150'yi geçen maç ezilmiş sayılır.
-
-- **ana:** bu akşamın formu değişiyor (%15) ve parti üyeleri birlikte daha iyi oynuyor (parti sinerjisi %15)
-- **sinerjisiz:** partiler birlikte daha güçlü değil
-- **dalgalı:** bu akşamın formu iki kat değişiyor (%30)
-
-Sonuçlar:
-
-- Beş preset de ezilen maçı yaklaşık %28'den (rastgele) %10 ila 13'e indiriyor ve her karıştırmada oyuncuların %50'si yerine %33 ila 36'sını taşıyor.
-- Üç kalite preseti her dünyada şu anki varsayılandan 0,3 ila 0,8 puan daha iyi.
-- Arkadaşları birlikte tutmak dengeden götürüyor, grup büyüdükçe daha çok: ikili ve üçlüler neredeyse hiçbir şey kaybettirmiyor, 6 kişiye kadar partiler şu anki varsayılan kadar, 7 ila 9 kişilik her grubu tutmak ezilmeyi %14'e (dalgalı dünyada %17'ye) çıkarıyor. Bu yüzden hiçbir preset her partiyi tutmuyor.
-- **Daha az taşıma.** Eklenti iki tarafı kimin nerede olduğuna bakmadan seçtiği için her karıştırmada sunucunun yaklaşık yarısını taşıyordu. `fewerMoves` önce, taşımayı azaltıyorsa iki tarafın etiketini değiştiriyor, sonra denge en iyi bölmenin o oranı içinde kaldıkça oyuncuları çiftler halinde mevcut takımlarına geri bırakıyor. Orta yol `0.1`: oyuncuların %33'ü taşınıyor, ezilen maç oranı gürültü içinde aynı. `0.2` %27 taşıyor ama ezilmeyi yaklaşık 0,5 puan artırıyor. Mevcut takımlardan başlayan bölme sadece %19 taşıyor ama ezilmeyi 0,5 ila 1 puan artırıyor, bu yüzden eklenmedi.
-- 8 farklı başlangıçtan arama da denendi ve eklenmedi: kâğıt üstünde daha dar puan farkı, ama ezilme azalmıyor.
-
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./assets/moves-chart-dark.svg">
-    <img src="./assets/moves-chart.svg" width="92%" alt="Bar chart of players moved per shuffle: fewerMoves off 50%, 0.1 33% (recommended), 0.2 27%, 0.3 24%, starting from the current teams 19%">
-  </picture>
-</p>
-
-Bunlar model sonuçları, canlı veri değil.
 
 ---
 
@@ -319,6 +302,42 @@ Her oyuncunun oturumdaki önceki turları da sayılınca (varsayılan) SquadJS f
 </p>
 
 Oyuncuları puanlamanın dört yolu, her biri 43.200 simüle maçta denendi. Mavi çubuk, Smart Shuffle'ın varsayılan olarak kullandığı yöntem.
+
+
+### Preset simülasyonu
+
+Her preset üç simüle dünyada, her birinde 7.200 maç (preset başına 21.600) oynatıldı: 100 oyuncu, maç başına 2 ila 4 kişilik 6 ila 10 küçük parti ve 6 ila 9 kişilik 1 ya da 2 büyük grup, önceki turların bilet modeli ve her turda oyuncuların %20'sinin yeni olduğu aynı oturum geçmişi. Bilet farkı 150'yi geçen maç ezilmiş sayılır.
+
+- **ana:** bu akşamın formu değişiyor (%15) ve parti üyeleri birlikte daha iyi oynuyor (parti sinerjisi %15)
+- **sinerjisiz:** partiler birlikte daha güçlü değil
+- **dalgalı:** bu akşamın formu iki kat değişiyor (%30)
+
+| Sıra | Preset | ana | sinerjisiz | dalgalı |
+|:---:|---|:---:|:---:|:---:|
+| 1 | `quality-max` | 10.0% | 10.5% | 11.4% |
+| 2 | `quality-session` | 10.4% | 10.1% | 11.7% |
+| 3 | `quality-fresh` | 10.4% | 10.1% | 11.7% |
+| 4 | `friends-small` | 10.6% | 10.2% | 12.4% |
+|  | *preset yok (eklenti varsayılanı)* | 10.7% | 10.7% | 12.1% |
+| 5 | `friends-squad` | 11.0% | 10.8% | 12.8% |
+|  | *rastgele karıştırma (eklenti yok)* | 28.3% | 27.4% | 31.8% |
+
+Sonuçlar:
+
+- Beş preset de ezilen maçı yaklaşık %28'den (rastgele) %10 ila 13'e indiriyor ve her karıştırmada oyuncuların %50'si yerine %33 ila 36'sını taşıyor.
+- Üç kalite preseti her dünyada şu anki varsayılandan 0,3 ila 0,8 puan daha iyi.
+- Arkadaşları birlikte tutmak dengeden götürüyor, grup büyüdükçe daha çok: ikili ve üçlüler neredeyse hiçbir şey kaybettirmiyor, 6 kişiye kadar partiler şu anki varsayılan kadar, 7 ila 9 kişilik her grubu tutmak ezilmeyi %14'e (dalgalı dünyada %17'ye) çıkarıyor. Bu yüzden hiçbir preset her partiyi tutmuyor.
+- **Daha az taşıma.** Eklenti iki tarafı kimin nerede olduğuna bakmadan seçtiği için her karıştırmada sunucunun yaklaşık yarısını taşıyordu. `fewerMoves` önce, taşımayı azaltıyorsa iki tarafın etiketini değiştiriyor, sonra denge en iyi bölmenin o oranı içinde kaldıkça oyuncuları çiftler halinde mevcut takımlarına geri bırakıyor. Orta yol `0.1`: oyuncuların %33'ü taşınıyor, ezilen maç oranı gürültü içinde aynı. `0.2` %27 taşıyor ama ezilmeyi yaklaşık 0,5 puan artırıyor. Mevcut takımlardan başlayan bölme sadece %19 taşıyor ama ezilmeyi 0,5 ila 1 puan artırıyor, bu yüzden eklenmedi.
+- 8 farklı başlangıçtan arama da denendi ve eklenmedi: kâğıt üstünde daha dar puan farkı, ama ezilme azalmıyor.
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/moves-chart-dark.svg">
+    <img src="./assets/moves-chart.svg" width="92%" alt="Bar chart of players moved per shuffle: fewerMoves off 50%, 0.1 33% (recommended), 0.2 27%, 0.3 24%, starting from the current teams 19%">
+  </picture>
+</p>
+
+Bunlar model sonuçları, canlı veri değil.
 
 ---
 

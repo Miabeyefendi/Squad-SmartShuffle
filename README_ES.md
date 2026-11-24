@@ -79,6 +79,42 @@
 
 4. Reinicia SquadJS.
 
+### 🎛️ Presets listos
+
+La versión **[Presets 1.1.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v1.1.0)** tiene un zip por preset. Cada zip contiene el `smart-shuffle.js` de **[SquadJS 1.2.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/squadjs-v1.2.0)**, la entrada para `config.json` y un `README.txt` corto: descomprime uno, copia el plugin y pega la entrada. Ordenados de los equipos más parejos a los menos:
+
+| Puesto | Archivo de la versión | Tipo | Ideal para | Partidas aplastantes | Jugadores movidos | Grupos que se mantienen |
+|:---:|---|---|---|:---:|:---:|:---:|
+| **1** | [`SmartShuffle-quality-max.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v1.1.0/SmartShuffle-quality-max.zip) | Calidad | los equipos más parejos | **10.6%** | 33% | ninguno |
+| **2** | [`SmartShuffle-quality-session.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v1.1.0/SmartShuffle-quality-session.zip) | Calidad | los mismos habituales durante horas | **10.7%** | 33% | ninguno |
+| **3** | [`SmartShuffle-quality-fresh.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v1.1.0/SmartShuffle-quality-fresh.zip) | Calidad | servidores públicos con mucho ir y venir | **10.7%** | 33% | ninguno |
+| **4** | [`SmartShuffle-friends-small.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v1.1.0/SmartShuffle-friends-small.zip) | Amigos | jugadores que quieren seguir con uno o dos amigos | **11.1%** | 36% | 60% |
+| | *sin preset (predeterminado del plugin)* | | | 11.2% | 50% | 84% |
+| **5** | [`SmartShuffle-friends-squad.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v1.1.0/SmartShuffle-friends-squad.zip) | Amigos | clanes y grupos que juegan como escuadra | **11.5%** | 36% | 88% |
+| | *mezcla aleatoria (sin plugin)* | | | 29.2% | 50% | 24% |
+
+Partidas aplastantes: proporción de partidas con una diferencia de tickets mayor de 150, media de tres mundos simulados, menos es mejor. Jugadores movidos: proporción del servidor que cambia de equipo en una mezcla. Detalles en [Cómo funciona](#-cómo-funciona).
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/preset-chart-dark.svg">
+    <img src="./assets/preset-chart.svg" width="92%" alt="Bar chart of stomped matches by preset, best first: 1 quality-max 10.6%, 2 quality-session 10.7%, 3 quality-fresh 10.7%, 4 friends-small 11.1%, no preset 11.2%, 5 friends-squad 11.5%, random shuffle 29.2%">
+  </picture>
+</p>
+
+**Qué cambia cada preset**, en el mismo orden. Todo lo demás queda en el valor predeterminado del plugin.
+
+| Puesto | Preset | `lockMode` | `maxPartySize` | `historyRounds` | `historyHours` | `fewerMoves` |
+|:---:|---|:---:|:---:|:---:|:---:|:---:|
+| 1 | `quality-max` | 1 | - | 4 | 6 | 0.1 |
+| 2 | `quality-session` | 1 | - | 8 | 12 | 0.1 |
+| 3 | `quality-fresh` | 1 | - | 2 | 3 | 0.1 |
+| 4 | `friends-small` | 2 | 3 | 2 | 6 | 0.1 |
+|  | *sin preset (predeterminado del plugin)* | 2 | 4 | 4 | 6 | 0 |
+| 5 | `friends-squad` | 2 | 6 | 4 | 6 | 0.1 |
+
+Para el comportamiento anterior, en el que se mueve cerca de la mitad del servidor, usa la versión [Presets 1.0.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v1.0.0).
+
 <details>
 <summary><b>Vía híbrida (marcador completo)</b></summary>
 
@@ -98,59 +134,6 @@ y regístralo en `Saved/ModLoader/ModLoader.json`. Cada función del Blueprint t
 mismo nombre en `smart-shuffle.js`.
 
 </details>
-
----
-
-## 🎛️ Presets listos
-
-Cinco zips listos para la ruta SquadJS: dos para servidores donde los jugadores quieren quedarse con sus amigos y tres que solo buscan equipos parejos. Cada zip tiene el mismo `smart-shuffle.js` (SquadJS 1.2.0), la entrada del plugin para `config.json` y un `README.txt` corto. Solo cambian los ajustes, así que basta con cambiar `config.json` para pasar de un preset a otro. Desde 1.1.0 cada preset también pone `fewerMoves` en `0.1`, así que una mezcla mueve cerca de un tercio del servidor en lugar de la mitad.
-
-**Descarga:** [versión presets-v1.1.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v1.1.0)
-
-| Preset | Tipo | `lockMode` | `maxPartySize` | `historyRounds` | Partidas aplastantes (principal / sin sinergia / volátil) | Jugadores movidos | Grupos que se mantienen |
-|---|---|---|---|---|---|---|---|
-| `friends-small` | Amigos: dúos y tríos | 2 | 3 | 2 | 10.6% / 10.2% / 12.4% | 36% | 60% |
-| `friends-squad` | Amigos: escuadras de hasta 6 | 2 | 6 | 4 | 11.0% / 10.8% / 12.8% | 36% | 88% |
-| `quality-max` | Calidad: máximo equilibrio | 1 | - | 4 | 10.0% / 10.5% / 11.4% | 33% | - |
-| `quality-session` | Calidad: sesión larga | 1 | - | 8 (12 h) | 10.4% / 10.1% / 11.7% | 33% | - |
-| `quality-fresh` | Calidad: la forma de esta noche | 1 | - | 2 (3 h) | 10.4% / 10.1% / 11.7% | 33% | - |
-| | Mezcla aleatoria (comparación) | | | | 28.3% / 27.4% / 31.8% | 50% | 24% |
-| | Predeterminado actual (`lockMode` 2, límite 4, historial 4) | | | | 10.7% / 10.7% / 12.1% | 50% | 84% |
-| | Todos los grupos juntos, sin límite (comparación) | | | | 14.3% / 12.8% / 17.2% | 50% | 99% |
-
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./assets/preset-chart-dark.svg">
-    <img src="./assets/preset-chart.svg" width="92%" alt="Bar chart of stomped matches by preset: random shuffle 28.3%, current default 10.7%, friends-small 10.6%, friends-squad 11.0%, quality-max 10.0%, quality-session 10.4%, quality-fresh 10.4%">
-  </picture>
-</p>
-
-**Cuál elegir.** Los jugadores piden quedarse con un amigo: `friends-small`. Clanes y grupos de amigos juegan como una escuadra entera: `friends-squad`. Los amigos no importan y quieres los equipos más parejos: `quality-max`. Los mismos habituales juegan durante horas: `quality-session`. Servidor público donde entran y salen muchos jugadores: `quality-fresh`.
-
-### Simulación de los presets
-
-Cada preset se jugó en tres mundos simulados, 7.200 partidas en cada uno (21.600 por preset), con 100 jugadores, de 6 a 10 grupos pequeños de 2 a 4 y 1 o 2 grupos grandes de 6 a 9 por partida, el modelo de tickets de las rondas anteriores y el mismo historial de sesión con un 20% de jugadores nuevos en cada ronda. Una partida cuenta como aplastante cuando la diferencia de tickets supera 150.
-
-- **principal:** la forma de esta noche varía (15%) y los miembros de un grupo juegan mejor juntos (sinergia 15%)
-- **sin sinergia:** los grupos no son más fuertes juntos
-- **volátil:** la forma de esta noche varía el doble (30%)
-
-Lo que mostró:
-
-- Los cinco presets bajan las partidas aplastantes de cerca del 28% (aleatorio) al 10 a 13% y mueven del 33 al 36% de los jugadores por mezcla en lugar del 50%.
-- Los tres presets de calidad superan al predeterminado actual por 0,3 a 0,8 puntos en todos los mundos.
-- Mantener amigos juntos cuesta equilibrio, y más cuanto mayor es el grupo: dúos y tríos casi no cuestan nada, grupos de hasta 6 cuestan lo mismo que el predeterminado actual, mantener todos los grupos de 7 a 9 sube las partidas aplastantes al 14% (17% en el mundo volátil). Por eso ningún preset mantiene todos los grupos.
-- **Menos movimientos.** El plugin elige los dos lados sin mirar dónde está cada uno ahora, así que movía cerca de la mitad del servidor en cada mezcla. `fewerMoves` primero intercambia las etiquetas de los lados cuando eso ahorra movimientos, y luego devuelve jugadores a su lado actual por parejas mientras el equilibrio se mantenga dentro de esa proporción del mejor reparto. El punto medio es `0.1`: se mueve el 33% de los jugadores y la proporción de partidas aplastantes es la misma dentro del ruido. `0.2` mueve el 27% pero añade cerca de 0,5 puntos de partidas aplastantes. Un reparto que parte de los equipos actuales mueve solo el 19%, pero añade de 0,5 a 1 punto, así que se descartó.
-- También se probó y descartó una búsqueda desde 8 repartos iniciales: menor diferencia de puntuación en teoría, pero no menos partidas aplastantes.
-
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./assets/moves-chart-dark.svg">
-    <img src="./assets/moves-chart.svg" width="92%" alt="Bar chart of players moved per shuffle: fewerMoves off 50%, 0.1 33% (recommended), 0.2 27%, 0.3 24%, starting from the current teams 19%">
-  </picture>
-</p>
-
-Son resultados de un modelo, no datos en vivo.
 
 ---
 
@@ -321,6 +304,42 @@ Contando las rondas anteriores de cada jugador en la sesión (por defecto), la f
 </p>
 
 Cuatro formas de valorar a los jugadores, cada una probada en 43.200 partidas simuladas. La barra azul es el método que Smart Shuffle usa por defecto.
+
+
+### Simulación de los presets
+
+Cada preset se jugó en tres mundos simulados, 7.200 partidas en cada uno (21.600 por preset), con 100 jugadores, de 6 a 10 grupos pequeños de 2 a 4 y 1 o 2 grupos grandes de 6 a 9 por partida, el modelo de tickets de las rondas anteriores y el mismo historial de sesión con un 20% de jugadores nuevos en cada ronda. Una partida cuenta como aplastante cuando la diferencia de tickets supera 150.
+
+- **principal:** la forma de esta noche varía (15%) y los miembros de un grupo juegan mejor juntos (sinergia 15%)
+- **sin sinergia:** los grupos no son más fuertes juntos
+- **volátil:** la forma de esta noche varía el doble (30%)
+
+| Puesto | Preset | principal | sin sinergia | volátil |
+|:---:|---|:---:|:---:|:---:|
+| 1 | `quality-max` | 10.0% | 10.5% | 11.4% |
+| 2 | `quality-session` | 10.4% | 10.1% | 11.7% |
+| 3 | `quality-fresh` | 10.4% | 10.1% | 11.7% |
+| 4 | `friends-small` | 10.6% | 10.2% | 12.4% |
+|  | *sin preset (predeterminado del plugin)* | 10.7% | 10.7% | 12.1% |
+| 5 | `friends-squad` | 11.0% | 10.8% | 12.8% |
+|  | *mezcla aleatoria (sin plugin)* | 28.3% | 27.4% | 31.8% |
+
+Lo que mostró:
+
+- Los cinco presets bajan las partidas aplastantes de cerca del 28% (aleatorio) al 10 a 13% y mueven del 33 al 36% de los jugadores por mezcla en lugar del 50%.
+- Los tres presets de calidad superan al predeterminado actual por 0,3 a 0,8 puntos en todos los mundos.
+- Mantener amigos juntos cuesta equilibrio, y más cuanto mayor es el grupo: dúos y tríos casi no cuestan nada, grupos de hasta 6 cuestan lo mismo que el predeterminado actual, mantener todos los grupos de 7 a 9 sube las partidas aplastantes al 14% (17% en el mundo volátil). Por eso ningún preset mantiene todos los grupos.
+- **Menos movimientos.** El plugin elige los dos lados sin mirar dónde está cada uno ahora, así que movía cerca de la mitad del servidor en cada mezcla. `fewerMoves` primero intercambia las etiquetas de los lados cuando eso ahorra movimientos, y luego devuelve jugadores a su lado actual por parejas mientras el equilibrio se mantenga dentro de esa proporción del mejor reparto. El punto medio es `0.1`: se mueve el 33% de los jugadores y la proporción de partidas aplastantes es la misma dentro del ruido. `0.2` mueve el 27% pero añade cerca de 0,5 puntos de partidas aplastantes. Un reparto que parte de los equipos actuales mueve solo el 19%, pero añade de 0,5 a 1 punto, así que se descartó.
+- También se probó y descartó una búsqueda desde 8 repartos iniciales: menor diferencia de puntuación en teoría, pero no menos partidas aplastantes.
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/moves-chart-dark.svg">
+    <img src="./assets/moves-chart.svg" width="92%" alt="Bar chart of players moved per shuffle: fewerMoves off 50%, 0.1 33% (recommended), 0.2 27%, 0.3 24%, starting from the current teams 19%">
+  </picture>
+</p>
+
+Son resultados de un modelo, no datos en vivo.
 
 ---
 
