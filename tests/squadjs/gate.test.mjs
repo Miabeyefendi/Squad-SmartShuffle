@@ -218,3 +218,72 @@ test('imbalance alert goes to the admins online only', async () => {
   assert.ok(!s.calls.some((c) => c.startsWith('broadcast')), 'nothing to the server');
   await p.unmount();
 });
+
+// ---- everyone in a squad (squads of up to 9, the game's limit): squads must stay whole and the teams even ----
+
+const golden = JSON.parse(fs.readFileSync(path.join(HERE, 'golden.json'), 'utf8'));
+const { planTeams, buildScores, FORMULAS } = mod;
+
+function squadsOf(team, size = 9) {
+  const out = [];
+  for (const side of [0, 1]) {
+    const ids = team.map((t, i) => (t === side ? i : -1)).filter((i) => i >= 0);
+    for (let k = 0; k < ids.length; k += size) out.push(ids.slice(k, k + size));
+  }
+  return out.filter((g) => g.length >= 2);
+}
+
+function gap(P, team) {
+  let a = 0;
+  let b = 0;
+  P.forEach((v, i) => (team[i] === 0 ? (a += v) : (b += v)));
+  return Math.abs(a - b) / (a + b);
+}
+
+test('whole squads of 9 covering every player: no squad split, sizes even, balance better than before', () => {
+  let before = 0;
+  let after = 0;
+  golden.cases.forEach((c, n) => {
+    const S = c.visible;
+    const groups = squadsOf(S.team);
+    for (const fewer of [0, 1]) {
+      const { team } = planTeams(S, 'k6', c.slGroups, groups, null, fewer);
+      groups.forEach((g, k) => assert.equal(new Set(g.map((i) => team[i])).size, 1, `case ${n} fewer ${fewer} squad ${k} split`));
+      const n0 = team.filter((x) => x === 0).length;
+      assert.ok(Math.abs(n0 - (team.length - n0)) <= 2, `case ${n} fewer ${fewer}: ${n0} v ${team.length - n0}`);
+      if (fewer === 0) {
+        const { P } = buildScores(S, FORMULAS.k6);
+        before += gap(P, S.team);
+        after += gap(P, team);
+      }
+    }
+  });
+  assert.ok(after < 0.5 * before, `score gap ${before.toFixed(3)} -> ${after.toFixed(3)}`);
+});
+
+test('plugin with moveSquads and maxPartySize 9: four full squads, the strong one is traded whole', async () => {
+  const s = fakeServer(players(36, 18, (i) => ({ squadID: 1 + Math.floor(i / 9), isLeader: i % 9 === 0 })));
+  const p = new SmartShuffle(s, { moveSquads: 'on', maxPartySize: 9, lockMode: 1, lockCheckSeconds: 0 });
+  await p.mount();
+  s.emit('NEW_GAME', {});
+  for (let k = 0; k < 3; k++) await s.listeners('UPDATED_PLAYER_INFORMATION')[0]();
+  // squads 1 and 2 (team 1) are both strong: a good split sends one of them to team 2
+  for (const pl of s.players.slice(0, 18)) {
+    for (let k = 0; k < 10; k++) {
+      const victim = s.players.find((x) => x.teamID === 2);
+      s.emit('PLAYER_DIED', { attacker: pl, victim, teamkill: false });
+      s.emit('PLAYER_DAMAGED', { attacker: pl, victim, damage: 100, teamkill: false });
+    }
+  }
+  const { players: ps, team } = await p.plan(false);
+  const side = new Map();
+  ps.forEach((pl, i) => {
+    const k = pl.squadID;
+    if (!side.has(k)) side.set(k, new Set());
+    side.get(k).add(team[i]);
+  });
+  for (const [k, sides] of side) assert.equal(sides.size, 1, `squad ${k} split`);
+  assert.notEqual([...side.get(1)][0], [...side.get(2)][0], 'the two strong squads end on different sides');
+  assert.equal(team.filter((x) => x === 0).length, 18);
+  await p.unmount();
+});

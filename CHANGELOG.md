@@ -70,6 +70,14 @@ The three routes are released separately, each with its own tag: `squadjs-vX.Y.Z
 - Simulation: the full scoreboard with session history, an Elo-like rating from earlier rounds' team results, and
   other prior, team share and lambda settings were tested. None went below about 10% stomped matches.
 
+### Fixed
+
+- Whole squads and parties when (almost) every player is in one: with `moveSquads` on and squads of up to 9 (the
+  game's limit), or with parties and no `maxPartySize`, there were no free players left to trade with, so squads
+  could be split or the teams left uneven. Kept groups are now balanced as whole units against each other (a squad
+  of 9 for a squad of 8 or 9), with team sizes at most 1 apart where the squads allow it. The files of the 2.1.0
+  release were replaced with the fixed plugin.
+
 ## [2.0.0] - 2026-11-24
 
 ### Changed
