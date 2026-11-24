@@ -3,11 +3,11 @@
 Run: python -I -B src/utils/build_presets.py <version>
 Output: releases/presets-v<version>/SmartShuffle-<preset>.zip, SmartShuffle-all-presets.zip and sha256.txt
 
-The five presets form a ladder: step 1 gives the most even teams, every next step moves fewer players and
+The ten presets form a ladder: step 1 gives the most even teams, every next step moves fewer players and
 keeps more friend groups together, for more stomped matches. Every zip holds the plugin
 (src/squadjs/smart-shuffle.js), the complete plugin entry for SquadJS config.json with the lock, party and
 history settings (src/squadjs/presets/<preset>.json) and a short README.txt. The all-presets zip holds the
-plugin once and the five entries. The numbers come from the round 21 simulation (see the README).
+plugin once and the ten entries. The numbers come from the round 22 simulation (see the README).
 """
 import hashlib
 import json
@@ -18,40 +18,26 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 PLUGIN = ROOT / "src" / "squadjs" / "smart-shuffle.js"
 PRESETS = ROOT / "src" / "squadjs" / "presets"
-STAMP = (2026, 11, 24, 18, 0, 0)
+STAMP = (2026, 11, 24, 21, 0, 0)
 
 # id: (title, who it is for, what it does)
+def _what(cap, moved):
+    parties = "Every party stays whole" if cap == 0 else "Parties of up to %d stay whole" % cap
+    return (parties + (", on the side they play on now. About %s of the players change team.\n"
+                       "The lock keeps friends together for the next round. Counts each player's last 8 rounds." % moved))
+
+
 INFO = {
-    "1-strict": (
-        "Step 1, strict: the most even teams",
-        "Servers that want the most even teams and do not keep friends together.",
-        "Everyone is placed by strength, parties are ignored. About a third of the server changes team.\n"
-        "Hard lock for one round: nobody may switch back.",
-    ),
-    "2-balanced": (
-        "Step 2, balanced: even teams, friends stay",
-        "Most servers: players keep their party and most keep their team.",
-        "Parties of up to 4 stay whole, on the side they play on now. About one player in eight changes\n"
-        "team. The lock keeps friends together for the next round.",
-    ),
-    "3-relaxed": (
-        "Step 3, relaxed: fewer moves",
-        "Servers where players dislike being moved more than a less even match.",
-        "Parties of up to 4 stay whole, on their current side. About one player in ten changes team.\n"
-        "The lock keeps friends together for the next round.",
-    ),
-    "4-together": (
-        "Step 4, together: every party stays",
-        "Clan and community servers with big friend stacks.",
-        "Every party stays whole on its current side, whatever its size. About one player in eleven\n"
-        "changes team. The lock keeps friends together for the next round.",
-    ),
-    "5-light": (
-        "Step 5, light: the smallest shuffle",
-        "Servers that only want the worst mismatches softened.",
-        "Every party stays whole on its current side. About one player in twelve changes team, still\n"
-        "far fewer stomped matches than a random shuffle. The lock keeps friends together.",
-    ),
+    "01-strict": ("Step 1, strict: the most even teams", "Servers that want the most even teams.", _what(2, "a third")),
+    "02-tight": ("Step 2, tight: even teams, trios stay", "Servers that want even teams and small friend groups kept.", _what(3, "a fifth")),
+    "03-balanced": ("Step 3, balanced: parties up to 4 stay", "Most servers.", _what(4, "one in five")),
+    "04-steady": ("Step 4, steady: fewer moves", "Most servers, with fewer players moved.", _what(4, "one in seven")),
+    "05-calm": ("Step 5, calm: few moves", "Servers where players dislike being moved.", _what(4, "one in eight")),
+    "06-squads": ("Step 6, squads: parties up to 6 stay", "Community servers with friend squads.", _what(6, "one in eight")),
+    "07-relaxed": ("Step 7, relaxed: very few moves", "Community servers that prefer few moves to tight balance.", _what(6, "one in ten")),
+    "08-easy": ("Step 8, easy: minimal moves for squads", "Servers that only want clear mismatches fixed.", _what(6, "one in eleven")),
+    "09-together": ("Step 9, together: every party stays", "Clan servers with big friend stacks.", _what(0, "one in eleven")),
+    "10-light": ("Step 10, light: the smallest shuffle", "Servers that only want the worst mismatches softened.", _what(0, "one in twelve")),
 }
 ORDER = list(INFO)
 
@@ -69,7 +55,7 @@ def readme(pid, version, entry, sim):
     title, who, what = INFO[pid]
     lines = [
         "Smart Shuffle for SquadJS - %s (%s)" % (title, pid),
-        "Presets %s: step %d of 5. Step 1 gives the most even teams, every next step moves fewer" % (version, ORDER.index(pid) + 1),
+        "Presets %s: step %d of 10. Step 1 gives the most even teams, every next step moves fewer" % (version, ORDER.index(pid) + 1),
         "players and keeps more friends together, for more stomped matches.",
         "",
         "For: " + who,
@@ -97,10 +83,10 @@ def readme(pid, version, entry, sim):
 
 def readme_all(version, entries, sims):
     lines = [
-        "Smart Shuffle for SquadJS - all five presets (Presets %s)" % version,
+        "Smart Shuffle for SquadJS - all ten presets (Presets %s)" % version,
         "",
-        "One plugin file and five ready config.json entries, from the most even teams (step 1) to the",
-        "smallest shuffle (step 5). Pick one entry, put it into the \"plugins\" list of SquadJS config.json",
+        "One plugin file and ten ready config.json entries, from the most even teams (step 1) to the",
+        "smallest shuffle (step 10). Pick one entry, put it into the \"plugins\" list of SquadJS config.json",
         "(replace an older SmartShuffle entry, keep only one), copy smart-shuffle.js into",
         "SquadJS/squad-server/plugins/ and restart SquadJS.",
         "",
@@ -153,6 +139,6 @@ def main(version, sims):
 
 
 if __name__ == "__main__":
-    ver = sys.argv[1] if len(sys.argv) > 1 else "2.0.0"
+    ver = sys.argv[1] if len(sys.argv) > 1 else "3.0.0"
     sim_file = ROOT / "src" / "squadjs" / "presets" / "simulation.json"
     main(ver, json.loads(sim_file.read_text(encoding="utf-8")))

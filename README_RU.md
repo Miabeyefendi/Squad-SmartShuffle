@@ -81,16 +81,21 @@
 
 ### 🎛️ Готовые пресеты
 
-Релиз **[Presets 2.0.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v2.0.0)** это лестница из пяти ступеней. Ступень 1 даёт самые ровные команды; каждая следующая перемещает меньше игроков и сохраняет больше групп друзей целыми, ценой большего числа разгромов. В каждом zip `smart-shuffle.js` из **[SquadJS 1.3.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/squadjs-v1.3.0)** и полная запись `config.json` с настройками блокировки, пати, истории и меньших перемещений. [`SmartShuffle-all-presets.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-all-presets.zip) содержит все пять.
+Релиз **[Presets 3.0.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v3.0.0)** это лестница из десяти ступеней. Ступень 1 даёт самые ровные команды; каждая следующая перемещает меньше игроков и сохраняет больше групп друзей целыми, ценой большего числа разгромов. В каждом zip `smart-shuffle.js` из **[SquadJS 1.3.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/squadjs-v1.3.0)** и полная запись `config.json` с настройками блокировки, пати, истории и меньших перемещений. [`SmartShuffle-all-presets.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-all-presets.zip) содержит все десять.
 
 | Ступень | Файл релиза | Разгромные матчи | Перемещено игроков | Целые пати | Лучше всего для |
 |:---:|---|:---:|:---:|:---:|---|
-| **1** | [`SmartShuffle-1-strict.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-1-strict.zip) | **10.7%** | **33%** | 30% | самых ровных команд, друзья не важны |
-| | *без пресета (по умолчанию в плагине)* | 11.5% | 50% | 84% | |
-| **2** | [`SmartShuffle-2-balanced.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-2-balanced.zip) | **14.1%** | **13%** | 86% | большинства серверов: друзья вместе, перемещается мало игроков |
-| **3** | [`SmartShuffle-3-relaxed.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-3-relaxed.zip) | **18.2%** | **10%** | 87% | игроков, которые не любят перемещений |
-| **4** | [`SmartShuffle-4-together.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-4-together.zip) | **21.8%** | **9%** | 99% | кланов и больших групп друзей |
-| **5** | [`SmartShuffle-5-light.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-5-light.zip) | **23.9%** | **8%** | 99% | лишь смягчения худших перекосов |
+| **1** | [`SmartShuffle-01-strict.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-01-strict.zip) | **10.7%** | **33%** | **42%** | самых ровных команд, пары остаются вместе |
+| | *без пресета (по умолчанию в плагине)* | 11.2% | 50% | 84% | |
+| **2** | [`SmartShuffle-02-tight.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-02-tight.zip) | **11.7%** | **22%** | **65%** | ровных команд, тройки остаются вместе |
+| **3** | [`SmartShuffle-03-balanced.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-03-balanced.zip) | **12.5%** | **18%** | **85%** | большинства серверов |
+| **4** | [`SmartShuffle-04-steady.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-04-steady.zip) | **13.1%** | **15%** | **86%** | большинства серверов, меньше перемещений |
+| **5** | [`SmartShuffle-05-calm.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-05-calm.zip) | **14.2%** | **13%** | **86%** | игроков, которые не любят перемещений |
+| **6** | [`SmartShuffle-06-squads.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-06-squads.zip) | **14.6%** | **12%** | **89%** | отрядов друзей до 6 |
+| **7** | [`SmartShuffle-07-relaxed.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-07-relaxed.zip) | **16.6%** | **11%** | **90%** | мало перемещений важнее строгого баланса |
+| **8** | [`SmartShuffle-08-easy.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-08-easy.zip) | **19.0%** | **9%** | **90%** | только явных перекосов |
+| **9** | [`SmartShuffle-09-together.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-09-together.zip) | **21.7%** | **9%** | **99%** | кланов и больших групп |
+| **10** | [`SmartShuffle-10-light.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-10-light.zip) | **24.0%** | **8%** | **99%** | самого маленького перемешивания |
 | | *случайное перемешивание (без плагина)* | 29.3% | 50% | 24% | |
 
 Разгромные матчи: доля матчей с разницей тикетов больше 150, среднее по трём симулированным мирам. Перемещено игроков: доля сервера, меняющая команду при перемешивании. Подробности в разделе [Как это работает](#-как-это-работает).
@@ -98,22 +103,26 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="./assets/ladder-chart-dark.svg">
-    <img src="./assets/ladder-chart.svg" width="92%" alt="Preset ladder: step 1 strict 10.7% stomped and 33% of players moved, no preset 11.5% and 50%, step 2 balanced 14.1% and 13%, step 3 relaxed 18.2% and 10%, step 4 together 21.8% and 9%, step 5 light 23.9% and 8%, random shuffle 29.3% and 50%">
+    <img src="./assets/ladder-chart.svg" width="92%" alt="Preset ladder, ten steps: stomped matches rise from 10.7% (step 1) to 24.0% (step 10), players moved fall from 33% to 8%, parties kept whole rise from 42% to 99%. No preset: 11.2%, 50%, 84%. Random shuffle: 29.3%, 50%, 24%">
   </picture>
 </p>
 
-**Что меняется от ступени к ступени.** Все пять используют `historyRounds` 4 и `autoShuffle` false; остальное остаётся по умолчанию плагина.
+**Что меняется от ступени к ступени.** Все десять используют `lockMode` 2, `keepParties` true, `historyRounds` 8 и `historyHours` 12; меняются только эти две настройки:
 
-| Ступень | Пресет | `lockMode` | `maxPartySize` | `fewerMoves` |
-|:---:|---|:---:|:---:|:---:|
-| 1 | `1-strict` | 1 | пати не учитываются | 0.1 |
-|  | *без пресета (по умолчанию в плагине)* | 2 | 4 | 0 |
-| 2 | `2-balanced` | 2 | 4 | 1 |
-| 3 | `3-relaxed` | 2 | 4 | 4 |
-| 4 | `4-together` | 2 | без лимита | 2 |
-| 5 | `5-light` | 2 | без лимита | 4 |
+| Ступень | Пресет | `maxPartySize` | `fewerMoves` |
+|:---:|---|:---:|:---:|
+| 1 | `01-strict` | 2 | 0.1 |
+| 2 | `02-tight` | 3 | 0.3 |
+| 3 | `03-balanced` | 4 | 0.3 |
+| 4 | `04-steady` | 4 | 0.6 |
+| 5 | `05-calm` | 4 | 1 |
+| 6 | `06-squads` | 6 | 1 |
+| 7 | `07-relaxed` | 6 | 2 |
+| 8 | `08-easy` | 6 | 4 |
+| 9 | `09-together` | без лимита | 2 |
+| 10 | `10-light` | без лимита | 4 |
 
-Прежние пресеты остаются в релизе [Presets 1.1.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v1.1.0).
+Прежние пресеты остаются в релизе [Presets 2.0.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v2.0.0) и более ранних.
 
 <details>
 <summary><b>Гибридный вариант (полная таблица счёта)</b></summary>
@@ -314,20 +323,25 @@ Smart Shuffle report: 44 moved, 0 not placed, score gap 21% -> 1%, done in 3.2 s
 
 | Ступень | Пресет | основной | без синергии | нестабильный |
 |:---:|---|:---:|:---:|:---:|
-| 1 | `1-strict` | 10.3% | 10.1% | 11.8% |
-|  | *без пресета (по умолчанию в плагине)* | 10.8% | 11.0% | 12.6% |
-| 2 | `2-balanced` | 13.5% | 12.9% | 15.8% |
-| 3 | `3-relaxed` | 17.6% | 17.0% | 20.1% |
-| 4 | `4-together` | 21.3% | 18.6% | 25.4% |
-| 5 | `5-light` | 23.6% | 20.5% | 27.7% |
-|  | *случайное перемешивание (без плагина)* | 27.8% | 27.6% | 32.3% |
+| 1 | `01-strict` | 10.0% | 10.2% | 11.9% |
+|  | *без пресета (по умолчанию в плагине)* | 10.5% | 11.0% | 12.2% |
+| 2 | `02-tight` | 10.8% | 11.1% | 13.2% |
+| 3 | `03-balanced` | 11.8% | 11.7% | 13.9% |
+| 4 | `04-steady` | 12.2% | 12.3% | 14.8% |
+| 5 | `05-calm` | 13.4% | 12.9% | 16.2% |
+| 6 | `06-squads` | 13.7% | 13.4% | 16.6% |
+| 7 | `07-relaxed` | 15.7% | 15.1% | 19.0% |
+| 8 | `08-easy` | 18.2% | 17.2% | 21.7% |
+| 9 | `09-together` | 21.1% | 17.9% | 26.2% |
+| 10 | `10-light` | 23.2% | 20.3% | 28.6% |
+|  | *случайное перемешивание (без плагина)* | 28.0% | 27.7% | 32.1% |
 
 Что показала симуляция:
 
-- Лестница растягивается от 10,7% до 23,9% разгромных матчей, а доля перемещённых игроков падает с 33% до 8%. Даже последняя ступень заметно ниже случайного перемешивания (29,3%).
-- Мало перемещений возможно, только если пати остаются на месте. С `fewerMoves` плагин оставляет каждую сохраняемую пати на той стороне, где она играет сейчас (начиная с SquadJS 1.3.0). Если ставить такие пати на сторону сбалансированного разбиения, перемещалось бы не меньше 19% сервера.
-- Большие группы стоят балансу дороже всего: ступени 4 и 5 сохраняют все пати, поэтому сильнее всего растут в нестабильном мире.
-- Проверено и не включено: поиск из 8 стартовых разбиений (на бумаге меньше разница очков, но разгромов не меньше) и разбиение от текущих команд (меньше перемещений, чем на ступени 1, но больше разгромов, чем на ступени 2, при большем числе перемещений).
+- Десять ступеней растягиваются от 10,7% до 24,0% разгромных матчей, при этом перемещённых игроков становится меньше, с 33% до 8%, а целых пати больше, с 42% до 99%. Каждый столбец меняется только в одну сторону.
+- Около 10% это предел для данных, которые видит плагин. Разбиение, знающее истинную силу каждого игрока, даёт 5,5 до 6%, но все методы, видящие только статистику матча, остались на 9,5 до 10,5%: проверены более длинная или более весомая история сессии, история других вечеров, полный счёт гибридного пути и прямая балансировка поминутных показателей. Разрыв это предел оценки игроков по статистике, поэтому 7 до 8% с этими данными недостижимы.
+- Мало перемещений возможно, только если пати остаются на месте: с `fewerMoves` каждая сохраняемая пати остаётся на той стороне, где играет сейчас.
+- Большие группы стоят балансу дороже всего: ступени 9 и 10 сохраняют все пати, поэтому сильнее всего растут в нестабильном мире.
 
 Это результаты модели, а не живые данные.
 

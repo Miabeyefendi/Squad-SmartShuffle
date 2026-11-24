@@ -5,7 +5,7 @@
   "lockMode": 2,
   "keepParties": true,
   "maxPartySize": 4,
-  "historyRounds": 4,
-  "historyHours": 6,
-  "fewerMoves": 1
+  "historyRounds": 8,
+  "historyHours": 12,
+  "fewerMoves": 0.3
 }

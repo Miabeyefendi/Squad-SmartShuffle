@@ -4,8 +4,8 @@
   "autoShuffle": false,
   "lockMode": 2,
   "keepParties": true,
-  "maxPartySize": 0,
-  "historyRounds": 4,
-  "historyHours": 6,
-  "fewerMoves": 2
+  "maxPartySize": 6,
+  "historyRounds": 8,
+  "historyHours": 12,
+  "fewerMoves": 4
 }

@@ -81,16 +81,21 @@
 
 ### 🎛️ Hazır presetler
 
-**[Presets 2.0.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v2.0.0)** sürümü beş basamaklı bir merdiven. 1. basamak en dengeli takımları verir; her sonraki basamak daha az oyuncu taşır ve daha çok arkadaş grubunu bütün tutar, karşılığında ezilen maç artar. Her zip'te **[SquadJS 1.3.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/squadjs-v1.3.0)** sürümündeki `smart-shuffle.js` ve kilit, parti, geçmiş ve az taşıma ayarlarıyla eksiksiz bir `config.json` girdisi var. [`SmartShuffle-all-presets.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-all-presets.zip) beşini birden içerir.
+**[Presets 3.0.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v3.0.0)** sürümü on basamaklı bir merdiven. 1. basamak en dengeli takımları verir; her sonraki basamak daha az oyuncu taşır ve daha çok arkadaş grubunu bütün tutar, karşılığında ezilen maç artar. Her zip'te **[SquadJS 1.3.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/squadjs-v1.3.0)** sürümündeki `smart-shuffle.js` ve kilit, parti, geçmiş ve az taşıma ayarlarıyla eksiksiz bir `config.json` girdisi var. [`SmartShuffle-all-presets.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-all-presets.zip) onunu birden içerir.
 
 | Basamak | Sürüm dosyası | Ezilen maç | Taşınan oyuncu | Bütün kalan parti | En uygun |
 |:---:|---|:---:|:---:|:---:|---|
-| **1** | [`SmartShuffle-1-strict.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-1-strict.zip) | **10.7%** | **33%** | 30% | en dengeli takımlar, arkadaşlık önemsiz |
-| | *preset yok (eklenti varsayılanı)* | 11.5% | 50% | 84% | |
-| **2** | [`SmartShuffle-2-balanced.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-2-balanced.zip) | **14.1%** | **13%** | 86% | çoğu sunucu: arkadaşlar kalır, az oyuncu taşınır |
-| **3** | [`SmartShuffle-3-relaxed.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-3-relaxed.zip) | **18.2%** | **10%** | 87% | taşınmaktan hiç hoşlanmayan oyuncular |
-| **4** | [`SmartShuffle-4-together.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-4-together.zip) | **21.8%** | **9%** | 99% | klanlar ve büyük arkadaş grupları |
-| **5** | [`SmartShuffle-5-light.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-5-light.zip) | **23.9%** | **8%** | 99% | sadece en kötü eşleşmeleri yumuşatmak |
+| **1** | [`SmartShuffle-01-strict.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-01-strict.zip) | **10.7%** | **33%** | **42%** | en dengeli takımlar, ikililer kalır |
+| | *preset yok (eklenti varsayılanı)* | 11.2% | 50% | 84% | |
+| **2** | [`SmartShuffle-02-tight.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-02-tight.zip) | **11.7%** | **22%** | **65%** | dengeli takımlar, üçlüler kalır |
+| **3** | [`SmartShuffle-03-balanced.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-03-balanced.zip) | **12.5%** | **18%** | **85%** | çoğu sunucu |
+| **4** | [`SmartShuffle-04-steady.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-04-steady.zip) | **13.1%** | **15%** | **86%** | çoğu sunucu, daha az taşıma |
+| **5** | [`SmartShuffle-05-calm.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-05-calm.zip) | **14.2%** | **13%** | **86%** | taşınmaktan hoşlanmayan oyuncular |
+| **6** | [`SmartShuffle-06-squads.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-06-squads.zip) | **14.6%** | **12%** | **89%** | 6 kişiye kadar arkadaş squad'ları |
+| **7** | [`SmartShuffle-07-relaxed.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-07-relaxed.zip) | **16.6%** | **11%** | **90%** | sıkı denge yerine az taşıma |
+| **8** | [`SmartShuffle-08-easy.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-08-easy.zip) | **19.0%** | **9%** | **90%** | sadece belirgin dengesizlikler |
+| **9** | [`SmartShuffle-09-together.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-09-together.zip) | **21.7%** | **9%** | **99%** | klanlar ve büyük gruplar |
+| **10** | [`SmartShuffle-10-light.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-10-light.zip) | **24.0%** | **8%** | **99%** | en küçük karıştırma |
 | | *rastgele karıştırma (eklenti yok)* | 29.3% | 50% | 24% | |
 
 Ezilen maç: bilet farkı 150'yi geçen maçların oranı, üç simüle dünyanın ortalaması. Taşınan oyuncu: karıştırmada takım değiştiren oyuncuların oranı. Ayrıntılar [Nasıl çalışır](#-nasıl-çalışır) bölümünde.
@@ -98,22 +103,26 @@ Ezilen maç: bilet farkı 150'yi geçen maçların oranı, üç simüle dünyan�
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="./assets/ladder-chart-dark.svg">
-    <img src="./assets/ladder-chart.svg" width="92%" alt="Preset ladder: step 1 strict 10.7% stomped and 33% of players moved, no preset 11.5% and 50%, step 2 balanced 14.1% and 13%, step 3 relaxed 18.2% and 10%, step 4 together 21.8% and 9%, step 5 light 23.9% and 8%, random shuffle 29.3% and 50%">
+    <img src="./assets/ladder-chart.svg" width="92%" alt="Preset ladder, ten steps: stomped matches rise from 10.7% (step 1) to 24.0% (step 10), players moved fall from 33% to 8%, parties kept whole rise from 42% to 99%. No preset: 11.2%, 50%, 84%. Random shuffle: 29.3%, 50%, 24%">
   </picture>
 </p>
 
-**Basamaktan basamağa ne değişiyor.** Beşi de `historyRounds` 4 ve `autoShuffle` false kullanır; gerisi eklentinin varsayılanında kalır.
+**Basamaktan basamağa ne değişiyor.** Onu da `lockMode` 2, `keepParties` true, `historyRounds` 8 ve `historyHours` 12 kullanır; sadece şu iki ayar değişir:
 
-| Basamak | Preset | `lockMode` | `maxPartySize` | `fewerMoves` |
-|:---:|---|:---:|:---:|:---:|
-| 1 | `1-strict` | 1 | partiler yok sayılır | 0.1 |
-|  | *preset yok (eklenti varsayılanı)* | 2 | 4 | 0 |
-| 2 | `2-balanced` | 2 | 4 | 1 |
-| 3 | `3-relaxed` | 2 | 4 | 4 |
-| 4 | `4-together` | 2 | sınırsız | 2 |
-| 5 | `5-light` | 2 | sınırsız | 4 |
+| Basamak | Preset | `maxPartySize` | `fewerMoves` |
+|:---:|---|:---:|:---:|
+| 1 | `01-strict` | 2 | 0.1 |
+| 2 | `02-tight` | 3 | 0.3 |
+| 3 | `03-balanced` | 4 | 0.3 |
+| 4 | `04-steady` | 4 | 0.6 |
+| 5 | `05-calm` | 4 | 1 |
+| 6 | `06-squads` | 6 | 1 |
+| 7 | `07-relaxed` | 6 | 2 |
+| 8 | `08-easy` | 6 | 4 |
+| 9 | `09-together` | sınırsız | 2 |
+| 10 | `10-light` | sınırsız | 4 |
 
-Önceki presetler [Presets 1.1.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v1.1.0) sürümünde duruyor.
+Önceki presetler [Presets 2.0.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v2.0.0) ve daha eski sürümlerde duruyor.
 
 <details>
 <summary><b>Karma yol (tam skorbord)</b></summary>
@@ -314,20 +323,25 @@ Her basamak üç simüle dünyada, her birinde 7.200 maç (basamak başına 21.6
 
 | Basamak | Preset | ana | sinerjisiz | dalgalı |
 |:---:|---|:---:|:---:|:---:|
-| 1 | `1-strict` | 10.3% | 10.1% | 11.8% |
-|  | *preset yok (eklenti varsayılanı)* | 10.8% | 11.0% | 12.6% |
-| 2 | `2-balanced` | 13.5% | 12.9% | 15.8% |
-| 3 | `3-relaxed` | 17.6% | 17.0% | 20.1% |
-| 4 | `4-together` | 21.3% | 18.6% | 25.4% |
-| 5 | `5-light` | 23.6% | 20.5% | 27.7% |
-|  | *rastgele karıştırma (eklenti yok)* | 27.8% | 27.6% | 32.3% |
+| 1 | `01-strict` | 10.0% | 10.2% | 11.9% |
+|  | *preset yok (eklenti varsayılanı)* | 10.5% | 11.0% | 12.2% |
+| 2 | `02-tight` | 10.8% | 11.1% | 13.2% |
+| 3 | `03-balanced` | 11.8% | 11.7% | 13.9% |
+| 4 | `04-steady` | 12.2% | 12.3% | 14.8% |
+| 5 | `05-calm` | 13.4% | 12.9% | 16.2% |
+| 6 | `06-squads` | 13.7% | 13.4% | 16.6% |
+| 7 | `07-relaxed` | 15.7% | 15.1% | 19.0% |
+| 8 | `08-easy` | 18.2% | 17.2% | 21.7% |
+| 9 | `09-together` | 21.1% | 17.9% | 26.2% |
+| 10 | `10-light` | 23.2% | 20.3% | 28.6% |
+|  | *rastgele karıştırma (eklenti yok)* | 28.0% | 27.7% | 32.1% |
 
 Sonuçlar:
 
-- Merdiven %10,7'den %23,9 ezilen maça yayılırken taşınan oyuncu oranı %33'ten %8'e iniyor. Son basamak bile rastgele karıştırmanın (%29,3) belirgin biçimde altında.
-- Az taşıma için partilerin yerinde kalması gerekiyor. `fewerMoves` açıkken eklenti tutulan her partiyi şu an oynadığı tarafta bırakıyor (SquadJS 1.3.0'dan beri). Tutulan partileri dengeli bölmenin tarafına koymak, sunucunun en az %19'unu yine taşıyordu.
-- Büyük gruplar dengeden en çok götürüyor: 4. ve 5. basamak her partiyi tuttuğu için dalgalı dünyada en hızlı yükselenler bunlar.
-- Denenip eklenmeyenler: 8 farklı başlangıçtan arama (kâğıt üstünde daha dar puan farkı, ezilme azalmıyor) ve mevcut takımlardan başlayan bölme (1. basamaktan az taşıyor ama 2. basamaktan daha çok taşıyıp daha çok eziliyor).
+- On basamak %10,7'den %24,0 ezilen maça yayılıyor; taşınan oyuncu %33'ten %8'e iniyor, bütün kalan parti %42'den %99'a çıkıyor. Her sütun tek yönde ilerliyor.
+- Eklentinin görebildiği veriyle alt sınır yaklaşık %10. Her oyuncunun gerçek gücünü bilen bir bölme %5,5 ila 6'ya iniyor, ama sadece maç istatistiklerini gören her yöntem %9,5 ila 10,5'te kaldı: daha uzun ya da daha ağır oturum geçmişi, önceki akşamların geçmişi, hibrit yolun tam skor tablosu ve dakika başı oranları doğrudan dengelemek denendi. Aradaki fark oyuncuyu istatistiğinden puanlamanın sınırı; bu veriyle %7 ila 8 ulaşılamıyor.
+- Az taşıma için partilerin yerinde kalması gerekiyor: `fewerMoves` açıkken tutulan her parti şu an oynadığı tarafta kalır.
+- Büyük gruplar dengeden en çok götürüyor: 9. ve 10. basamak her partiyi tuttuğu için dalgalı dünyada en hızlı yükselenler bunlar.
 
 Bunlar model sonuçları, canlı veri değil.
 

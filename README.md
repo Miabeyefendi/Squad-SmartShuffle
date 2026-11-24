@@ -81,16 +81,21 @@
 
 ### 🎛️ Ready-made presets
 
-The **[Presets 2.0.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v2.0.0)** release is a ladder of five steps. Step 1 gives the most even teams; every next step moves fewer players and keeps more friend groups whole, for more stomped matches. Each zip holds `smart-shuffle.js` from **[SquadJS 1.3.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/squadjs-v1.3.0)** and a complete `config.json` entry with the lock, party, history and fewer-moves settings. [`SmartShuffle-all-presets.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-all-presets.zip) holds all five.
+The **[Presets 3.0.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v3.0.0)** release is a ladder of ten steps. Step 1 gives the most even teams; every next step moves fewer players and keeps more friend groups whole, for more stomped matches. Each zip holds `smart-shuffle.js` from **[SquadJS 1.3.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/squadjs-v1.3.0)** and a complete `config.json` entry with the lock, party, history and fewer-moves settings. [`SmartShuffle-all-presets.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-all-presets.zip) holds all ten.
 
 | Step | Release file | Stomped matches | Players moved | Parties kept whole | Best for |
 |:---:|---|:---:|:---:|:---:|---|
-| **1** | [`SmartShuffle-1-strict.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-1-strict.zip) | **10.7%** | **33%** | 30% | the most even teams, friends do not matter |
-| | *no preset (plugin default)* | 11.5% | 50% | 84% | |
-| **2** | [`SmartShuffle-2-balanced.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-2-balanced.zip) | **14.1%** | **13%** | 86% | most servers: friends stay, few players move |
-| **3** | [`SmartShuffle-3-relaxed.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-3-relaxed.zip) | **18.2%** | **10%** | 87% | players who hate being moved |
-| **4** | [`SmartShuffle-4-together.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-4-together.zip) | **21.8%** | **9%** | 99% | clans and big friend stacks |
-| **5** | [`SmartShuffle-5-light.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-5-light.zip) | **23.9%** | **8%** | 99% | only softening the worst mismatches |
+| **1** | [`SmartShuffle-01-strict.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-01-strict.zip) | **10.7%** | **33%** | **42%** | the most even teams, duos stay |
+| | *no preset (plugin default)* | 11.2% | 50% | 84% | |
+| **2** | [`SmartShuffle-02-tight.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-02-tight.zip) | **11.7%** | **22%** | **65%** | even teams, trios stay |
+| **3** | [`SmartShuffle-03-balanced.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-03-balanced.zip) | **12.5%** | **18%** | **85%** | most servers |
+| **4** | [`SmartShuffle-04-steady.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-04-steady.zip) | **13.1%** | **15%** | **86%** | most servers, fewer moves |
+| **5** | [`SmartShuffle-05-calm.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-05-calm.zip) | **14.2%** | **13%** | **86%** | players who dislike being moved |
+| **6** | [`SmartShuffle-06-squads.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-06-squads.zip) | **14.6%** | **12%** | **89%** | friend squads up to 6 |
+| **7** | [`SmartShuffle-07-relaxed.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-07-relaxed.zip) | **16.6%** | **11%** | **90%** | few moves over tight balance |
+| **8** | [`SmartShuffle-08-easy.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-08-easy.zip) | **19.0%** | **9%** | **90%** | only clear mismatches fixed |
+| **9** | [`SmartShuffle-09-together.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-09-together.zip) | **21.7%** | **9%** | **99%** | clans and big stacks |
+| **10** | [`SmartShuffle-10-light.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-10-light.zip) | **24.0%** | **8%** | **99%** | the smallest shuffle |
 | | *random shuffle (no plugin)* | 29.3% | 50% | 24% | |
 
 Stomped matches: share of matches with a ticket gap over 150, average of three simulated worlds. Players moved: share of the server that changes team at a shuffle. Details in [How it works](#-how-it-works).
@@ -98,22 +103,26 @@ Stomped matches: share of matches with a ticket gap over 150, average of three s
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="./assets/ladder-chart-dark.svg">
-    <img src="./assets/ladder-chart.svg" width="92%" alt="Preset ladder: step 1 strict 10.7% stomped and 33% of players moved, no preset 11.5% and 50%, step 2 balanced 14.1% and 13%, step 3 relaxed 18.2% and 10%, step 4 together 21.8% and 9%, step 5 light 23.9% and 8%, random shuffle 29.3% and 50%">
+    <img src="./assets/ladder-chart.svg" width="92%" alt="Preset ladder, ten steps: stomped matches rise from 10.7% (step 1) to 24.0% (step 10), players moved fall from 33% to 8%, parties kept whole rise from 42% to 99%. No preset: 11.2%, 50%, 84%. Random shuffle: 29.3%, 50%, 24%">
   </picture>
 </p>
 
-**What changes from step to step.** All five use `historyRounds` 4 and `autoShuffle` false; everything else stays at the plugin default.
+**What changes from step to step.** All ten use `lockMode` 2, `keepParties` true, `historyRounds` 8 and `historyHours` 12; only these two settings move:
 
-| Step | Preset | `lockMode` | `maxPartySize` | `fewerMoves` |
-|:---:|---|:---:|:---:|:---:|
-| 1 | `1-strict` | 1 | parties ignored | 0.1 |
-|  | *no preset (plugin default)* | 2 | 4 | 0 |
-| 2 | `2-balanced` | 2 | 4 | 1 |
-| 3 | `3-relaxed` | 2 | 4 | 4 |
-| 4 | `4-together` | 2 | no limit | 2 |
-| 5 | `5-light` | 2 | no limit | 4 |
+| Step | Preset | `maxPartySize` | `fewerMoves` |
+|:---:|---|:---:|:---:|
+| 1 | `01-strict` | 2 | 0.1 |
+| 2 | `02-tight` | 3 | 0.3 |
+| 3 | `03-balanced` | 4 | 0.3 |
+| 4 | `04-steady` | 4 | 0.6 |
+| 5 | `05-calm` | 4 | 1 |
+| 6 | `06-squads` | 6 | 1 |
+| 7 | `07-relaxed` | 6 | 2 |
+| 8 | `08-easy` | 6 | 4 |
+| 9 | `09-together` | no limit | 2 |
+| 10 | `10-light` | no limit | 4 |
 
-The earlier presets stay available in [Presets 1.1.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v1.1.0).
+The earlier presets stay available in [Presets 2.0.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v2.0.0) and older releases.
 
 <details>
 <summary><b>Hybrid route (full scoreboard)</b></summary>
@@ -314,20 +323,25 @@ Each step was played in three simulated worlds, 7,200 matches each (21,600 per s
 
 | Step | Preset | main | no synergy | volatile |
 |:---:|---|:---:|:---:|:---:|
-| 1 | `1-strict` | 10.3% | 10.1% | 11.8% |
-|  | *no preset (plugin default)* | 10.8% | 11.0% | 12.6% |
-| 2 | `2-balanced` | 13.5% | 12.9% | 15.8% |
-| 3 | `3-relaxed` | 17.6% | 17.0% | 20.1% |
-| 4 | `4-together` | 21.3% | 18.6% | 25.4% |
-| 5 | `5-light` | 23.6% | 20.5% | 27.7% |
-|  | *random shuffle (no plugin)* | 27.8% | 27.6% | 32.3% |
+| 1 | `01-strict` | 10.0% | 10.2% | 11.9% |
+|  | *no preset (plugin default)* | 10.5% | 11.0% | 12.2% |
+| 2 | `02-tight` | 10.8% | 11.1% | 13.2% |
+| 3 | `03-balanced` | 11.8% | 11.7% | 13.9% |
+| 4 | `04-steady` | 12.2% | 12.3% | 14.8% |
+| 5 | `05-calm` | 13.4% | 12.9% | 16.2% |
+| 6 | `06-squads` | 13.7% | 13.4% | 16.6% |
+| 7 | `07-relaxed` | 15.7% | 15.1% | 19.0% |
+| 8 | `08-easy` | 18.2% | 17.2% | 21.7% |
+| 9 | `09-together` | 21.1% | 17.9% | 26.2% |
+| 10 | `10-light` | 23.2% | 20.3% | 28.6% |
+|  | *random shuffle (no plugin)* | 28.0% | 27.7% | 32.1% |
 
 What it showed:
 
-- The ladder spreads from 10.7% to 23.9% stomped matches while the share of players moved falls from 33% to 8%. Even the last step stays well under a random shuffle (29.3%).
-- Few moves need the parties to stay where they are. With `fewerMoves` on, the plugin keeps each kept party on the side it plays on now (since SquadJS 1.3.0). Putting kept parties on the balanced side instead still moved at least 19% of the server.
-- Big stacks cost the most balance: steps 4 and 5 keep every party, so they rise fastest in the volatile world.
-- Tested and left out: a search from 8 starting splits (a tighter score gap on paper, no fewer stomps) and a split that starts from the current teams (fewer moves than step 1, but more stomps than step 2 at more moves).
+- The ten steps spread from 10.7% to 24.0% stomped matches, while the players moved fall from 33% to 8% and the parties kept whole rise from 42% to 99%. Each column moves one way only.
+- About 10% is the floor for what the plugin can see. A split that knows every player's true ability gets 5.5 to 6%, but every method that only sees match stats stayed at 9.5 to 10.5%: a longer or heavier session history, history from other nights, the full scoreboard of the hybrid route and balancing the per-minute rates directly were all tested. The gap is the limit of rating players from their stats, so 7 to 8% is out of reach with this data.
+- Few moves need the parties to stay where they are: with `fewerMoves` on, each kept party stays on the side it plays on now.
+- Big stacks cost the most balance: steps 9 and 10 keep every party, so they rise fastest in the volatile world.
 
 These are model results, not live data.
 

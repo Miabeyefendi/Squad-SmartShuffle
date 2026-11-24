@@ -39,6 +39,19 @@ The three routes are released separately, each with its own tag: `squadjs-vX.Y.Z
 - Hybrid route docs now use the version 2 form of `ModLoader.json` (`"rulesets": { "<path>": true }`). The older list form still works, ModLoader converts it.
 - The hybrid ruleset was loaded on a local Windows dedicated server with ModLoader: it mounts and is added as a ruleset. The end of match dump itself still needs a played match to be checked.
 
+## [Presets 3.0.0] - 2026-11-24
+
+### Changed
+
+- Ten steps instead of five, `01-strict` to `10-light`, so each step differs clearly and every column moves one
+  way only: stomped matches rise from 10.7% to 24.0%, players moved fall from 33% to 8%, and parties kept whole
+  rise from 42% to 99% (step 1 now keeps duos). All ten count 8 earlier rounds of the session (12 hours) and use
+  lock mode 2; only `maxPartySize` and `fewerMoves` change from step to step. `SmartShuffle-all-presets.zip`
+  holds all ten. Same plugin as SquadJS 1.3.0.
+- The README explains why stomped matches below about 10% were not reached: a split that knows every player's
+  true ability gets 5.5 to 6% in the simulation, but every method that only sees match stats stayed at 9.5 to
+  10.5% (longer or heavier history, history from other nights, the full scoreboard, direct rate balancing).
+
 ## [Presets 2.0.0] - 2026-11-24
 
 ### Changed
@@ -187,6 +200,7 @@ The three routes are released separately, each with its own tag: `squadjs-vX.Y.Z
 
 <!-- Keep this link block at the bottom and add one line per release. -->
 
+[Presets 3.0.0]: https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v3.0.0
 [Presets 2.0.0]: https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v2.0.0
 [SquadJS 1.3.0]: https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/squadjs-v1.3.0
 [Presets 1.1.0]: https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v1.1.0

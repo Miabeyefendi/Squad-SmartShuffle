@@ -81,16 +81,21 @@
 
 ### 🎛️ Presets listos
 
-La versión **[Presets 2.0.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v2.0.0)** es una escalera de cinco pasos. El paso 1 da los equipos más parejos; cada paso siguiente mueve menos jugadores y mantiene enteros más grupos de amigos, a cambio de más partidas aplastantes. Cada zip contiene el `smart-shuffle.js` de **[SquadJS 1.3.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/squadjs-v1.3.0)** y una entrada completa de `config.json` con los ajustes de bloqueo, grupos, historial y menos movimientos. [`SmartShuffle-all-presets.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-all-presets.zip) contiene los cinco.
+La versión **[Presets 3.0.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v3.0.0)** es una escalera de diez pasos. El paso 1 da los equipos más parejos; cada paso siguiente mueve menos jugadores y mantiene enteros más grupos de amigos, a cambio de más partidas aplastantes. Cada zip contiene el `smart-shuffle.js` de **[SquadJS 1.3.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/squadjs-v1.3.0)** y una entrada completa de `config.json` con los ajustes de bloqueo, grupos, historial y menos movimientos. [`SmartShuffle-all-presets.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-all-presets.zip) contiene los diez.
 
 | Paso | Archivo de la versión | Partidas aplastantes | Jugadores movidos | Grupos enteros | Ideal para |
 |:---:|---|:---:|:---:|:---:|---|
-| **1** | [`SmartShuffle-1-strict.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-1-strict.zip) | **10.7%** | **33%** | 30% | los equipos más parejos, los amigos no importan |
-| | *sin preset (predeterminado del plugin)* | 11.5% | 50% | 84% | |
-| **2** | [`SmartShuffle-2-balanced.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-2-balanced.zip) | **14.1%** | **13%** | 86% | la mayoría de servidores: los amigos siguen juntos, se mueven pocos |
-| **3** | [`SmartShuffle-3-relaxed.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-3-relaxed.zip) | **18.2%** | **10%** | 87% | jugadores que odian que los muevan |
-| **4** | [`SmartShuffle-4-together.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-4-together.zip) | **21.8%** | **9%** | 99% | clanes y grupos grandes de amigos |
-| **5** | [`SmartShuffle-5-light.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v2.0.0/SmartShuffle-5-light.zip) | **23.9%** | **8%** | 99% | solo suavizar los peores desequilibrios |
+| **1** | [`SmartShuffle-01-strict.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-01-strict.zip) | **10.7%** | **33%** | **42%** | los equipos más parejos, los dúos siguen juntos |
+| | *sin preset (predeterminado del plugin)* | 11.2% | 50% | 84% | |
+| **2** | [`SmartShuffle-02-tight.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-02-tight.zip) | **11.7%** | **22%** | **65%** | equipos parejos, los tríos siguen juntos |
+| **3** | [`SmartShuffle-03-balanced.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-03-balanced.zip) | **12.5%** | **18%** | **85%** | la mayoría de servidores |
+| **4** | [`SmartShuffle-04-steady.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-04-steady.zip) | **13.1%** | **15%** | **86%** | la mayoría de servidores, menos movimientos |
+| **5** | [`SmartShuffle-05-calm.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-05-calm.zip) | **14.2%** | **13%** | **86%** | jugadores a los que no les gusta que los muevan |
+| **6** | [`SmartShuffle-06-squads.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-06-squads.zip) | **14.6%** | **12%** | **89%** | escuadras de amigos de hasta 6 |
+| **7** | [`SmartShuffle-07-relaxed.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-07-relaxed.zip) | **16.6%** | **11%** | **90%** | pocos movimientos antes que equilibrio estricto |
+| **8** | [`SmartShuffle-08-easy.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-08-easy.zip) | **19.0%** | **9%** | **90%** | solo corregir desequilibrios claros |
+| **9** | [`SmartShuffle-09-together.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-09-together.zip) | **21.7%** | **9%** | **99%** | clanes y grupos grandes |
+| **10** | [`SmartShuffle-10-light.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/presets-v3.0.0/SmartShuffle-10-light.zip) | **24.0%** | **8%** | **99%** | la mezcla más pequeña |
 | | *mezcla aleatoria (sin plugin)* | 29.3% | 50% | 24% | |
 
 Partidas aplastantes: proporción de partidas con una diferencia de tickets mayor de 150, media de tres mundos simulados. Jugadores movidos: proporción del servidor que cambia de equipo en una mezcla. Detalles en [Cómo funciona](#-cómo-funciona).
@@ -98,22 +103,26 @@ Partidas aplastantes: proporción de partidas con una diferencia de tickets mayo
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="./assets/ladder-chart-dark.svg">
-    <img src="./assets/ladder-chart.svg" width="92%" alt="Preset ladder: step 1 strict 10.7% stomped and 33% of players moved, no preset 11.5% and 50%, step 2 balanced 14.1% and 13%, step 3 relaxed 18.2% and 10%, step 4 together 21.8% and 9%, step 5 light 23.9% and 8%, random shuffle 29.3% and 50%">
+    <img src="./assets/ladder-chart.svg" width="92%" alt="Preset ladder, ten steps: stomped matches rise from 10.7% (step 1) to 24.0% (step 10), players moved fall from 33% to 8%, parties kept whole rise from 42% to 99%. No preset: 11.2%, 50%, 84%. Random shuffle: 29.3%, 50%, 24%">
   </picture>
 </p>
 
-**Qué cambia de un paso a otro.** Los cinco usan `historyRounds` 4 y `autoShuffle` false; todo lo demás queda en el valor predeterminado del plugin.
+**Qué cambia de un paso a otro.** Los diez usan `lockMode` 2, `keepParties` true, `historyRounds` 8 y `historyHours` 12; solo cambian estos dos ajustes:
 
-| Paso | Preset | `lockMode` | `maxPartySize` | `fewerMoves` |
-|:---:|---|:---:|:---:|:---:|
-| 1 | `1-strict` | 1 | se ignoran los grupos | 0.1 |
-|  | *sin preset (predeterminado del plugin)* | 2 | 4 | 0 |
-| 2 | `2-balanced` | 2 | 4 | 1 |
-| 3 | `3-relaxed` | 2 | 4 | 4 |
-| 4 | `4-together` | 2 | sin límite | 2 |
-| 5 | `5-light` | 2 | sin límite | 4 |
+| Paso | Preset | `maxPartySize` | `fewerMoves` |
+|:---:|---|:---:|:---:|
+| 1 | `01-strict` | 2 | 0.1 |
+| 2 | `02-tight` | 3 | 0.3 |
+| 3 | `03-balanced` | 4 | 0.3 |
+| 4 | `04-steady` | 4 | 0.6 |
+| 5 | `05-calm` | 4 | 1 |
+| 6 | `06-squads` | 6 | 1 |
+| 7 | `07-relaxed` | 6 | 2 |
+| 8 | `08-easy` | 6 | 4 |
+| 9 | `09-together` | sin límite | 2 |
+| 10 | `10-light` | sin límite | 4 |
 
-Los presets anteriores siguen disponibles en [Presets 1.1.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v1.1.0).
+Los presets anteriores siguen disponibles en [Presets 2.0.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v2.0.0) y versiones más antiguas.
 
 <details>
 <summary><b>Vía híbrida (marcador completo)</b></summary>
@@ -316,20 +325,25 @@ Cada paso se jugó en tres mundos simulados, 7.200 partidas en cada uno (21.600 
 
 | Paso | Preset | principal | sin sinergia | volátil |
 |:---:|---|:---:|:---:|:---:|
-| 1 | `1-strict` | 10.3% | 10.1% | 11.8% |
-|  | *sin preset (predeterminado del plugin)* | 10.8% | 11.0% | 12.6% |
-| 2 | `2-balanced` | 13.5% | 12.9% | 15.8% |
-| 3 | `3-relaxed` | 17.6% | 17.0% | 20.1% |
-| 4 | `4-together` | 21.3% | 18.6% | 25.4% |
-| 5 | `5-light` | 23.6% | 20.5% | 27.7% |
-|  | *mezcla aleatoria (sin plugin)* | 27.8% | 27.6% | 32.3% |
+| 1 | `01-strict` | 10.0% | 10.2% | 11.9% |
+|  | *sin preset (predeterminado del plugin)* | 10.5% | 11.0% | 12.2% |
+| 2 | `02-tight` | 10.8% | 11.1% | 13.2% |
+| 3 | `03-balanced` | 11.8% | 11.7% | 13.9% |
+| 4 | `04-steady` | 12.2% | 12.3% | 14.8% |
+| 5 | `05-calm` | 13.4% | 12.9% | 16.2% |
+| 6 | `06-squads` | 13.7% | 13.4% | 16.6% |
+| 7 | `07-relaxed` | 15.7% | 15.1% | 19.0% |
+| 8 | `08-easy` | 18.2% | 17.2% | 21.7% |
+| 9 | `09-together` | 21.1% | 17.9% | 26.2% |
+| 10 | `10-light` | 23.2% | 20.3% | 28.6% |
+|  | *mezcla aleatoria (sin plugin)* | 28.0% | 27.7% | 32.1% |
 
 Lo que mostró:
 
-- La escalera va del 10,7% al 23,9% de partidas aplastantes mientras la proporción de jugadores movidos baja del 33% al 8%. Incluso el último paso queda claramente por debajo de una mezcla aleatoria (29,3%).
-- Pocos movimientos exigen que los grupos se queden donde están. Con `fewerMoves` activo, el plugin deja cada grupo mantenido en el lado en el que juega ahora (desde SquadJS 1.3.0). Poner esos grupos en el lado del reparto equilibrado seguía moviendo al menos el 19% del servidor.
-- Los grupos grandes son los que más equilibrio cuestan: los pasos 4 y 5 mantienen todos los grupos, por eso son los que más suben en el mundo volátil.
-- Probado y descartado: una búsqueda desde 8 repartos iniciales (menor diferencia de puntuación en teoría, no menos partidas aplastantes) y un reparto que parte de los equipos actuales (menos movimientos que el paso 1, pero más partidas aplastantes que el paso 2 con más movimientos).
+- Los diez pasos van del 10,7% al 24,0% de partidas aplastantes, mientras los jugadores movidos bajan del 33% al 8% y los grupos enteros suben del 42% al 99%. Cada columna avanza en un solo sentido.
+- Cerca del 10% es el límite para lo que el plugin puede ver. Un reparto que conoce la habilidad real de cada jugador llega al 5,5 a 6%, pero todos los métodos que solo ven estadísticas de partida se quedaron en el 9,5 a 10,5%: se probaron un historial de sesión más largo o con más peso, historial de otras noches, el marcador completo de la ruta híbrida y equilibrar directamente las tasas por minuto. La diferencia es el límite de puntuar a los jugadores por sus estadísticas, así que el 7 a 8% no se alcanza con estos datos.
+- Pocos movimientos exigen que los grupos se queden donde están: con `fewerMoves` activo, cada grupo mantenido se queda en el lado en el que juega ahora.
+- Los grupos grandes son los que más equilibrio cuestan: los pasos 9 y 10 mantienen todos los grupos, por eso son los que más suben en el mundo volátil.
 
 Son resultados de un modelo, no datos en vivo.
 

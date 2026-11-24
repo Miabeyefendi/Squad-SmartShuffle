@@ -1,0 +1,11 @@
+{
+  "plugin": "SmartShuffle",
+  "enabled": true,
+  "autoShuffle": false,
+  "lockMode": 2,
+  "keepParties": true,
+  "maxPartySize": 6,
+  "historyRounds": 8,
+  "historyHours": 12,
+  "fewerMoves": 1
+}
