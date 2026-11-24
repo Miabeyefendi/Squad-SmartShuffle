@@ -182,7 +182,7 @@ test('plugin: auto shuffle moves players at round end, lock moves a switcher bac
   runner.teamID = want === 1 ? 2 : 1;
   await plugin.onPlayerInfo();
   assert.equal(runner.teamID, want);
-  assert.ok(server.calls.some((c) => c === `warn ${runner.eosID} Smart Shuffle: team changes are locked until this round ends.`));
+  assert.ok(server.calls.some((c) => c === `warn ${runner.eosID} Smart Shuffle: team changes are locked until this round ends, you were moved back.`));
 
   // admin lifts the lock: the next switch stays
   await plugin.onCommand({ chat: 'ChatAdmin', message: 'unlock', eosID: 'admin' });

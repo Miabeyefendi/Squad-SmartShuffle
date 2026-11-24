@@ -1,11 +1,118 @@
 // Smart Shuffle for SquadJS.
-// Balances the two teams at round end from this match's stats only. Nothing is stored between matches.
+// Balances the two teams at round end from this match's stats and the last rounds of the session (kept in memory).
+// Nothing is written to disk, except the switch tokens file when switchTokens is on.
 // Install: copy this one file to SquadJS/squad-server/plugins/ and add an entry to config.json:
 //   { "plugin": "SmartShuffle", "enabled": true, "autoShuffle": false, "lockMode": 2 }
-// Admin chat: !smartshuffle now | auto on | auto off | lock 0 | lock 1 | lock 2 | unlock | status
+// Admin chat: !smartshuffle now | cancel | preview | auto on/off | friends on/off | history on/off | tokens on/off |
+//             lock 0/1/2 | unlock | status. Players: !tokens (when switchTokens is on).
 // The scoring and balancing part is a port of the offline reference model the formula was tuned with;
 // tests/squadjs/core.test.mjs checks it against that model's outputs (tests/squadjs/golden.json).
+import fs from 'node:fs';
 import BasePlugin from './base-plugin.js';
+
+// ---------------------------------------------------------------------------------------------
+// Settings: every switch takes true/false or "on"/"off" (also 1/0, "yes"/"no"); every number takes a
+// number, "off" (= 0) or "on" (= 1). 0 always turns a numeric feature off.
+// ---------------------------------------------------------------------------------------------
+
+export function flag(v, dflt = false) {
+  if (v === undefined || v === null) return dflt;
+  if (typeof v === 'boolean') return v;
+  if (typeof v === 'number') return v !== 0;
+  const s = String(v).trim().toLowerCase();
+  if (['on', 'true', 'yes', '1', 'enabled'].includes(s)) return true;
+  if (['off', 'false', 'no', '0', '', 'disabled'].includes(s)) return false;
+  return dflt;
+}
+
+export function num(v, dflt = 0) {
+  if (v === undefined || v === null || v === '') return dflt;
+  if (typeof v === 'boolean') return v ? 1 : 0;
+  const s = String(v).trim().toLowerCase();
+  if (s === 'off') return 0;
+  if (s === 'on') return 1;
+  const x = Number(s);
+  return Number.isFinite(x) ? x : dflt;
+}
+
+// ---------------------------------------------------------------------------------------------
+// Switch tokens: kept in a small JSON file so they survive a SquadJS restart (only when switchTokens is on)
+// ---------------------------------------------------------------------------------------------
+
+const DAY_MS = 86400000;
+
+export class TokenBook {
+  // opts: { start, max, refillHours, decayDays, seedSteps: [minutes...] }
+  constructor(opts, data = null) {
+    this.o = opts;
+    this.players = (data && data.players) || {};
+  }
+
+  // the player's record, with refill and inactivity decay applied up to `now`; returns [record, notes]
+  touch(id, now) {
+    const o = this.o;
+    const notes = [];
+    let r = this.players[id];
+    if (!r) {
+      r = { tokens: o.start, lastSeen: now, refillAt: now, seedDay: '', seedMin: 0, seedGot: 0 };
+      this.players[id] = r;
+      return [r, notes];
+    }
+    if (o.decayDays > 0 && r.tokens > o.start) {
+      const periods = Math.floor((now - r.lastSeen) / (o.decayDays * DAY_MS));
+      const lose = Math.min(periods, r.tokens - o.start);
+      if (lose > 0) {
+        r.tokens -= lose;
+        notes.push({ kind: 'decay', lost: lose });
+      }
+    }
+    if (o.refillHours > 0 && r.tokens < o.start) {
+      const gain = Math.floor((now - r.refillAt) / (o.refillHours * 3600000));
+      if (gain > 0) {
+        const got = Math.min(gain, o.start - r.tokens);
+        r.tokens += got;
+        r.refillAt += gain * o.refillHours * 3600000;
+        notes.push({ kind: 'refill', got });
+      }
+    } else r.refillAt = now;
+    r.lastSeen = now;
+    return [r, notes];
+  }
+
+  spend(id, now) {
+    const [r] = this.touch(id, now);
+    if (r.tokens <= 0) return false;
+    if (r.tokens === this.o.start) r.refillAt = now; // refill clock starts with the first spent token
+    r.tokens -= 1;
+    return true;
+  }
+
+  // minutes of seeding by this player, counted per calendar day; returns how many tokens were just earned
+  seed(id, now, minutes) {
+    const [r] = this.touch(id, now);
+    const day = new Date(now).toISOString().slice(0, 10);
+    if (r.seedDay !== day) {
+      r.seedDay = day;
+      r.seedMin = 0;
+      r.seedGot = 0;
+    }
+    r.seedMin += minutes;
+    const reached = this.o.seedSteps.filter((m) => m > 0 && r.seedMin >= m).length;
+    let earned = 0;
+    while (r.seedGot < reached) {
+      r.seedGot += 1;
+      if (!this.o.max || r.tokens < this.o.max) {
+        r.tokens += 1;
+        earned += 1;
+      }
+    }
+    return earned;
+  }
+
+  toJSON() {
+    return { version: 1, players: this.players };
+  }
+}
 
 // ---------------------------------------------------------------------------------------------
 // Scoring
@@ -702,12 +809,105 @@ export default class SmartShuffle extends BasePlugin {
         required: false,
         description: 'Hybrid route: how long to wait at round end for the scoreboard dump.',
         default: 10
+      },
+      lockCheckSeconds: {
+        required: false,
+        description: 'While teams are locked, read the player list this often (seconds) so a switch is undone fast. 0 = only on SquadJS\'s own update (about every 30 s).',
+        default: 5
+      },
+      announceLockStart: {
+        required: false,
+        description: 'At the start of a locked round tell the server that team changes are locked: on or off.',
+        default: true
+      },
+      announceLockEnd: {
+        required: false,
+        description: 'When the lock ends at round end tell the server: on or off.',
+        default: false
+      },
+      reportSkips: {
+        required: false,
+        description: 'Tell the admins online when an automatic shuffle is skipped and why: on or off.',
+        default: true
+      },
+      switchTokens: {
+        required: false,
+        description: 'Switch tokens: during a locked round a player may switch team by spending a token instead of being moved back. on or off.',
+        default: false
+      },
+      tokenStart: {
+        required: false,
+        description: 'Tokens every player has (and gets back over time, see tokenRefillHours).',
+        default: 2
+      },
+      tokenMax: {
+        required: false,
+        description: 'Most tokens a player can hold. 0 = no limit.',
+        default: 5
+      },
+      tokenRefillHours: {
+        required: false,
+        description: 'A spent token comes back after this many hours, up to tokenStart. 0 = spent tokens do not come back.',
+        default: 24
+      },
+      tokenSeedMinutes: {
+        required: false,
+        description: 'Seeding minutes in one day that earn a lasting token each, e.g. [15, 60, 180] = +1 after 15 min, +2 after 1 h, +3 after 3 h. [] = no seed tokens.',
+        default: [15, 60, 180]
+      },
+      tokenSeedPlayers: {
+        required: false,
+        description: 'The server counts as seeding below this many players (or on a layer named seed). 0 = only seed layers.',
+        default: 50
+      },
+      tokenDecayDays: {
+        required: false,
+        description: 'A player away this many days loses one earned token per period, never below tokenStart. 0 = never.',
+        default: 21
+      },
+      tokenMessages: {
+        required: false,
+        description: 'Private messages about tokens (used, left, earned, lost): on or off.',
+        default: true
+      },
+      tokenCommand: {
+        required: false,
+        description: 'Chat command any player can type to see his tokens, e.g. "tokens" for !tokens. "off" = no command.',
+        default: 'tokens'
+      },
+      tokenFile: {
+        required: false,
+        description: 'File the tokens are kept in, relative to the SquadJS folder.',
+        default: 'smart-shuffle-tokens.json'
       }
     };
   }
 
   constructor(server, options, connectors) {
     super(server, options, connectors);
+    // every switch accepts true/false or on/off, every number accepts a number or on/off (0 = off)
+    const o = this.options;
+    for (const k of ['autoShuffle', 'broadcastResult', 'warnMovedPlayers', 'adminReport', 'useMySquadStats',
+      'useScoreboardDump', 'announceLockStart', 'announceLockEnd', 'reportSkips', 'switchTokens', 'tokenMessages']) {
+      o[k] = flag(o[k], flag(SmartShuffle.optionsSpecification[k].default));
+    }
+    if (o.keepParties !== null && o.keepParties !== undefined) o.keepParties = flag(o.keepParties, true);
+    for (const k of ['lockMode', 'shuffleDelaySeconds', 'shuffleDeadlineSeconds', 'announceMinutes', 'historyRounds',
+      'historyHours', 'mySquadStatsWeight', 'lockedSquadMaxSize', 'maxPartySize', 'minPlayers', 'dumpWaitSeconds',
+      'fewerMoves', 'lockCheckSeconds', 'tokenStart', 'tokenMax', 'tokenRefillHours', 'tokenSeedPlayers', 'tokenDecayDays']) {
+      o[k] = num(o[k], SmartShuffle.optionsSpecification[k].default);
+    }
+    o.tokenSeedMinutes = [].concat(o.tokenSeedMinutes === 'off' ? [] : o.tokenSeedMinutes || [])
+      .map((m) => num(m, 0)).filter((m) => m > 0).sort((a, b) => a - b);
+    const tc = String(o.tokenCommand === undefined || o.tokenCommand === null ? 'tokens' : o.tokenCommand).trim().toLowerCase();
+    this.tokenCmd = ['off', 'false', '0', '', 'no'].includes(tc) ? null : ['on', 'true', '1', 'yes'].includes(tc) ? 'tokens' : tc.replace(/^!/, '');
+    this.tokens = o.switchTokens
+      ? new TokenBook({ start: o.tokenStart, max: o.tokenMax, refillHours: o.tokenRefillHours,
+          decayDays: o.tokenDecayDays, seedSteps: o.tokenSeedMinutes })
+      : null;
+    this.tokenDirty = false;
+    this.tokenTimer = null;
+    this.lockTimer = null;
     this.auto = !!this.options.autoShuffle;
     const mode = [0, 1, 2].includes(+this.options.lockMode) ? +this.options.lockMode : 2;
     this.locking = mode > 0; // hold the new teams for one round
@@ -746,7 +946,7 @@ export default class SmartShuffle extends BasePlugin {
       crew: this.options.kitCrew ? new RegExp(this.options.kitCrew, 'i') : null
     };
     for (const name of ['onCommand', 'onDamaged', 'onWounded', 'onDied', 'onRevived', 'onDeployable',
-      'onTeamkill', 'onPlayerInfo', 'onRoundEnded', 'onNewGame', 'onAnnounce']) {
+      'onTeamkill', 'onPlayerInfo', 'onRoundEnded', 'onNewGame', 'onAnnounce', 'onTokenCommand', 'onLockCheck']) {
       this[name] = this[name].bind(this);
     }
     this.dumpRule = {
@@ -772,6 +972,98 @@ export default class SmartShuffle extends BasePlugin {
       this.announceTimer = setInterval(this.onAnnounce, minutes * 60000);
       if (this.announceTimer.unref) this.announceTimer.unref();
     }
+    const check = this.options.lockCheckSeconds;
+    if (check > 0) {
+      this.lockTimer = setInterval(this.onLockCheck, Math.max(check, 2) * 1000);
+      if (this.lockTimer.unref) this.lockTimer.unref();
+    }
+    if (this.tokens) this.loadTokens();
+    // registered even while tokens are off, so an admin can switch them on in game ("tokens on")
+    if (this.tokenCmd) this.server.on(`CHAT_COMMAND:${this.tokenCmd}`, this.onTokenCommand);
+    this.tokenTimer = setInterval(() => this.saveTokens(), 30000);
+    if (this.tokenTimer.unref) this.tokenTimer.unref();
+  }
+
+  // ---- switch tokens ----
+
+  loadTokens() {
+    try {
+      const data = JSON.parse(fs.readFileSync(this.options.tokenFile, 'utf8'));
+      this.tokens = new TokenBook(this.tokens.o, data);
+    } catch (err) {
+      if (err.code !== 'ENOENT') this.verbose(1, `Switch tokens: could not read ${this.options.tokenFile}: ${err}`);
+    }
+  }
+
+  saveTokens(force = false) {
+    if (!this.tokens || (!this.tokenDirty && !force)) return;
+    try {
+      const tmp = `${this.options.tokenFile}.tmp`;
+      fs.writeFileSync(tmp, JSON.stringify(this.tokens.toJSON()));
+      fs.renameSync(tmp, this.options.tokenFile);
+      this.tokenDirty = false;
+    } catch (err) {
+      this.verbose(1, `Switch tokens: could not write ${this.options.tokenFile}: ${err}`);
+    }
+  }
+
+  tokenNote(id, text) {
+    if (this.options.tokenMessages) return this.tell([id], `Smart Shuffle: ${text}`);
+  }
+
+  seeding() {
+    const on = this.server.players.filter((p) => +p.teamID === 1 || +p.teamID === 2).length;
+    const limit = this.options.tokenSeedPlayers;
+    const layer = String((this.server.currentLayer && (this.server.currentLayer.name || this.server.currentLayer.layerid)) ||
+      this.server.currentLayer || this.layerClass || '').toLowerCase();
+    return layer.includes('seed') || (limit > 0 && on < limit);
+  }
+
+  // called on every player list update: last seen, refill, decay notices and seed tokens
+  async tokenTick(dt, now = Date.now()) {
+    if (!this.tokens) return;
+    const seed = dt > 0 && this.options.tokenSeedMinutes.length > 0 && this.seeding();
+    for (const p of this.server.players) {
+      if (!p.eosID) continue;
+      const [r, notes] = this.tokens.touch(p.eosID, now);
+      this.tokenDirty = true;
+      for (const n of notes) {
+        if (n.kind === 'decay') await this.tokenNote(p.eosID, `${n.lost} switch token${n.lost > 1 ? 's' : ''} expired after a long break. You have ${r.tokens}.`);
+      }
+      if (seed && (+p.teamID === 1 || +p.teamID === 2)) {
+        const got = this.tokens.seed(p.eosID, now, dt);
+        if (got > 0) {
+          await this.tokenNote(p.eosID, `+${got} switch token for seeding (${Math.round(r.seedMin)} min today). You have ${r.tokens}. Thank you!`);
+        }
+      }
+    }
+  }
+
+  async onTokenCommand(info) {
+    const id = info.eosID || (info.player && info.player.eosID);
+    if (!id || !this.tokens) return;
+    const [r] = this.tokens.touch(id, Date.now());
+    this.tokenDirty = true;
+    const next = this.options.tokenSeedMinutes.find((m) => m > r.seedMin);
+    const refill = r.tokens < this.options.tokenStart && this.options.tokenRefillHours > 0
+      ? ` Next refill in ${Math.max(1, Math.ceil((r.refillAt + this.options.tokenRefillHours * 3600000 - Date.now()) / 3600000))} h.`
+      : '';
+    const seed = next ? ` Seed ${Math.ceil(next - r.seedMin)} more min today for +1.` : '';
+    await this.tell([id], `Smart Shuffle: you have ${r.tokens} switch token${r.tokens === 1 ? '' : 's'}. ` +
+      `A token lets you change team while teams are locked.${refill}${seed}`);
+  }
+
+  // a faster read of the player list while teams are locked, so a switch is noticed within seconds
+  async onLockCheck() {
+    if (!this.lock || !this.locking || this.busy || this.checking) return;
+    this.checking = true;
+    try {
+      await this.server.updatePlayerList();
+    } catch (err) {
+      this.verbose(1, `Lock check: ${err}`);
+    } finally {
+      this.checking = false;
+    }
   }
 
   async unmount() {
@@ -787,6 +1079,12 @@ export default class SmartShuffle extends BasePlugin {
     this.server.removeListener('NEW_GAME', this.onNewGame);
     if (this.announceTimer) clearInterval(this.announceTimer);
     this.announceTimer = null;
+    if (this.lockTimer) clearInterval(this.lockTimer);
+    this.lockTimer = null;
+    if (this.tokenTimer) clearInterval(this.tokenTimer);
+    this.tokenTimer = null;
+    if (this.tokenCmd) this.server.removeListener(`CHAT_COMMAND:${this.tokenCmd}`, this.onTokenCommand);
+    if (this.tokens) this.saveTokens(true);
     const rules = this.server.logParser.getRules();
     const at = rules.indexOf(this.dumpRule);
     if (at >= 0) rules.splice(at, 1);
@@ -853,6 +1151,7 @@ export default class SmartShuffle extends BasePlugin {
       for (const p of this.server.players) if (p.teamID) this.stat(p.eosID).minutes += dt;
     }
     if (this.outsideOn) this.fetchOutside().catch((err) => this.verbose(1, `MySquadStats: ${err}`));
+    if (this.tokens) await this.tokenTick(this.inMatch ? dt : 0, now);
     if (!this.lock || !this.locking) return;
     const seen = this.server.players.filter((p) => (+p.teamID === 1 || +p.teamID === 2) && this.lock.has(p.eosID));
     if (!this.lockAligned) {
@@ -874,10 +1173,21 @@ export default class SmartShuffle extends BasePlugin {
       return;
     }
     for (const p of wrong) {
+      // a switch token pays for the change: the player stays and the lock follows him
+      if (this.tokens && this.tokens.spend(p.eosID, now)) {
+        this.tokenDirty = true;
+        this.lock.set(p.eosID, +p.teamID);
+        const left = this.tokens.players[p.eosID].tokens;
+        await this.tokenNote(p.eosID, `you used 1 switch token to change team. ${left} left.`);
+        continue;
+      }
       this.reverting.add(p.eosID);
       try {
         await this.server.rcon.switchTeam(p.eosID);
-        await this.server.rcon.warn(p.eosID, 'Smart Shuffle: team changes are locked until this round ends.');
+        const tip = this.tokens
+          ? ` You have no switch tokens left${this.options.tokenSeedMinutes.length ? ', seed the server to earn more' : ''}.`
+          : '';
+        await this.server.rcon.warn(p.eosID, `Smart Shuffle: team changes are locked until this round ends, you were moved back.${tip}`);
       } catch (err) {
         this.verbose(1, `Could not move ${p.eosID} back: ${err}`);
       } finally {
@@ -895,6 +1205,11 @@ export default class SmartShuffle extends BasePlugin {
     this.dump = null;
     this.inMatch = true;
     this.lastTick = Date.now();
+    if (this.lock && this.locking && this.options.announceLockStart) {
+      const how = this.tokens ? ` Switching team costs a switch token (type !${this.tokenCmd || 'tokens'} to see yours).` : ' Switching team is undone.';
+      // after the map loads, so the players see it
+      setTimeout(() => this.say(`Smart Shuffle: teams are locked this round.${how}`), 60000).unref?.();
+    }
   }
 
   // ---- announcements ----
@@ -1050,12 +1365,18 @@ export default class SmartShuffle extends BasePlugin {
   async onRoundEnded() {
     this.inMatch = false;
     this.roundCounts = !this.skipReason();
+    const hadLock = !!this.lock && this.locking;
     this.lock = null;
     const forced = this.pendingNow;
-    if (!(this.auto || forced) || this.busy) return;
+    if (!(this.auto || forced) || this.busy) {
+      if (hadLock && this.options.announceLockEnd) await this.say('Smart Shuffle: team lock lifted, you may switch teams again.');
+      return;
+    }
     const skip = forced ? null : this.skipReason();
     if (skip) {
       this.verbose(1, `Auto shuffle skipped: ${skip}.`);
+      if (this.options.reportSkips) await this.tell(this.adminsOnline(null), `Smart Shuffle: automatic shuffle skipped this round (${skip}).`);
+      if (hadLock && this.options.announceLockEnd) await this.say('Smart Shuffle: team lock lifted, you may switch teams again.');
       return;
     }
     this.pendingNow = false;
@@ -1326,18 +1647,30 @@ export default class SmartShuffle extends BasePlugin {
       this.outsideOn = args[1] === 'on' && !!this.options.mySquadStatsToken;
       reply = `Smart Shuffle MySquadStats rating: ${onOff(this.outsideOn)}.`;
       if (args[1] === 'on' && !this.outsideOn) reply += ' Set mySquadStatsToken in config.json first.';
+    } else if (args[0] === 'tokens' && ['on', 'off'].includes(args[1])) {
+      if (args[1] === 'off') {
+        this.saveTokens(true);
+        this.tokensPaused = this.tokens;
+        this.tokens = null;
+      } else if (!this.tokens) {
+        this.tokens = this.tokensPaused || new TokenBook({ start: this.options.tokenStart, max: this.options.tokenMax,
+          refillHours: this.options.tokenRefillHours, decayDays: this.options.tokenDecayDays,
+          seedSteps: this.options.tokenSeedMinutes });
+        if (!this.tokensPaused) this.loadTokens();
+      }
+      reply = `Smart Shuffle switch tokens: ${onOff(!!this.tokens)}.`;
     } else if (args[0] === 'unlock') {
       this.lock = null;
       reply = 'Smart Shuffle: lock lifted for this round.';
     } else {
       reply =
         `Smart Shuffle: auto ${onOff(this.auto)}, lock ${onOff(this.locking)}, friends ${onOff(this.friends)}, ` +
-        `history ${onOff(this.historyOn)}, mss ${onOff(this.outsideOn)}, ` +
+        `history ${onOff(this.historyOn)}, mss ${onOff(this.outsideOn)}, tokens ${onOff(!!this.tokens)}, ` +
         `pending ${this.pendingNow ? 1 : 0}, locked now ${this.lock ? 1 : 0}. ` +
         (this.last
           ? `Last shuffle: ${this.last.moved} moved, ${this.last.failed} not placed${this.last.stopped ? ', stopped early' : ''}. `
           : '') +
-        `Use: now | cancel | preview | auto on/off | friends on/off | history on/off | mss on/off | lock on/off | unlock`;
+        `Use: now | cancel | preview | auto on/off | friends on/off | history on/off | mss on/off | tokens on/off | lock on/off | unlock`;
     }
     if (id) await this.server.rcon.warn(id, reply);
   }

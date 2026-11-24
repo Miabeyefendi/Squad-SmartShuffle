@@ -81,23 +81,23 @@
 
 ### 🎛️ Готовые пресеты
 
-Релиз **[Smart Shuffle 2.0.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/v2.0.0)** содержит все пресеты. `<Имя>.zip` нужен только SquadJS; `Modloader-<Имя>.zip` это тот же пресет на гибридном пути (SquadJS + ModLoader + предмет SmartShuffle из Workshop, полный счёт). В каждом zip `smart-shuffle.js` (SquadJS 1.3.0) и полная запись `config.json` с настройками блокировки, пати, истории и меньших перемещений. [`All-presets.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/All-presets.zip) содержит их все.
+Релиз **[Smart Shuffle](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest)** содержит все пресеты. `<Имя>.zip` нужен только SquadJS; `Modloader-<Имя>.zip` это тот же пресет на гибридном пути (SquadJS + ModLoader + предмет SmartShuffle из Workshop, полный счёт). В каждом zip `smart-shuffle.js` (SquadJS 1.4.0) и полная запись `config.json` с настройками блокировки, пати, истории и меньших перемещений. [`All-presets.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/All-presets.zip) содержит их все.
 
 Десять ступеней образуют лестницу: ступень 1 даёт самые ровные команды; каждая следующая перемещает меньше игроков и сохраняет больше групп друзей целыми, ценой большего числа разгромов.
 
 | Ступень | Файл релиза | Разгромные матчи | Перемещено игроков | Целые пати | Лучше всего для |
 |:---:|---|:---:|:---:|:---:|---|
-| **1** | [`Strict.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Strict.zip) · [`Modloader-Strict.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Strict.zip) | **10.7%** | **33%** | **42%** | самых ровных команд, пары остаются вместе |
-| | [`Default.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Default.zip) · [`Modloader-Default.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Default.zip) *(плагин как есть)* | 11.2% | 50% | 84% | |
-| **2** | [`Tight.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Tight.zip) · [`Modloader-Tight.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Tight.zip) | **11.7%** | **22%** | **65%** | ровных команд, тройки остаются вместе |
-| **3** | [`Balanced.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Balanced.zip) · [`Modloader-Balanced.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Balanced.zip) | **12.5%** | **18%** | **85%** | большинства серверов |
-| **4** | [`Steady.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Steady.zip) · [`Modloader-Steady.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Steady.zip) | **13.1%** | **15%** | **86%** | большинства серверов, меньше перемещений |
-| **5** | [`Calm.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Calm.zip) · [`Modloader-Calm.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Calm.zip) | **14.2%** | **13%** | **86%** | игроков, которые не любят перемещений |
-| **6** | [`Squads.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Squads.zip) · [`Modloader-Squads.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Squads.zip) | **14.6%** | **12%** | **89%** | отрядов друзей до 6 |
-| **7** | [`Relaxed.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Relaxed.zip) · [`Modloader-Relaxed.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Relaxed.zip) | **16.6%** | **11%** | **90%** | мало перемещений важнее строгого баланса |
-| **8** | [`Easy.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Easy.zip) · [`Modloader-Easy.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Easy.zip) | **19.0%** | **9%** | **90%** | только явных перекосов |
-| **9** | [`Together.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Together.zip) · [`Modloader-Together.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Together.zip) | **21.7%** | **9%** | **99%** | кланов и больших групп |
-| **10** | [`Light.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Light.zip) · [`Modloader-Light.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Light.zip) | **24.0%** | **8%** | **99%** | самого маленького перемешивания |
+| **1** | [`Strict.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Strict.zip) · [`Modloader-Strict.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Strict.zip) | **10.7%** | **33%** | **42%** | самых ровных команд, пары остаются вместе |
+| | [`Default.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Default.zip) · [`Modloader-Default.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Default.zip) *(плагин как есть)* | 11.2% | 50% | 84% | |
+| **2** | [`Tight.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Tight.zip) · [`Modloader-Tight.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Tight.zip) | **11.7%** | **22%** | **65%** | ровных команд, тройки остаются вместе |
+| **3** | [`Balanced.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Balanced.zip) · [`Modloader-Balanced.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Balanced.zip) | **12.5%** | **18%** | **85%** | большинства серверов |
+| **4** | [`Steady.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Steady.zip) · [`Modloader-Steady.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Steady.zip) | **13.1%** | **15%** | **86%** | большинства серверов, меньше перемещений |
+| **5** | [`Calm.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Calm.zip) · [`Modloader-Calm.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Calm.zip) | **14.2%** | **13%** | **86%** | игроков, которые не любят перемещений |
+| **6** | [`Squads.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Squads.zip) · [`Modloader-Squads.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Squads.zip) | **14.6%** | **12%** | **89%** | отрядов друзей до 6 |
+| **7** | [`Relaxed.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Relaxed.zip) · [`Modloader-Relaxed.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Relaxed.zip) | **16.6%** | **11%** | **90%** | мало перемещений важнее строгого баланса |
+| **8** | [`Easy.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Easy.zip) · [`Modloader-Easy.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Easy.zip) | **19.0%** | **9%** | **90%** | только явных перекосов |
+| **9** | [`Together.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Together.zip) · [`Modloader-Together.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Together.zip) | **21.7%** | **9%** | **99%** | кланов и больших групп |
+| **10** | [`Light.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Light.zip) · [`Modloader-Light.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Light.zip) | **24.0%** | **8%** | **99%** | самого маленького перемешивания |
 | | *случайное перемешивание (без плагина)* | 29.3% | 50% | 24% | |
 
 Разгромные матчи: доля матчей с разницей тикетов больше 150, среднее по трём симулированным мирам. Перемещено игроков: доля сервера, меняющая команду при перемешивании. Подробности в разделе [Как это работает](#-как-это-работает).
@@ -341,7 +341,7 @@ Smart Shuffle report: 44 moved, 0 not placed, score gap 21% -> 1%, done in 3.2 s
 Что показала симуляция:
 
 - Десять ступеней растягиваются от 10,7% до 24,0% разгромных матчей, при этом перемещённых игроков становится меньше, с 33% до 8%, а целых пати больше, с 42% до 99%. Каждый столбец меняется только в одну сторону.
-- Около 10% это предел для данных, которые видит плагин. Разбиение, знающее истинную силу каждого игрока, даёт 5,5 до 6%, но все методы, видящие только статистику матча, остались на 9,5 до 10,5%: проверены более длинная или более весомая история сессии, история других вечеров, полный счёт гибридного пути и прямая балансировка поминутных показателей. Разрыв это предел оценки игроков по статистике, поэтому 7 до 8% с этими данными недостижимы.
+- Около 10% это предел для данных, которые видит плагин. Разбиение, знающее истинную силу каждого игрока, даёт 5,5 до 6%, но все методы, видящие только статистику матча, остались на 9,5 до 10,5%: проверены более длинная или более весомая история сессии, история других вечеров, полный счёт гибридного пути с историей сессии и без неё, прямая балансировка поминутных показателей, рейтинг в духе Elo по результатам команд в прошлых раундах и другие настройки prior, доли команды и lambda. Разрыв это предел оценки игроков по статистике, поэтому 7 до 8% с этими данными недостижимы.
 - Мало перемещений возможно, только если пати остаются на месте: с `fewerMoves` каждая сохраняемая пати остаётся на той стороне, где играет сейчас.
 - Большие группы стоят балансу дороже всего: ступени 9 и 10 сохраняют все пати, поэтому сильнее всего растут в нестабильном мире.
 
@@ -352,6 +352,8 @@ Smart Shuffle report: 44 moved, 0 not placed, score gap 21% -> 1%, done in 3.2 s
 ## ⚙️ Настройка
 
 Все параметры задаются в записи плагина в `config.json` SquadJS.
+
+Каждый переключатель принимает `true`/`false` или `"on"`/`"off"`. Каждое число принимает число или `"off"`, и `0` всегда выключает эту функцию (`1` включено, большие значения это дополнительные ступени).
 
 | Ключ | По умолчанию | Что делает |
 |---|---|---|
@@ -367,6 +369,20 @@ Smart Shuffle report: 44 moved, 0 not placed, score gap 21% -> 1%, done in 3.2 s
 | `skipLayers` | `["seed", "jensen", "invasion"]` | Автоматическое перемешивание пропускает раунд, если название layer содержит что-то из списка. `!smartshuffle now` выполняется всегда |
 | `minPlayers` | `40` | Автоматическое перемешивание пропускает раунд с меньшим числом игроков. `!smartshuffle now` выполняется всегда |
 | `fewerMoves` | `0` | Перемещать меньше игроков. 0 выключено. Больше 0: больше игроков остаётся на своей стороне, а разница в балансе может вырасти не более чем на эту долю. `0.1` перемещает примерно на треть меньше игроков (в симуляции с 50% до 33%) при той же доле разгромных матчей. До `10`; большие значения перемещают ещё меньше игроков (`4`: примерно каждого десятого) ценой большего числа разгромов. Когда включено, сохраняемые пати остаются на той стороне, где играют сейчас |
+| `lockCheckSeconds` | `5` | Пока команды заблокированы, читать список игроков с такой частотой (секунды), чтобы переход отменялся за секунды, а не примерно за 30. `0` = только собственное обновление SquadJS |
+| `announceLockStart` | `on` | В начале заблокированного раунда сообщать серверу, что смена команды заблокирована |
+| `announceLockEnd` | `off` | Сообщать серверу, когда блокировка снимается в конце раунда |
+| `reportSkips` | `on` | Сообщать админам онлайн, когда автоматическое перемешивание пропущено и почему |
+| `switchTokens` | `off` | Жетоны смены: в заблокированном раунде игрок может сменить команду за жетон, а не быть возвращённым. Жетоны хранятся в `tokenFile` |
+| `tokenStart` | `2` | Жетоны, которые есть у каждого игрока и восстанавливаются со временем |
+| `tokenMax` | `5` | Максимум жетонов у игрока. `0` = без лимита |
+| `tokenRefillHours` | `24` | Потраченный жетон возвращается через столько часов, до `tokenStart`. `0` = никогда |
+| `tokenSeedMinutes` | `[15, 60, 180]` | Минуты сида за день, каждая ступень даёт постоянный жетон: +1 за 15 мин, +2 за 1 ч, +3 за 3 ч. `[]` = без жетонов за сид |
+| `tokenSeedPlayers` | `50` | Сервер считается сидом ниже этого числа игроков или на слое с названием seed. `0` = только сид-слои |
+| `tokenDecayDays` | `21` | Игрок, отсутствующий столько дней, теряет один заработанный жетон за каждый период, но не ниже `tokenStart`. `0` = никогда |
+| `tokenMessages` | `on` | Личные сообщения о жетонах: использован, осталось, заработан, сгорел |
+| `tokenCommand` | `tokens` | Команда чата, которой любой игрок видит свои жетоны (`!tokens`). `"off"` = без команды |
+| `tokenFile` | `smart-shuffle-tokens.json` | Файл, где хранятся жетоны, относительно папки SquadJS |
 | `shuffleDelaySeconds` | `0` | Сколько секунд ждать после конца раунда перед перемещением игроков (время посмотреть таблицу), от 0 до 25 |
 | `shuffleDeadlineSeconds` | `30` | Позже этого числа секунд после конца раунда никого не двигают, и никогда после старта следующей карты |
 | `announceMinutes` | `10` | Пока перемешивание ожидается, сообщать серверу каждые столько минут. 0 отключает объявления |

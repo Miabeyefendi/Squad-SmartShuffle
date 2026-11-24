@@ -81,23 +81,23 @@
 
 ### 🎛️ Ready-made presets
 
-The **[Smart Shuffle 2.0.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/v2.0.0)** release holds every preset. `<Name>.zip` needs SquadJS only; `Modloader-<Name>.zip` is the same preset on the hybrid route (SquadJS + ModLoader + the SmartShuffle Workshop item, full scoreboard). Each zip holds `smart-shuffle.js` (SquadJS 1.3.0) and a complete `config.json` entry with the lock, party, history and fewer-moves settings. [`All-presets.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/All-presets.zip) holds all of them.
+The **[Smart Shuffle](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest)** release holds every preset. `<Name>.zip` needs SquadJS only; `Modloader-<Name>.zip` is the same preset on the hybrid route (SquadJS + ModLoader + the SmartShuffle Workshop item, full scoreboard). Each zip holds `smart-shuffle.js` (SquadJS 1.4.0) and a complete `config.json` entry with the lock, party, history and fewer-moves settings. [`All-presets.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/All-presets.zip) holds all of them.
 
 The ten steps form a ladder: step 1 gives the most even teams; every next step moves fewer players and keeps more friend groups whole, for more stomped matches.
 
 | Step | Release file | Stomped matches | Players moved | Parties kept whole | Best for |
 |:---:|---|:---:|:---:|:---:|---|
-| **1** | [`Strict.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Strict.zip) · [`Modloader-Strict.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Strict.zip) | **10.7%** | **33%** | **42%** | the most even teams, duos stay |
-| | [`Default.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Default.zip) · [`Modloader-Default.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Default.zip) *(the plugin as it comes)* | 11.2% | 50% | 84% | |
-| **2** | [`Tight.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Tight.zip) · [`Modloader-Tight.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Tight.zip) | **11.7%** | **22%** | **65%** | even teams, trios stay |
-| **3** | [`Balanced.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Balanced.zip) · [`Modloader-Balanced.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Balanced.zip) | **12.5%** | **18%** | **85%** | most servers |
-| **4** | [`Steady.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Steady.zip) · [`Modloader-Steady.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Steady.zip) | **13.1%** | **15%** | **86%** | most servers, fewer moves |
-| **5** | [`Calm.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Calm.zip) · [`Modloader-Calm.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Calm.zip) | **14.2%** | **13%** | **86%** | players who dislike being moved |
-| **6** | [`Squads.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Squads.zip) · [`Modloader-Squads.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Squads.zip) | **14.6%** | **12%** | **89%** | friend squads up to 6 |
-| **7** | [`Relaxed.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Relaxed.zip) · [`Modloader-Relaxed.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Relaxed.zip) | **16.6%** | **11%** | **90%** | few moves over tight balance |
-| **8** | [`Easy.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Easy.zip) · [`Modloader-Easy.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Easy.zip) | **19.0%** | **9%** | **90%** | only clear mismatches fixed |
-| **9** | [`Together.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Together.zip) · [`Modloader-Together.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Together.zip) | **21.7%** | **9%** | **99%** | clans and big stacks |
-| **10** | [`Light.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Light.zip) · [`Modloader-Light.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Light.zip) | **24.0%** | **8%** | **99%** | the smallest shuffle |
+| **1** | [`Strict.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Strict.zip) · [`Modloader-Strict.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Strict.zip) | **10.7%** | **33%** | **42%** | the most even teams, duos stay |
+| | [`Default.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Default.zip) · [`Modloader-Default.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Default.zip) *(the plugin as it comes)* | 11.2% | 50% | 84% | |
+| **2** | [`Tight.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Tight.zip) · [`Modloader-Tight.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Tight.zip) | **11.7%** | **22%** | **65%** | even teams, trios stay |
+| **3** | [`Balanced.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Balanced.zip) · [`Modloader-Balanced.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Balanced.zip) | **12.5%** | **18%** | **85%** | most servers |
+| **4** | [`Steady.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Steady.zip) · [`Modloader-Steady.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Steady.zip) | **13.1%** | **15%** | **86%** | most servers, fewer moves |
+| **5** | [`Calm.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Calm.zip) · [`Modloader-Calm.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Calm.zip) | **14.2%** | **13%** | **86%** | players who dislike being moved |
+| **6** | [`Squads.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Squads.zip) · [`Modloader-Squads.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Squads.zip) | **14.6%** | **12%** | **89%** | friend squads up to 6 |
+| **7** | [`Relaxed.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Relaxed.zip) · [`Modloader-Relaxed.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Relaxed.zip) | **16.6%** | **11%** | **90%** | few moves over tight balance |
+| **8** | [`Easy.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Easy.zip) · [`Modloader-Easy.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Easy.zip) | **19.0%** | **9%** | **90%** | only clear mismatches fixed |
+| **9** | [`Together.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Together.zip) · [`Modloader-Together.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Together.zip) | **21.7%** | **9%** | **99%** | clans and big stacks |
+| **10** | [`Light.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Light.zip) · [`Modloader-Light.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Light.zip) | **24.0%** | **8%** | **99%** | the smallest shuffle |
 | | *random shuffle (no plugin)* | 29.3% | 50% | 24% | |
 
 Stomped matches: share of matches with a ticket gap over 150, average of three simulated worlds. Players moved: share of the server that changes team at a shuffle. Details in [How it works](#-how-it-works).
@@ -341,7 +341,7 @@ Each step was played in three simulated worlds, 7,200 matches each (21,600 per s
 What it showed:
 
 - The ten steps spread from 10.7% to 24.0% stomped matches, while the players moved fall from 33% to 8% and the parties kept whole rise from 42% to 99%. Each column moves one way only.
-- About 10% is the floor for what the plugin can see. A split that knows every player's true ability gets 5.5 to 6%, but every method that only sees match stats stayed at 9.5 to 10.5%: a longer or heavier session history, history from other nights, the full scoreboard of the hybrid route and balancing the per-minute rates directly were all tested. The gap is the limit of rating players from their stats, so 7 to 8% is out of reach with this data.
+- About 10% is the floor for what the plugin can see. A split that knows every player's true ability gets 5.5 to 6%, but every method that only sees match stats stayed at 9.5 to 10.5%: a longer or heavier session history, history from other nights, the full scoreboard of the hybrid route with and without session history, balancing the per-minute rates directly, an Elo-like rating from the team results of earlier rounds and other prior, team share and lambda settings were all tested. The gap is the limit of rating players from their stats, so 7 to 8% is out of reach with this data.
 - Few moves need the parties to stay where they are: with `fewerMoves` on, each kept party stays on the side it plays on now.
 - Big stacks cost the most balance: steps 9 and 10 keep every party, so they rise fastest in the volatile world.
 
@@ -352,6 +352,8 @@ These are model results, not live data.
 ## ⚙️ Configuration
 
 All options go into the plugin entry in SquadJS `config.json`.
+
+Every switch takes `true`/`false` or `"on"`/`"off"`. Every number takes a number or `"off"`, and `0` always turns that feature off (`1` on, higher values are extra steps).
 
 | Key | Default | What it does |
 |---|---|---|
@@ -367,6 +369,20 @@ All options go into the plugin entry in SquadJS `config.json`.
 | `skipLayers` | `["seed", "jensen", "invasion"]` | Automatic shuffle skips a round whose layer name contains one of these. `!smartshuffle now` always runs |
 | `minPlayers` | `40` | Automatic shuffle skips a round with fewer players. `!smartshuffle now` always runs |
 | `fewerMoves` | `0` | Move fewer players. 0 is off. Above 0 more players stay on their current side and the balance gap may grow by that share. `0.1` moves about a third fewer players (50% down to 33% in simulation) with the same share of stomped matches. Up to `10`; larger values move even fewer players (`4`: about one in ten) for more stomped matches. While it is on, kept parties stay on the side they play on now |
+| `lockCheckSeconds` | `5` | While teams are locked, read the player list this often (seconds), so a switch is undone within seconds instead of about 30. `0` = only SquadJS's own update |
+| `announceLockStart` | `on` | Tell the server at the start of a locked round that team changes are locked |
+| `announceLockEnd` | `off` | Tell the server when the lock ends at round end |
+| `reportSkips` | `on` | Tell the admins online when an automatic shuffle is skipped and why |
+| `switchTokens` | `off` | Switch tokens: in a locked round a player may change team by spending a token instead of being moved back. Tokens are kept in `tokenFile` |
+| `tokenStart` | `2` | Tokens every player has, and gets back over time |
+| `tokenMax` | `5` | Most tokens a player can hold. `0` = no limit |
+| `tokenRefillHours` | `24` | A spent token comes back after this many hours, up to `tokenStart`. `0` = never |
+| `tokenSeedMinutes` | `[15, 60, 180]` | Seeding minutes in one day that each earn a lasting token: +1 after 15 min, +2 after 1 h, +3 after 3 h. `[]` = no seed tokens |
+| `tokenSeedPlayers` | `50` | The server counts as seeding below this many players, or on a layer named seed. `0` = only seed layers |
+| `tokenDecayDays` | `21` | A player away this many days loses one earned token per period, never below `tokenStart`. `0` = never |
+| `tokenMessages` | `on` | Private messages about tokens: used, left, earned, expired |
+| `tokenCommand` | `tokens` | Chat command any player can type to see his tokens (`!tokens`). `"off"` = no command |
+| `tokenFile` | `smart-shuffle-tokens.json` | File the tokens are kept in, relative to the SquadJS folder |
 | `shuffleDelaySeconds` | `0` | Seconds to wait after the round ends before players are moved (time to read the scoreboard), 0 to 25 |
 | `shuffleDeadlineSeconds` | `30` | Nobody is moved later than this many seconds after the round ended, and never after the next map started |
 | `announceMinutes` | `10` | While a shuffle is due, tell the server every this many minutes. 0 turns the announcements off |

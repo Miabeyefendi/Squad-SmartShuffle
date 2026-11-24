@@ -81,23 +81,23 @@
 
 ### 🎛️ Hazır presetler
 
-**[Smart Shuffle 2.0.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/v2.0.0)** sürümü bütün presetleri içerir. `<Ad>.zip` sadece SquadJS ister; `Modloader-<Ad>.zip` aynı presetin hibrit yoldaki hali (SquadJS + ModLoader + SmartShuffle Workshop öğesi, tam skor tablosu). Her zip'te `smart-shuffle.js` (SquadJS 1.3.0) ve kilit, parti, geçmiş ve az taşıma ayarlarıyla eksiksiz bir `config.json` girdisi var. [`All-presets.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/All-presets.zip) hepsini birden içerir.
+**[Smart Shuffle](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest)** sürümü bütün presetleri içerir. `<Ad>.zip` sadece SquadJS ister; `Modloader-<Ad>.zip` aynı presetin hibrit yoldaki hali (SquadJS + ModLoader + SmartShuffle Workshop öğesi, tam skor tablosu). Her zip'te `smart-shuffle.js` (SquadJS 1.4.0) ve kilit, parti, geçmiş ve az taşıma ayarlarıyla eksiksiz bir `config.json` girdisi var. [`All-presets.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/All-presets.zip) hepsini birden içerir.
 
 On basamak bir merdiven oluşturur: 1. basamak en dengeli takımları verir; her sonraki basamak daha az oyuncu taşır ve daha çok arkadaş grubunu bütün tutar, karşılığında ezilen maç artar.
 
 | Basamak | Sürüm dosyası | Ezilen maç | Taşınan oyuncu | Bütün kalan parti | En uygun |
 |:---:|---|:---:|:---:|:---:|---|
-| **1** | [`Strict.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Strict.zip) · [`Modloader-Strict.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Strict.zip) | **10.7%** | **33%** | **42%** | en dengeli takımlar, ikililer kalır |
-| | [`Default.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Default.zip) · [`Modloader-Default.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Default.zip) *(eklentinin kendi ayarları)* | 11.2% | 50% | 84% | |
-| **2** | [`Tight.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Tight.zip) · [`Modloader-Tight.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Tight.zip) | **11.7%** | **22%** | **65%** | dengeli takımlar, üçlüler kalır |
-| **3** | [`Balanced.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Balanced.zip) · [`Modloader-Balanced.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Balanced.zip) | **12.5%** | **18%** | **85%** | çoğu sunucu |
-| **4** | [`Steady.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Steady.zip) · [`Modloader-Steady.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Steady.zip) | **13.1%** | **15%** | **86%** | çoğu sunucu, daha az taşıma |
-| **5** | [`Calm.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Calm.zip) · [`Modloader-Calm.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Calm.zip) | **14.2%** | **13%** | **86%** | taşınmaktan hoşlanmayan oyuncular |
-| **6** | [`Squads.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Squads.zip) · [`Modloader-Squads.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Squads.zip) | **14.6%** | **12%** | **89%** | 6 kişiye kadar arkadaş squad'ları |
-| **7** | [`Relaxed.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Relaxed.zip) · [`Modloader-Relaxed.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Relaxed.zip) | **16.6%** | **11%** | **90%** | sıkı denge yerine az taşıma |
-| **8** | [`Easy.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Easy.zip) · [`Modloader-Easy.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Easy.zip) | **19.0%** | **9%** | **90%** | sadece belirgin dengesizlikler |
-| **9** | [`Together.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Together.zip) · [`Modloader-Together.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Together.zip) | **21.7%** | **9%** | **99%** | klanlar ve büyük gruplar |
-| **10** | [`Light.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Light.zip) · [`Modloader-Light.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Light.zip) | **24.0%** | **8%** | **99%** | en küçük karıştırma |
+| **1** | [`Strict.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Strict.zip) · [`Modloader-Strict.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Strict.zip) | **10.7%** | **33%** | **42%** | en dengeli takımlar, ikililer kalır |
+| | [`Default.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Default.zip) · [`Modloader-Default.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Default.zip) *(eklentinin kendi ayarları)* | 11.2% | 50% | 84% | |
+| **2** | [`Tight.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Tight.zip) · [`Modloader-Tight.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Tight.zip) | **11.7%** | **22%** | **65%** | dengeli takımlar, üçlüler kalır |
+| **3** | [`Balanced.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Balanced.zip) · [`Modloader-Balanced.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Balanced.zip) | **12.5%** | **18%** | **85%** | çoğu sunucu |
+| **4** | [`Steady.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Steady.zip) · [`Modloader-Steady.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Steady.zip) | **13.1%** | **15%** | **86%** | çoğu sunucu, daha az taşıma |
+| **5** | [`Calm.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Calm.zip) · [`Modloader-Calm.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Calm.zip) | **14.2%** | **13%** | **86%** | taşınmaktan hoşlanmayan oyuncular |
+| **6** | [`Squads.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Squads.zip) · [`Modloader-Squads.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Squads.zip) | **14.6%** | **12%** | **89%** | 6 kişiye kadar arkadaş squad'ları |
+| **7** | [`Relaxed.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Relaxed.zip) · [`Modloader-Relaxed.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Relaxed.zip) | **16.6%** | **11%** | **90%** | sıkı denge yerine az taşıma |
+| **8** | [`Easy.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Easy.zip) · [`Modloader-Easy.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Easy.zip) | **19.0%** | **9%** | **90%** | sadece belirgin dengesizlikler |
+| **9** | [`Together.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Together.zip) · [`Modloader-Together.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Together.zip) | **21.7%** | **9%** | **99%** | klanlar ve büyük gruplar |
+| **10** | [`Light.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Light.zip) · [`Modloader-Light.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Light.zip) | **24.0%** | **8%** | **99%** | en küçük karıştırma |
 | | *rastgele karıştırma (eklenti yok)* | 29.3% | 50% | 24% | |
 
 Ezilen maç: bilet farkı 150'yi geçen maçların oranı, üç simüle dünyanın ortalaması. Taşınan oyuncu: karıştırmada takım değiştiren oyuncuların oranı. Ayrıntılar [Nasıl çalışır](#-nasıl-çalışır) bölümünde.
@@ -341,7 +341,7 @@ Her basamak üç simüle dünyada, her birinde 7.200 maç (basamak başına 21.6
 Sonuçlar:
 
 - On basamak %10,7'den %24,0 ezilen maça yayılıyor; taşınan oyuncu %33'ten %8'e iniyor, bütün kalan parti %42'den %99'a çıkıyor. Her sütun tek yönde ilerliyor.
-- Eklentinin görebildiği veriyle alt sınır yaklaşık %10. Her oyuncunun gerçek gücünü bilen bir bölme %5,5 ila 6'ya iniyor, ama sadece maç istatistiklerini gören her yöntem %9,5 ila 10,5'te kaldı: daha uzun ya da daha ağır oturum geçmişi, önceki akşamların geçmişi, hibrit yolun tam skor tablosu ve dakika başı oranları doğrudan dengelemek denendi. Aradaki fark oyuncuyu istatistiğinden puanlamanın sınırı; bu veriyle %7 ila 8 ulaşılamıyor.
+- Eklentinin görebildiği veriyle alt sınır yaklaşık %10. Her oyuncunun gerçek gücünü bilen bir bölme %5,5 ila 6'ya iniyor, ama sadece maç istatistiklerini gören her yöntem %9,5 ila 10,5'te kaldı: daha uzun ya da daha ağır oturum geçmişi, önceki akşamların geçmişi, hibrit yolun tam skor tablosu (oturum geçmişiyle ve geçmişsiz), dakika başı oranları doğrudan dengelemek, önceki turların takım sonuçlarından Elo benzeri bir puan ve farklı yumuşatma, takım payı ve lambda ayarları denendi. Aradaki fark oyuncuyu istatistiğinden puanlamanın sınırı; bu veriyle %7 ila 8 ulaşılamıyor.
 - Az taşıma için partilerin yerinde kalması gerekiyor: `fewerMoves` açıkken tutulan her parti şu an oynadığı tarafta kalır.
 - Büyük gruplar dengeden en çok götürüyor: 9. ve 10. basamak her partiyi tuttuğu için dalgalı dünyada en hızlı yükselenler bunlar.
 
@@ -352,6 +352,8 @@ Bunlar model sonuçları, canlı veri değil.
 ## ⚙️ Yapılandırma
 
 Bütün seçenekler SquadJS `config.json` içindeki eklenti girişine yazılır.
+
+Her aç/kapa ayarı `true`/`false` ya da `"on"`/`"off"` alır. Her sayı ayarı bir sayı ya da `"off"` alır; `0` o özelliği her zaman kapatır (`1` açık, daha büyük değerler ek basamaklar).
 
 | Anahtar | Varsayılan | Ne yapar |
 |---|---|---|
@@ -367,6 +369,20 @@ Bütün seçenekler SquadJS `config.json` içindeki eklenti girişine yazılır.
 | `skipLayers` | `["seed", "jensen", "invasion"]` | Otomatik karıştırma, layer adı bunlardan birini içeren turu atlar. `!smartshuffle now` her zaman çalışır |
 | `minPlayers` | `40` | Otomatik karıştırma, oyuncu sayısı bundan az olan turu atlar. `!smartshuffle now` her zaman çalışır |
 | `fewerMoves` | `0` | Daha az oyuncu taşı. 0 kapalı. 0'dan büyükse daha çok oyuncu mevcut takımında kalır, denge farkı en fazla bu oran kadar büyüyebilir. `0.1` taşınan oyuncuyu yaklaşık üçte bir azaltır (simülasyonda %50'den %33'e), ezilen maç oranı aynı kalır. En fazla `10`; büyük değerler daha da az oyuncu taşır (`4`: yaklaşık onda bir), karşılığında ezilen maç artar. Açıkken tutulan partiler şu an oynadıkları tarafta kalır |
+| `lockCheckSeconds` | `5` | Takımlar kilitliyken oyuncu listesini bu sıklıkla (saniye) oku; değişim yaklaşık 30 sn yerine birkaç saniyede geri alınır. `0` = sadece SquadJS'in kendi güncellemesi |
+| `announceLockStart` | `on` | Kilitli turun başında sunucuya takım değişiminin kilitli olduğunu söyle |
+| `announceLockEnd` | `off` | Tur sonunda kilit kalkınca sunucuya söyle |
+| `reportSkips` | `on` | Otomatik karıştırma atlanınca çevrimiçi adminlere nedenini söyle |
+| `switchTokens` | `off` | Değişim tokenı: kilitli turda oyuncu geri taşınmak yerine token harcayarak takım değiştirebilir. Tokenlar `tokenFile` içinde saklanır |
+| `tokenStart` | `2` | Her oyuncunun sahip olduğu ve zamanla geri aldığı token sayısı |
+| `tokenMax` | `5` | Bir oyuncunun tutabileceği en çok token. `0` = sınırsız |
+| `tokenRefillHours` | `24` | Harcanan token bu kadar saat sonra geri gelir, `tokenStart`'a kadar. `0` = hiç |
+| `tokenSeedMinutes` | `[15, 60, 180]` | Bir günde her biri kalıcı token kazandıran seed dakikaları: 15 dk'da +1, 1 saatte +2, 3 saatte +3. `[]` = seed tokenı yok |
+| `tokenSeedPlayers` | `50` | Bu sayıdan az oyuncuyken ya da adında seed geçen katmanda sunucu seed sayılır. `0` = sadece seed katmanları |
+| `tokenDecayDays` | `21` | Bu kadar gün gelmeyen oyuncu her dönemde kazandığı bir tokenı kaybeder, `tokenStart`'ın altına inmez. `0` = hiç |
+| `tokenMessages` | `on` | Tokenlarla ilgili özel mesajlar: kullanıldı, kaldı, kazanıldı, süresi doldu |
+| `tokenCommand` | `tokens` | Her oyuncunun tokenlarını görmek için yazabileceği sohbet komutu (`!tokens`). `"off"` = komut yok |
+| `tokenFile` | `smart-shuffle-tokens.json` | Tokenların saklandığı dosya, SquadJS klasörüne göre |
 | `shuffleDelaySeconds` | `0` | Tur bittikten sonra oyuncular taşınmadan önce beklenecek saniye (skor tablosunu okumak için), 0 ile 25 arası |
 | `shuffleDeadlineSeconds` | `30` | Tur bittikten bu kadar saniye sonra kimse taşınmaz, sonraki harita başladıktan sonra da asla |
 | `announceMinutes` | `10` | Karıştırma bekliyorken sunucuya bu kadar dakikada bir duyur. 0 duyuruları kapatır |

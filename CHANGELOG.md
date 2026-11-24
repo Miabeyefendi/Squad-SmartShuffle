@@ -34,10 +34,29 @@ The three routes are released separately, each with its own tag: `squadjs-vX.Y.Z
 
 ## [Unreleased]
 
+### Added
+
+- Switch tokens (`switchTokens`, off by default): in a locked round a player can change team by spending a token
+  instead of being moved back. Every player has `tokenStart` (2), a spent one comes back after `tokenRefillHours`
+  (24). Seeding earns lasting tokens: +1 after 15 minutes, +2 after 1 hour, +3 after 3 hours in a day
+  (`tokenSeedMinutes`), up to `tokenMax` (5). A player away for `tokenDecayDays` (21) loses one earned token per
+  period. Players type `!tokens` to see theirs; admins switch the system with `!smartshuffle tokens on/off`. Tokens
+  are kept in `tokenFile`, the only thing the plugin writes to disk.
+- Faster lock: while teams are locked the plugin reads the player list every `lockCheckSeconds` (5), so a switch is
+  undone within seconds instead of about 30. Squad has no log line for a team change, so no plugin can stop it
+  before it happens; this keeps the window short.
+- Messages: the server is told at the start of a locked round that teams are locked (`announceLockStart`), and
+  optionally when the lock ends (`announceLockEnd`); admins are told when an automatic shuffle is skipped and why
+  (`reportSkips`); a player moved back is told whether he has switch tokens left.
+
 ### Changed
 
+- Every switch setting now also takes `"on"`/`"off"`, every number also takes `"off"` (0) and `"on"` (1).
+- The README download links point to the latest release, so they keep working after a new one.
 - Hybrid route docs now use the version 2 form of `ModLoader.json` (`"rulesets": { "<path>": true }`). The older list form still works, ModLoader converts it.
 - The hybrid ruleset was loaded on a local Windows dedicated server with ModLoader: it mounts and is added as a ruleset. The end of match dump itself still needs a played match to be checked.
+- Simulation: the full scoreboard with session history, an Elo-like rating from earlier rounds' team results, and
+  other prior, team share and lambda settings were tested. None went below about 10% stomped matches.
 
 ## [2.0.0] - 2026-11-24
 

@@ -81,23 +81,23 @@
 
 ### 🎛️ 现成预设
 
-**[Smart Shuffle 2.0.0](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/v2.0.0)** 版本包含所有预设。`<名称>.zip` 只需要 SquadJS；`Modloader-<名称>.zip` 是同一预设的混合方式（SquadJS + ModLoader + SmartShuffle 创意工坊物品，完整计分板）。每个 zip 都包含 `smart-shuffle.js`（SquadJS 1.3.0）和一个完整的 `config.json` 条目（锁定、组队、历史和少移动设置）。[`All-presets.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/All-presets.zip) 包含全部预设。
+**[Smart Shuffle](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest)** 版本包含所有预设。`<名称>.zip` 只需要 SquadJS；`Modloader-<名称>.zip` 是同一预设的混合方式（SquadJS + ModLoader + SmartShuffle 创意工坊物品，完整计分板）。每个 zip 都包含 `smart-shuffle.js`（SquadJS 1.4.0）和一个完整的 `config.json` 条目（锁定、组队、历史和少移动设置）。[`All-presets.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/All-presets.zip) 包含全部预设。
 
 十个级别构成一个阶梯：第 1 级队伍最平衡；之后每一级移动的玩家更少，保持完整的朋友组更多，代价是碾压局更多。
 
 | 级别 | 版本文件 | 碾压局 | 被移动的玩家 | 保持完整的组队 | 最适合 |
 |:---:|---|:---:|:---:|:---:|---|
-| **1** | [`Strict.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Strict.zip) · [`Modloader-Strict.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Strict.zip) | **10.7%** | **33%** | **42%** | 最平衡的队伍，两人组保留 |
-| | [`Default.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Default.zip) · [`Modloader-Default.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Default.zip) *(插件自带设置)* | 11.2% | 50% | 84% | |
-| **2** | [`Tight.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Tight.zip) · [`Modloader-Tight.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Tight.zip) | **11.7%** | **22%** | **65%** | 平衡的队伍，三人组保留 |
-| **3** | [`Balanced.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Balanced.zip) · [`Modloader-Balanced.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Balanced.zip) | **12.5%** | **18%** | **85%** | 大多数服务器 |
-| **4** | [`Steady.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Steady.zip) · [`Modloader-Steady.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Steady.zip) | **13.1%** | **15%** | **86%** | 大多数服务器，移动更少 |
-| **5** | [`Calm.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Calm.zip) · [`Modloader-Calm.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Calm.zip) | **14.2%** | **13%** | **86%** | 不喜欢被移动的玩家 |
-| **6** | [`Squads.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Squads.zip) · [`Modloader-Squads.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Squads.zip) | **14.6%** | **12%** | **89%** | 最多 6 人的朋友小队 |
-| **7** | [`Relaxed.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Relaxed.zip) · [`Modloader-Relaxed.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Relaxed.zip) | **16.6%** | **11%** | **90%** | 宁可少移动也不要严格平衡 |
-| **8** | [`Easy.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Easy.zip) · [`Modloader-Easy.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Easy.zip) | **19.0%** | **9%** | **90%** | 只修正明显的失衡 |
-| **9** | [`Together.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Together.zip) · [`Modloader-Together.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Together.zip) | **21.7%** | **9%** | **99%** | 战队和大组队 |
-| **10** | [`Light.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Light.zip) · [`Modloader-Light.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/download/v2.0.0/Modloader-Light.zip) | **24.0%** | **8%** | **99%** | 最小的打乱 |
+| **1** | [`Strict.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Strict.zip) · [`Modloader-Strict.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Strict.zip) | **10.7%** | **33%** | **42%** | 最平衡的队伍，两人组保留 |
+| | [`Default.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Default.zip) · [`Modloader-Default.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Default.zip) *(插件自带设置)* | 11.2% | 50% | 84% | |
+| **2** | [`Tight.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Tight.zip) · [`Modloader-Tight.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Tight.zip) | **11.7%** | **22%** | **65%** | 平衡的队伍，三人组保留 |
+| **3** | [`Balanced.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Balanced.zip) · [`Modloader-Balanced.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Balanced.zip) | **12.5%** | **18%** | **85%** | 大多数服务器 |
+| **4** | [`Steady.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Steady.zip) · [`Modloader-Steady.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Steady.zip) | **13.1%** | **15%** | **86%** | 大多数服务器，移动更少 |
+| **5** | [`Calm.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Calm.zip) · [`Modloader-Calm.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Calm.zip) | **14.2%** | **13%** | **86%** | 不喜欢被移动的玩家 |
+| **6** | [`Squads.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Squads.zip) · [`Modloader-Squads.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Squads.zip) | **14.6%** | **12%** | **89%** | 最多 6 人的朋友小队 |
+| **7** | [`Relaxed.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Relaxed.zip) · [`Modloader-Relaxed.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Relaxed.zip) | **16.6%** | **11%** | **90%** | 宁可少移动也不要严格平衡 |
+| **8** | [`Easy.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Easy.zip) · [`Modloader-Easy.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Easy.zip) | **19.0%** | **9%** | **90%** | 只修正明显的失衡 |
+| **9** | [`Together.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Together.zip) · [`Modloader-Together.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Together.zip) | **21.7%** | **9%** | **99%** | 战队和大组队 |
+| **10** | [`Light.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Light.zip) · [`Modloader-Light.zip`](https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/latest/download/Modloader-Light.zip) | **24.0%** | **8%** | **99%** | 最小的打乱 |
 | | *随机打乱（不用插件）* | 29.3% | 50% | 24% | |
 
 碾压局：票数差超过 150 的对局比例，三个模拟世界的平均值。被移动的玩家：一次打乱中换队的玩家比例。详见[工作原理](#-工作原理)。
@@ -335,7 +335,7 @@ Smart Shuffle report: 44 moved, 0 not placed, score gap 21% -> 1%, done in 3.2 s
 结果：
 
 - 十个级别的碾压局从 10.7% 扩展到 24.0%，被移动的玩家从 33% 降到 8%，保持完整的组队从 42% 升到 99%。每一列都只朝一个方向变化。
-- 对插件能看到的数据来说，约 10% 是下限。知道每名玩家真实能力的分配能达到 5.5% 到 6%，但所有只看比赛统计的方法都停在 9.5% 到 10.5%：更长或权重更大的会话历史、其他晚上的历史、混合方式的完整计分板以及直接平衡每分钟比率都测试过。差距来自根据统计数据评估玩家的极限，所以用这些数据达不到 7% 到 8%。
+- 对插件能看到的数据来说，约 10% 是下限。知道每名玩家真实能力的分配能达到 5.5% 到 6%，但所有只看比赛统计的方法都停在 9.5% 到 10.5%：更长或权重更大的会话历史、其他晚上的历史、混合方式的完整计分板（含与不含会话历史）、直接平衡每分钟比率、根据之前回合队伍结果的类 Elo 评分，以及其他先验、队内比例和 lambda 设置都测试过。差距来自根据统计数据评估玩家的极限，所以用这些数据达不到 7% 到 8%。
 - 少移动需要组队留在原地：开启 `fewerMoves` 时，每个保持的组队都留在其当前所在的一边。
 - 大组队对平衡的代价最大：第 9 和第 10 级保留所有组队，因此在波动世界中上升最快。
 
@@ -346,6 +346,8 @@ Smart Shuffle report: 44 moved, 0 not placed, score gap 21% -> 1%, done in 3.2 s
 ## ⚙️ 配置
 
 所有选项都写在 SquadJS `config.json` 的插件条目中。
+
+每个开关都接受 `true`/`false` 或 `"on"`/`"off"`。每个数值都接受数字或 `"off"`，`0` 总是关闭该功能（`1` 为开启，更大的值是额外级别）。
 
 | 键 | 默认值 | 作用 |
 |---|---|---|
@@ -361,6 +363,20 @@ Smart Shuffle report: 44 moved, 0 not placed, score gap 21% -> 1%, done in 3.2 s
 | `skipLayers` | `["seed", "jensen", "invasion"]` | 自动分队会跳过地图名包含其中任一项的对局。`!smartshuffle now` 始终执行 |
 | `minPlayers` | `40` | 自动分队会跳过人数少于此值的对局。`!smartshuffle now` 始终执行 |
 | `fewerMoves` | `0` | 少移动玩家。0 为关闭。大于 0 时更多玩家留在当前队伍，平衡差距最多按此比例增大。`0.1` 约少移动三分之一的玩家（模拟中从 50% 降到 33%），碾压局比例不变。最大 `10`；数值越大移动的玩家越少（`4`：约十分之一），碾压局越多。开启时，保持的组队留在其当前所在的一边 |
+| `lockCheckSeconds` | `5` | 队伍锁定期间按此频率（秒）读取玩家列表，这样换队会在几秒内被撤销，而不是约 30 秒。`0` = 只用 SquadJS 自身的更新 |
+| `announceLockStart` | `on` | 在锁定回合开始时告诉服务器换队已锁定 |
+| `announceLockEnd` | `off` | 回合结束锁定解除时告诉服务器 |
+| `reportSkips` | `on` | 自动打乱被跳过时告诉在线管理员原因 |
+| `switchTokens` | `off` | 换队令牌：锁定回合中玩家可以花一个令牌换队，而不是被移回。令牌保存在 `tokenFile` 中 |
+| `tokenStart` | `2` | 每名玩家拥有并会随时间恢复的令牌数 |
+| `tokenMax` | `5` | 每名玩家最多可持有的令牌数。`0` = 不限 |
+| `tokenRefillHours` | `24` | 花掉的令牌在这么多小时后恢复，最多到 `tokenStart`。`0` = 不恢复 |
+| `tokenSeedMinutes` | `[15, 60, 180]` | 一天内播种的分钟数，每档给一个永久令牌：15 分钟 +1，1 小时 +2，3 小时 +3。`[]` = 无播种令牌 |
+| `tokenSeedPlayers` | `50` | 玩家数低于此值或在名为 seed 的地图上时，服务器视为播种中。`0` = 仅 seed 地图 |
+| `tokenDecayDays` | `21` | 玩家离开这么多天，每个周期失去一个赚到的令牌，不低于 `tokenStart`。`0` = 从不 |
+| `tokenMessages` | `on` | 关于令牌的私信：已使用、剩余、获得、过期 |
+| `tokenCommand` | `tokens` | 任何玩家可输入查看自己令牌的聊天命令（`!tokens`）。`"off"` = 无命令 |
+| `tokenFile` | `smart-shuffle-tokens.json` | 保存令牌的文件，相对于 SquadJS 文件夹 |
 | `shuffleDelaySeconds` | `0` | 对局结束后移动玩家前等待的秒数（留出看计分板的时间），0 到 25 |
 | `shuffleDeadlineSeconds` | `30` | 对局结束超过这么多秒后不再移动任何人，下一张地图开始后也绝不移动 |
 | `announceMinutes` | `10` | 有分队待执行时，每隔这么多分钟向全服公告一次。0 表示不公告 |
