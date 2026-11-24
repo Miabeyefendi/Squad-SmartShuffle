@@ -448,6 +448,86 @@ function swapPhase(team, P, allowed, tol = 0.003, maxIter = 300) {
   return team;
 }
 
+// Group keeping when (almost) everyone is in a kept group, e.g. whole squads: every group and every player
+// outside a group is one unit. Each group first goes whole to its majority side (or sideOf), then units swap
+// sides (one for one, or one moved alone) while that lowers the cost: team sizes first (more than 1 player
+// apart costs heavily), then the score gap and every extra dimension, as in multiSwaps. No group is split.
+export function keepUnits(team, P, groups, cats = null, lam = 1, sideOf = null, maxIter = 300) {
+  const n = P.length;
+  const t = team.slice();
+  const inGroup = new Array(n).fill(false);
+  const units = [];
+  for (const g of groups) {
+    let side;
+    if (sideOf) side = sideOf(g);
+    else {
+      const c0 = g.filter((i) => t[i] === 0).length;
+      side = c0 * 2 !== g.length ? (c0 * 2 > g.length ? 0 : 1) : t[g.reduce((b, i) => (P[i] > P[b] ? i : b), g[0])];
+    }
+    for (const i of g) {
+      t[i] = side;
+      inGroup[i] = true;
+    }
+    units.push(g);
+  }
+  for (let i = 0; i < n; i++) if (!inGroup[i]) units.push([i]);
+  const D = cats ? cats.length : 0;
+  const tp = Math.max(sum(P), 1e-9);
+  const tc = cats ? cats.map((row) => Math.max(sum(row), 1e-9)) : [];
+  // per unit: size, score, extra dimensions; per side the running totals
+  const U = units.map((u) => ({
+    m: u,
+    size: u.length,
+    p: u.reduce((s, i) => s + P[i], 0),
+    c: cats ? cats.map((row) => u.reduce((s, i) => s + row[i], 0)) : []
+  }));
+  const side = U.map((u) => t[u.m[0]]);
+  let dn = 0;
+  let dP = 0;
+  const dC = new Array(D).fill(0);
+  U.forEach((u, k) => {
+    const s = side[k] === 0 ? 1 : -1;
+    dn += s * u.size;
+    dP += s * u.p;
+    for (let d = 0; d < D; d++) dC[d] += s * u.c[d];
+  });
+  const costOf = (nn, np, nc) => {
+    let m = 0;
+    for (let d = 0; d < D; d++) m += Math.abs(nc[d]) / tc[d];
+    return 10 * Math.max(0, Math.abs(nn) - 1) + Math.abs(np) / tp + (D ? lam * (m / D) : 0);
+  };
+  let cur = costOf(dn, dP, dC);
+  const nc = new Array(D);
+  for (let it = 0; it < maxIter; it++) {
+    let best = null;
+    // a = unit leaving side 0 (or -1: none), b = unit leaving side 1 (or -1: none)
+    const A = [-1];
+    const B = [-1];
+    U.forEach((u, k) => (side[k] === 0 ? A : B).push(k));
+    for (const a of A) {
+      for (const b of B) {
+        if (a === -1 && b === -1) continue;
+        const ua = a >= 0 ? U[a] : null;
+        const ub = b >= 0 ? U[b] : null;
+        const nn = dn - 2 * ((ua ? ua.size : 0) - (ub ? ub.size : 0));
+        const np = dP - 2 * ((ua ? ua.p : 0) - (ub ? ub.p : 0));
+        for (let d = 0; d < D; d++) nc[d] = dC[d] - 2 * ((ua ? ua.c[d] : 0) - (ub ? ub.c[d] : 0));
+        const cost = costOf(nn, np, nc);
+        if (cost < cur - 1e-12 && (best === null || cost < best.cost)) best = { cost, a, b, nn, np, nc: nc.slice() };
+      }
+    }
+    if (best === null) break;
+    if (best.a >= 0) side[best.a] = 1;
+    if (best.b >= 0) side[best.b] = 0;
+    dn = best.nn;
+    dP = best.np;
+    for (let d = 0; d < D; d++) dC[d] = best.nc[d];
+    cur = best.cost;
+  }
+  U.forEach((u, k) => u.m.forEach((i) => (t[i] = side[k])));
+  return t;
+}
+
 // friends on: every friend group (party) goes to its majority side, the most similar free player moves the
 // other way, then swaps among free players only repair the balance: with cats the same target as
 // balanceMulti (score sum and every extra dimension), without cats the score sum alone
@@ -471,7 +551,11 @@ export function keepGroups(team, P, groups, sl, cats = null, lam = 1, sideOf = n
         if (t[c] !== maj || gid[c] !== -1 || sl[c] !== sl[m]) continue;
         if (j === -1 || Math.abs(P[c] - P[m]) < Math.abs(P[j] - P[m])) j = c;
       }
-      if (j === -1) continue;
+      if (j === -1) {
+        // no free player to trade with: most players are in kept groups (whole squads of up to 9).
+        // Balance whole groups against each other instead.
+        return keepUnits(team, P, groups, cats, lam, sideOf);
+      }
       t[m] = maj;
       t[j] = 1 - maj;
     }
