@@ -118,6 +118,13 @@ Five ready zips for the SquadJS route, two for servers where players want to sta
 | | Current default (`lockMode` 2, cap 4, history 4) | | | | 10.7% / 10.7% / 12.1% | 50% | 84% |
 | | Every party kept, any size (for comparison) | | | | 14.3% / 12.8% / 17.2% | 50% | 99% |
 
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/preset-chart-dark.svg">
+    <img src="./assets/preset-chart.svg" width="92%" alt="Bar chart of stomped matches by preset: random shuffle 28.3%, current default 10.7%, friends-small 10.6%, friends-squad 11.0%, quality-max 10.0%, quality-session 10.4%, quality-fresh 10.4%">
+  </picture>
+</p>
+
 **How to pick.** Players keep asking to stay with a friend: `friends-small`. Clans and friend groups play as a whole squad: `friends-squad`. Friends do not matter and you want the most even teams: `quality-max`. The same regulars play for many hours: `quality-session`. A public server where many players come and go: `quality-fresh`.
 
 ### Preset simulation
@@ -135,6 +142,13 @@ What it showed:
 - Keeping friends costs balance, and bigger kept groups cost more: duos and trios cost almost nothing, parties up to 6 cost about the same as the current default, keeping every stack of 7 to 9 raises stomps to 14% (17% in the volatile world). That is why no preset keeps every party.
 - **Fewer moves.** The plugin picks the two sides without looking at who is where now, so it moved about half of the server at every shuffle. `fewerMoves` first swaps the side labels when that saves moves, then moves players back to their current side in pairs while the balance stays within that share of the best split. The middle ground is `0.1`: 33% of players moved and the same share of stomped matches within noise. `0.2` moves 27% but adds about 0.5 points of stomps. A split that starts from the current teams moves only 19%, but adds 0.5 to 1 point, so it was left out.
 - A search from 8 starting splits was also tested and left out: a tighter score gap on paper, no fewer stomps.
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/moves-chart-dark.svg">
+    <img src="./assets/moves-chart.svg" width="92%" alt="Bar chart of players moved per shuffle: fewerMoves off 50%, 0.1 33% (recommended), 0.2 27%, 0.3 24%, starting from the current teams 19%">
+  </picture>
+</p>
 
 These are model results, not live data.
 

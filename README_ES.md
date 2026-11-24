@@ -118,6 +118,13 @@ Cinco zips listos para la ruta SquadJS: dos para servidores donde los jugadores 
 | | Predeterminado actual (`lockMode` 2, límite 4, historial 4) | | | | 10.7% / 10.7% / 12.1% | 50% | 84% |
 | | Todos los grupos juntos, sin límite (comparación) | | | | 14.3% / 12.8% / 17.2% | 50% | 99% |
 
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/preset-chart-dark.svg">
+    <img src="./assets/preset-chart.svg" width="92%" alt="Bar chart of stomped matches by preset: random shuffle 28.3%, current default 10.7%, friends-small 10.6%, friends-squad 11.0%, quality-max 10.0%, quality-session 10.4%, quality-fresh 10.4%">
+  </picture>
+</p>
+
 **Cuál elegir.** Los jugadores piden quedarse con un amigo: `friends-small`. Clanes y grupos de amigos juegan como una escuadra entera: `friends-squad`. Los amigos no importan y quieres los equipos más parejos: `quality-max`. Los mismos habituales juegan durante horas: `quality-session`. Servidor público donde entran y salen muchos jugadores: `quality-fresh`.
 
 ### Simulación de los presets
@@ -135,6 +142,13 @@ Lo que mostró:
 - Mantener amigos juntos cuesta equilibrio, y más cuanto mayor es el grupo: dúos y tríos casi no cuestan nada, grupos de hasta 6 cuestan lo mismo que el predeterminado actual, mantener todos los grupos de 7 a 9 sube las partidas aplastantes al 14% (17% en el mundo volátil). Por eso ningún preset mantiene todos los grupos.
 - **Menos movimientos.** El plugin elige los dos lados sin mirar dónde está cada uno ahora, así que movía cerca de la mitad del servidor en cada mezcla. `fewerMoves` primero intercambia las etiquetas de los lados cuando eso ahorra movimientos, y luego devuelve jugadores a su lado actual por parejas mientras el equilibrio se mantenga dentro de esa proporción del mejor reparto. El punto medio es `0.1`: se mueve el 33% de los jugadores y la proporción de partidas aplastantes es la misma dentro del ruido. `0.2` mueve el 27% pero añade cerca de 0,5 puntos de partidas aplastantes. Un reparto que parte de los equipos actuales mueve solo el 19%, pero añade de 0,5 a 1 punto, así que se descartó.
 - También se probó y descartó una búsqueda desde 8 repartos iniciales: menor diferencia de puntuación en teoría, pero no menos partidas aplastantes.
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/moves-chart-dark.svg">
+    <img src="./assets/moves-chart.svg" width="92%" alt="Bar chart of players moved per shuffle: fewerMoves off 50%, 0.1 33% (recommended), 0.2 27%, 0.3 24%, starting from the current teams 19%">
+  </picture>
+</p>
 
 Son resultados de un modelo, no datos en vivo.
 

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 532" width="760" height="532" role="img" aria-labelledby="t d" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+<title id="t">Stomped matches by preset</title>
+<desc id="d">Random shuffle 28.3%; Current default 10.7%; friends-small 10.6%; friends-squad 11.0%; quality-max 10.0%; quality-session 10.4%; quality-fresh 10.4%. Lower is better.</desc>
+<rect width="760" height="532" rx="12" fill="#fcfcfb"/>
+<text x="24" y="36" font-size="18" font-weight="600" fill="#0b0b0b">Stomped matches by preset</text>
+<text x="24" y="58" font-size="13" fill="#52514e">Share of matches that end with a gap over 150 tickets. Lower is better.</text>
+<line x1="250.0" y1="84" x2="250.0" y2="462" stroke="#e4e3de" stroke-width="1"/>
+<text x="250.0" y="480" font-size="12" text-anchor="middle" fill="#52514e">0%</text>
+<line x1="396.7" y1="84" x2="396.7" y2="462" stroke="#e4e3de" stroke-width="1"/>
+<text x="396.7" y="480" font-size="12" text-anchor="middle" fill="#52514e">10%</text>
+<line x1="543.3" y1="84" x2="543.3" y2="462" stroke="#e4e3de" stroke-width="1"/>
+<text x="543.3" y="480" font-size="12" text-anchor="middle" fill="#52514e">20%</text>
+<line x1="690.0" y1="84" x2="690.0" y2="462" stroke="#e4e3de" stroke-width="1"/>
+<text x="690.0" y="480" font-size="12" text-anchor="middle" fill="#52514e">30%</text>
+<text x="236" y="105" font-size="14" font-weight="400" text-anchor="end" fill="#0b0b0b">Random shuffle</text>
+<text x="236" y="121" font-size="11.5" text-anchor="end" fill="#52514e">for comparison</text>
+<path d="M250 96 h411.1 a4 4 0 0 1 4 4 v14 a4 4 0 0 1 -4 4 h-411.1 z" fill="#8c8b84"/>
+<text x="673.1" y="112" font-size="14" font-weight="600" fill="#0b0b0b">28.3%</text>
+<text x="236" y="159" font-size="14" font-weight="400" text-anchor="end" fill="#0b0b0b">Current default</text>
+<text x="236" y="175" font-size="11.5" text-anchor="end" fill="#52514e">lock mode 2, parties up to 4</text>
+<path d="M250 150 h152.9 a4 4 0 0 1 4 4 v14 a4 4 0 0 1 -4 4 h-152.9 z" fill="#8c8b84"/>
+<text x="414.9" y="166" font-size="14" font-weight="600" fill="#0b0b0b">10.7%</text>
+<text x="236" y="213" font-size="14" font-weight="600" text-anchor="end" fill="#0b0b0b">friends-small</text>
+<text x="236" y="229" font-size="11.5" text-anchor="end" fill="#52514e">friends: duos and trios</text>
+<path d="M250 204 h151.5 a4 4 0 0 1 4 4 v14 a4 4 0 0 1 -4 4 h-151.5 z" fill="#2a78d6"/>
+<text x="413.5" y="220" font-size="14" font-weight="600" fill="#0b0b0b">10.6%</text>
+<text x="236" y="267" font-size="14" font-weight="600" text-anchor="end" fill="#0b0b0b">friends-squad</text>
+<text x="236" y="283" font-size="11.5" text-anchor="end" fill="#52514e">friends: squads up to 6</text>
+<path d="M250 258 h157.3 a4 4 0 0 1 4 4 v14 a4 4 0 0 1 -4 4 h-157.3 z" fill="#2a78d6"/>
+<text x="419.3" y="274" font-size="14" font-weight="600" fill="#0b0b0b">11.0%</text>
+<text x="236" y="321" font-size="14" font-weight="600" text-anchor="end" fill="#0b0b0b">quality-max</text>
+<text x="236" y="337" font-size="11.5" text-anchor="end" fill="#52514e">maximum balance</text>
+<path d="M250 312 h142.7 a4 4 0 0 1 4 4 v14 a4 4 0 0 1 -4 4 h-142.7 z" fill="#2a78d6"/>
+<text x="404.7" y="328" font-size="14" font-weight="600" fill="#0b0b0b">10.0%</text>
+<text x="236" y="375" font-size="14" font-weight="600" text-anchor="end" fill="#0b0b0b">quality-session</text>
+<text x="236" y="391" font-size="11.5" text-anchor="end" fill="#52514e">long session</text>
+<path d="M250 366 h148.5 a4 4 0 0 1 4 4 v14 a4 4 0 0 1 -4 4 h-148.5 z" fill="#2a78d6"/>
+<text x="410.5" y="382" font-size="14" font-weight="600" fill="#0b0b0b">10.4%</text>
+<text x="236" y="429" font-size="14" font-weight="600" text-anchor="end" fill="#0b0b0b">quality-fresh</text>
+<text x="236" y="445" font-size="11.5" text-anchor="end" fill="#52514e">tonight's form</text>
+<path d="M250 420 h148.5 a4 4 0 0 1 4 4 v14 a4 4 0 0 1 -4 4 h-148.5 z" fill="#2a78d6"/>
+<text x="410.5" y="436" font-size="14" font-weight="600" fill="#0b0b0b">10.4%</text>
+<text x="24" y="516" font-size="11.5" fill="#52514e">7,200 simulated matches per row (main world), 100 players each. Presets 1.1.0. A model, not live server data.</text>
+</svg>

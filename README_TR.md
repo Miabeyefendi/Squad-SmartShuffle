@@ -118,6 +118,13 @@ SquadJS yolu için beş hazır zip: ikisi oyuncuların arkadaşıyla kalmak iste
 | | Şu anki varsayılan (`lockMode` 2, sınır 4, geçmiş 4) | | | | 10.7% / 10.7% / 12.1% | 50% | 84% |
 | | Her parti birlikte, boyut sınırı yok (karşılaştırma) | | | | 14.3% / 12.8% / 17.2% | 50% | 99% |
 
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/preset-chart-dark.svg">
+    <img src="./assets/preset-chart.svg" width="92%" alt="Bar chart of stomped matches by preset: random shuffle 28.3%, current default 10.7%, friends-small 10.6%, friends-squad 11.0%, quality-max 10.0%, quality-session 10.4%, quality-fresh 10.4%">
+  </picture>
+</p>
+
 **Hangisini seçmeli.** Oyuncular sürekli bir arkadaşıyla kalmak istiyorsa: `friends-small`. Klanlar ve arkadaş grupları bütün bir squad olarak oynuyorsa: `friends-squad`. Arkadaşlık önemli değil, en dengeli takımlar isteniyorsa: `quality-max`. Aynı düzenli oyuncular saatlerce oynuyorsa: `quality-session`. Oyuncuların sık girip çıktığı herkese açık sunucu: `quality-fresh`.
 
 ### Preset simülasyonu
@@ -135,6 +142,13 @@ Sonuçlar:
 - Arkadaşları birlikte tutmak dengeden götürüyor, grup büyüdükçe daha çok: ikili ve üçlüler neredeyse hiçbir şey kaybettirmiyor, 6 kişiye kadar partiler şu anki varsayılan kadar, 7 ila 9 kişilik her grubu tutmak ezilmeyi %14'e (dalgalı dünyada %17'ye) çıkarıyor. Bu yüzden hiçbir preset her partiyi tutmuyor.
 - **Daha az taşıma.** Eklenti iki tarafı kimin nerede olduğuna bakmadan seçtiği için her karıştırmada sunucunun yaklaşık yarısını taşıyordu. `fewerMoves` önce, taşımayı azaltıyorsa iki tarafın etiketini değiştiriyor, sonra denge en iyi bölmenin o oranı içinde kaldıkça oyuncuları çiftler halinde mevcut takımlarına geri bırakıyor. Orta yol `0.1`: oyuncuların %33'ü taşınıyor, ezilen maç oranı gürültü içinde aynı. `0.2` %27 taşıyor ama ezilmeyi yaklaşık 0,5 puan artırıyor. Mevcut takımlardan başlayan bölme sadece %19 taşıyor ama ezilmeyi 0,5 ila 1 puan artırıyor, bu yüzden eklenmedi.
 - 8 farklı başlangıçtan arama da denendi ve eklenmedi: kâğıt üstünde daha dar puan farkı, ama ezilme azalmıyor.
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/moves-chart-dark.svg">
+    <img src="./assets/moves-chart.svg" width="92%" alt="Bar chart of players moved per shuffle: fewerMoves off 50%, 0.1 33% (recommended), 0.2 27%, 0.3 24%, starting from the current teams 19%">
+  </picture>
+</p>
 
 Bunlar model sonuçları, canlı veri değil.
 

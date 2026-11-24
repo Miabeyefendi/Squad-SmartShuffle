@@ -117,6 +117,13 @@
 | | 当前默认（`lockMode` 2，上限 4，历史 4） | | | | 10.7% / 10.7% / 12.1% | 50% | 84% |
 | | 所有组队都保持在一起，不限人数（对比） | | | | 14.3% / 12.8% / 17.2% | 50% | 99% |
 
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/preset-chart-dark.svg">
+    <img src="./assets/preset-chart.svg" width="92%" alt="Bar chart of stomped matches by preset: random shuffle 28.3%, current default 10.7%, friends-small 10.6%, friends-squad 11.0%, quality-max 10.0%, quality-session 10.4%, quality-fresh 10.4%">
+  </picture>
+</p>
+
 **如何选择。** 玩家经常要求和一个朋友在一起：`friends-small`。战队和朋友组以整个小队一起玩：`friends-squad`。不在乎朋友，只要最平衡的队伍：`quality-max`。同一批常客连续玩很多小时：`quality-session`。玩家进出频繁的公共服务器：`quality-fresh`。
 
 ### 预设模拟
@@ -134,6 +141,13 @@
 - 保持朋友在一起会牺牲平衡，组越大牺牲越多：两人和三人几乎没有代价，最多 6 人的组队代价与当前默认相当，保留所有 7 到 9 人的大组会把碾压局提高到 14%（波动世界中为 17%）。所以没有预设会保留所有组队。
 - **更少移动。** 插件在选择两边时不看玩家现在在哪一边，所以每次打乱大约移动服务器一半的玩家。`fewerMoves` 先在能减少移动时交换两边的标签，然后在平衡保持在最佳分配的该比例之内时，成对地把玩家放回他们当前的队伍。折中点是 `0.1`：移动 33% 的玩家，碾压局比例在噪声范围内不变。`0.2` 移动 27%，但碾压局增加约 0.5 个百分点。从当前队伍出发的分配只移动 19%，但碾压局增加 0.5 到 1 个百分点，所以没有采用。
 - 还测试过从 8 个初始分配开始的搜索，但没有采用：纸面上分数差更小，但碾压局没有减少。
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/moves-chart-dark.svg">
+    <img src="./assets/moves-chart.svg" width="92%" alt="Bar chart of players moved per shuffle: fewerMoves off 50%, 0.1 33% (recommended), 0.2 27%, 0.3 24%, starting from the current teams 19%">
+  </picture>
+</p>
 
 这些是模型结果，不是实际数据。
 
