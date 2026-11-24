@@ -32,7 +32,7 @@ The three routes are released separately, each with its own tag: `squadjs-vX.Y.Z
 
 ---
 
-## [Unreleased]
+## [2.1.0] - 2026-11-24
 
 ### Added
 
@@ -45,6 +45,18 @@ The three routes are released separately, each with its own tag: `squadjs-vX.Y.Z
 - Faster lock: while teams are locked the plugin reads the player list every `lockCheckSeconds` (5), so a switch is
   undone within seconds instead of about 30. Squad has no log line for a team change, so no plugin can stop it
   before it happens; this keeps the window short.
+- Shuffle only when needed: `shuffleTicketGap` runs the automatic shuffle only after a round won by that many
+  tickets, `shuffleWinStreak` only after the same group of players won that many rounds in a row (it follows the
+  players, not the team number, across map changes). Both off by default; with both set either one is enough.
+- Switch gate (`switchCommand`, off by default): players ask with `!switch` and the plugin moves them when it is
+  allowed, so nobody switches and is sent back. In a locked round it costs a switch token (or is refused without
+  tokens), the bigger team may end at most `switchMaxDiff` players ahead, and a request that cannot be done waits
+  `switchQueueMinutes` for a free slot or a player switching the other way, then the two are swapped.
+  `!switch cancel` leaves the queue.
+- Whole squads (`moveSquads`, off by default): squads up to `maxPartySize` players stay together when shuffling,
+  not only parties.
+- Admin imbalance alert (`imbalanceAlertMinutes`, off by default): that many minutes into a match the admins online,
+  and only they, are told when the score gap is above `imbalanceAlertGap` percent.
 - Messages: the server is told at the start of a locked round that teams are locked (`announceLockStart`), and
   optionally when the lock ends (`announceLockEnd`); admins are told when an automatic shuffle is skipped and why
   (`reportSkips`); a player moved back is told whether he has switch tokens left.
@@ -233,6 +245,7 @@ The three routes are released separately, each with its own tag: `squadjs-vX.Y.Z
 
 <!-- Keep this link block at the bottom and add one line per release. -->
 
+[2.1.0]: https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/v2.1.0
 [2.0.0]: https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/v2.0.0
 [Presets 3.0.0]: https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v3.0.0
 [Presets 2.0.0]: https://github.com/Miabeyefendi/Squad-SmartShuffle/releases/tag/presets-v2.0.0

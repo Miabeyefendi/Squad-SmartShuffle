@@ -383,6 +383,14 @@ Every switch takes `true`/`false` or `"on"`/`"off"`. Every number takes a number
 | `tokenMessages` | `on` | Private messages about tokens: used, left, earned, expired |
 | `tokenCommand` | `tokens` | Chat command any player can type to see his tokens (`!tokens`). `"off"` = no command |
 | `tokenFile` | `smart-shuffle-tokens.json` | File the tokens are kept in, relative to the SquadJS folder |
+| `shuffleTicketGap` | `0` | Automatic shuffle only after a round won by at least this many tickets. `0` = every round. With `shuffleWinStreak` set too, either one is enough |
+| `shuffleWinStreak` | `0` | Automatic shuffle only after the same group of players won this many rounds in a row. `0` = off |
+| `moveSquads` | `off` | Keep whole squads together when shuffling, up to `maxPartySize` players, not only parties |
+| `switchCommand` | `off` | Switch gate, like a `!switch` plugin: players ask with this command and the plugin moves them when allowed (a token in a locked round, team sizes), so nobody switches and gets sent back. `"off"` = no gate |
+| `switchMaxDiff` | `2` | Switch gate: a move is allowed while the bigger team ends at most this many players ahead |
+| `switchQueueMinutes` | `10` | Switch gate: a request that cannot be done now waits this long (minutes) for a free slot or a player switching the other way, then both are swapped. `0` = no queue |
+| `imbalanceAlertMinutes` | `0` | This many minutes into a match, tell the admins online (only them) when the teams look uneven. `0` = off |
+| `imbalanceAlertGap` | `15` | Score gap in percent that counts as uneven for `imbalanceAlertMinutes` |
 | `shuffleDelaySeconds` | `0` | Seconds to wait after the round ends before players are moved (time to read the scoreboard), 0 to 25 |
 | `shuffleDeadlineSeconds` | `30` | Nobody is moved later than this many seconds after the round ended, and never after the next map started |
 | `announceMinutes` | `10` | While a shuffle is due, tell the server every this many minutes. 0 turns the announcements off |

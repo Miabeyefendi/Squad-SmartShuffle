@@ -385,6 +385,14 @@ Cada interruptor acepta `true`/`false` o `"on"`/`"off"`. Cada número acepta un 
 | `tokenMessages` | `on` | Mensajes privados sobre fichas: usada, restantes, ganada, caducada |
 | `tokenCommand` | `tokens` | Comando de chat que cualquier jugador puede escribir para ver sus fichas (`!tokens`). `"off"` = sin comando |
 | `tokenFile` | `smart-shuffle-tokens.json` | Archivo donde se guardan las fichas, relativo a la carpeta de SquadJS |
+| `shuffleTicketGap` | `0` | Mezcla automática solo tras una ronda ganada por al menos estos tickets. `0` = cada ronda. Si `shuffleWinStreak` también está puesto, basta con uno |
+| `shuffleWinStreak` | `0` | Mezcla automática solo cuando el mismo grupo de jugadores gana estas rondas seguidas. `0` = apagado |
+| `moveSquads` | `off` | Mantener escuadras enteras al mezclar, hasta `maxPartySize` jugadores, no solo grupos |
+| `switchCommand` | `off` | Puerta de cambio, como un plugin `!switch`: los jugadores piden con este comando y el plugin los mueve cuando se permite (una ficha en ronda bloqueada, tamaños de equipo), así nadie cambia y es devuelto. `"off"` = sin puerta |
+| `switchMaxDiff` | `2` | Puerta de cambio: se permite mover mientras el equipo mayor quede como mucho estos jugadores por delante |
+| `switchQueueMinutes` | `10` | Puerta de cambio: una petición que no se puede hacer ya espera estos minutos un hueco o un jugador que cambie al revés, y entonces se intercambian. `0` = sin cola |
+| `imbalanceAlertMinutes` | `0` | A estos minutos de partida, avisa solo a los admins conectados si los equipos parecen desiguales. `0` = apagado |
+| `imbalanceAlertGap` | `15` | Diferencia de puntuación en porcentaje que cuenta como desigual para `imbalanceAlertMinutes` |
 | `shuffleDelaySeconds` | `0` | Segundos de espera tras el final de la ronda antes de mover jugadores (tiempo para ver el marcador), de 0 a 25 |
 | `shuffleDeadlineSeconds` | `30` | No se mueve a nadie pasados estos segundos desde el final de la ronda, y nunca después de que empiece el siguiente mapa |
 | `announceMinutes` | `10` | Mientras haya una mezcla pendiente, avisar al servidor cada tantos minutos. 0 desactiva los avisos |

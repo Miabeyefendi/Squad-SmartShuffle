@@ -383,6 +383,14 @@ Her aç/kapa ayarı `true`/`false` ya da `"on"`/`"off"` alır. Her sayı ayarı 
 | `tokenMessages` | `on` | Tokenlarla ilgili özel mesajlar: kullanıldı, kaldı, kazanıldı, süresi doldu |
 | `tokenCommand` | `tokens` | Her oyuncunun tokenlarını görmek için yazabileceği sohbet komutu (`!tokens`). `"off"` = komut yok |
 | `tokenFile` | `smart-shuffle-tokens.json` | Tokenların saklandığı dosya, SquadJS klasörüne göre |
+| `shuffleTicketGap` | `0` | Otomatik karıştırma sadece en az bu kadar bilet farkıyla biten turdan sonra çalışır. `0` = her tur. `shuffleWinStreak` da ayarlıysa biri yeter |
+| `shuffleWinStreak` | `0` | Otomatik karıştırma sadece aynı oyuncu grubu art arda bu kadar tur kazanınca çalışır. `0` = kapalı |
+| `moveSquads` | `off` | Karıştırırken sadece partileri değil, `maxPartySize` oyuncuya kadar bütün squad'ları da birlikte tut |
+| `switchCommand` | `off` | Değişim kapısı, `!switch` eklentisi gibi: oyuncular bu komutla ister, eklenti uygunsa (kilitli turda token, takım boyları) taşır; kimse geçip geri atılmaz. `"off"` = kapı yok |
+| `switchMaxDiff` | `2` | Değişim kapısı: büyük takım en fazla bu kadar oyuncu önde kalıyorsa taşımaya izin verilir |
+| `switchQueueMinutes` | `10` | Değişim kapısı: hemen yapılamayan istek boş yer ya da ters yöne geçmek isteyen biri için bu kadar dakika bekler, sonra ikisi takaslanır. `0` = kuyruk yok |
+| `imbalanceAlertMinutes` | `0` | Maçın bu dakikasında takımlar dengesiz görünüyorsa sadece çevrimiçi adminlere söyle. `0` = kapalı |
+| `imbalanceAlertGap` | `15` | `imbalanceAlertMinutes` için dengesiz sayılan puan farkı (yüzde) |
 | `shuffleDelaySeconds` | `0` | Tur bittikten sonra oyuncular taşınmadan önce beklenecek saniye (skor tablosunu okumak için), 0 ile 25 arası |
 | `shuffleDeadlineSeconds` | `30` | Tur bittikten bu kadar saniye sonra kimse taşınmaz, sonraki harita başladıktan sonra da asla |
 | `announceMinutes` | `10` | Karıştırma bekliyorken sunucuya bu kadar dakikada bir duyur. 0 duyuruları kapatır |

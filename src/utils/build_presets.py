@@ -18,7 +18,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 PLUGIN = ROOT / "src" / "squadjs" / "smart-shuffle.js"
 PRESETS = ROOT / "src" / "squadjs" / "presets"
-STAMP = (2026, 11, 24, 23, 0, 0)
+STAMP = (2026, 11, 25, 9, 0, 0)
 REPO = "https://github.com/Miabeyefendi/Squad-SmartShuffle"
 
 # name: (step, title, who it is for)

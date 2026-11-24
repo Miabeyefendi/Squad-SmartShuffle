@@ -114,6 +114,33 @@ export class TokenBook {
   }
 }
 
+// groups (arrays of player indexes) that share a player become one group
+export function mergeGroups(groups) {
+  const parent = new Map();
+  const find = (x) => {
+    while (parent.get(x) !== x) {
+      parent.set(x, parent.get(parent.get(x)));
+      x = parent.get(x);
+    }
+    return x;
+  };
+  for (const g of groups) {
+    for (const i of g) if (!parent.has(i)) parent.set(i, i);
+    for (let k = 1; k < g.length; k++) {
+      const a = find(g[0]);
+      const b = find(g[k]);
+      if (a !== b) parent.set(b, a);
+    }
+  }
+  const out = new Map();
+  for (const i of parent.keys()) {
+    const r = find(i);
+    if (!out.has(r)) out.set(r, []);
+    out.get(r).push(i);
+  }
+  return [...out.values()].map((g) => g.sort((a, b) => a - b)).filter((g) => g.length >= 2);
+}
+
 // ---------------------------------------------------------------------------------------------
 // Scoring
 // ---------------------------------------------------------------------------------------------
@@ -810,6 +837,46 @@ export default class SmartShuffle extends BasePlugin {
         description: 'Hybrid route: how long to wait at round end for the scoreboard dump.',
         default: 10
       },
+      shuffleTicketGap: {
+        required: false,
+        description: 'Automatic shuffle only after a round won by at least this many tickets. 0 = every round. With shuffleWinStreak set too, either one is enough.',
+        default: 0
+      },
+      shuffleWinStreak: {
+        required: false,
+        description: 'Automatic shuffle only after the same group of players won this many rounds in a row. 0 = off.',
+        default: 0
+      },
+      moveSquads: {
+        required: false,
+        description: 'Keep whole squads together when shuffling (up to maxPartySize players), not only parties: on or off.',
+        default: false
+      },
+      switchCommand: {
+        required: false,
+        description: 'Switch gate: players ask with this chat command (e.g. "switch" for !switch) and the plugin moves them when allowed (token in a locked round, team sizes), instead of switching and being moved back. "off" = no gate.',
+        default: 'off'
+      },
+      switchMaxDiff: {
+        required: false,
+        description: 'Switch gate: a move is allowed while the bigger team ends at most this many players ahead.',
+        default: 2
+      },
+      switchQueueMinutes: {
+        required: false,
+        description: 'Switch gate: a request that cannot be done now waits this many minutes for a free slot or a player switching the other way (then both are swapped). 0 = no queue.',
+        default: 10
+      },
+      imbalanceAlertMinutes: {
+        required: false,
+        description: 'This many minutes into a match, tell the admins online (only them) when the teams look uneven. 0 = off.',
+        default: 0
+      },
+      imbalanceAlertGap: {
+        required: false,
+        description: 'Score gap in percent that counts as uneven for imbalanceAlertMinutes.',
+        default: 15
+      },
       lockCheckSeconds: {
         required: false,
         description: 'While teams are locked, read the player list this often (seconds) so a switch is undone fast. 0 = only on SquadJS\'s own update (about every 30 s).',
@@ -888,19 +955,28 @@ export default class SmartShuffle extends BasePlugin {
     // every switch accepts true/false or on/off, every number accepts a number or on/off (0 = off)
     const o = this.options;
     for (const k of ['autoShuffle', 'broadcastResult', 'warnMovedPlayers', 'adminReport', 'useMySquadStats',
-      'useScoreboardDump', 'announceLockStart', 'announceLockEnd', 'reportSkips', 'switchTokens', 'tokenMessages']) {
+      'useScoreboardDump', 'announceLockStart', 'announceLockEnd', 'reportSkips', 'switchTokens', 'tokenMessages', 'moveSquads']) {
       o[k] = flag(o[k], flag(SmartShuffle.optionsSpecification[k].default));
     }
     if (o.keepParties !== null && o.keepParties !== undefined) o.keepParties = flag(o.keepParties, true);
     for (const k of ['lockMode', 'shuffleDelaySeconds', 'shuffleDeadlineSeconds', 'announceMinutes', 'historyRounds',
       'historyHours', 'mySquadStatsWeight', 'lockedSquadMaxSize', 'maxPartySize', 'minPlayers', 'dumpWaitSeconds',
-      'fewerMoves', 'lockCheckSeconds', 'tokenStart', 'tokenMax', 'tokenRefillHours', 'tokenSeedPlayers', 'tokenDecayDays']) {
+      'fewerMoves', 'lockCheckSeconds', 'tokenStart', 'tokenMax', 'tokenRefillHours', 'tokenSeedPlayers', 'tokenDecayDays',
+      'shuffleTicketGap', 'shuffleWinStreak', 'switchMaxDiff', 'switchQueueMinutes', 'imbalanceAlertMinutes', 'imbalanceAlertGap']) {
       o[k] = num(o[k], SmartShuffle.optionsSpecification[k].default);
     }
     o.tokenSeedMinutes = [].concat(o.tokenSeedMinutes === 'off' ? [] : o.tokenSeedMinutes || [])
       .map((m) => num(m, 0)).filter((m) => m > 0).sort((a, b) => a - b);
     const tc = String(o.tokenCommand === undefined || o.tokenCommand === null ? 'tokens' : o.tokenCommand).trim().toLowerCase();
     this.tokenCmd = ['off', 'false', '0', '', 'no'].includes(tc) ? null : ['on', 'true', '1', 'yes'].includes(tc) ? 'tokens' : tc.replace(/^!/, '');
+    const sc = String(o.switchCommand === undefined || o.switchCommand === null ? 'off' : o.switchCommand).trim().toLowerCase();
+    this.switchCmd = ['off', 'false', '0', '', 'no'].includes(sc) ? null : ['on', 'true', '1', 'yes'].includes(sc) ? 'switch' : sc.replace(/^!/, '');
+    this.queue = []; // switch gate requests waiting: { id, to, until }
+    this.squads = o.moveSquads;
+    this.streak = 0;
+    this.lastWinners = null;
+    this.matchStart = Date.now();
+    this.alerted = false;
     this.tokens = o.switchTokens
       ? new TokenBook({ start: o.tokenStart, max: o.tokenMax, refillHours: o.tokenRefillHours,
           decayDays: o.tokenDecayDays, seedSteps: o.tokenSeedMinutes })
@@ -946,7 +1022,8 @@ export default class SmartShuffle extends BasePlugin {
       crew: this.options.kitCrew ? new RegExp(this.options.kitCrew, 'i') : null
     };
     for (const name of ['onCommand', 'onDamaged', 'onWounded', 'onDied', 'onRevived', 'onDeployable',
-      'onTeamkill', 'onPlayerInfo', 'onRoundEnded', 'onNewGame', 'onAnnounce', 'onTokenCommand', 'onLockCheck']) {
+      'onTeamkill', 'onPlayerInfo', 'onRoundEnded', 'onNewGame', 'onAnnounce', 'onTokenCommand', 'onLockCheck',
+      'onSwitchCommand']) {
       this[name] = this[name].bind(this);
     }
     this.dumpRule = {
@@ -980,6 +1057,7 @@ export default class SmartShuffle extends BasePlugin {
     if (this.tokens) this.loadTokens();
     // registered even while tokens are off, so an admin can switch them on in game ("tokens on")
     if (this.tokenCmd) this.server.on(`CHAT_COMMAND:${this.tokenCmd}`, this.onTokenCommand);
+    if (this.switchCmd) this.server.on(`CHAT_COMMAND:${this.switchCmd}`, this.onSwitchCommand);
     this.tokenTimer = setInterval(() => this.saveTokens(), 30000);
     if (this.tokenTimer.unref) this.tokenTimer.unref();
   }
@@ -1053,6 +1131,134 @@ export default class SmartShuffle extends BasePlugin {
       `A token lets you change team while teams are locked.${refill}${seed}`);
   }
 
+  // ---- switch gate (!switch): the plugin moves a player when it is allowed, so nobody switches and is sent back ----
+
+  teamSizes() {
+    const n = { 1: 0, 2: 0 };
+    for (const p of this.server.players) if (+p.teamID === 1 || +p.teamID === 2) n[+p.teamID] += 1;
+    return n;
+  }
+
+  // the move keeps the teams within switchMaxDiff of each other
+  fits(from) {
+    const n = this.teamSizes();
+    const to = 3 - from;
+    return n[to] + 1 - (n[from] - 1) <= Math.max(this.options.switchMaxDiff, 0);
+  }
+
+  // in a locked round a gate move costs a token; without tokens the lock forbids it
+  canPay(id, now) {
+    if (!(this.lock && this.locking)) return true;
+    if (!this.tokens) return false;
+    const [r] = this.tokens.touch(id, now);
+    return r.tokens > 0;
+  }
+
+  async gateMove(p, now, how) {
+    const from = +p.teamID;
+    let paid = '';
+    if (this.lock && this.locking) {
+      if (this.tokens && this.tokens.spend(p.eosID, now)) {
+        this.tokenDirty = true;
+        paid = ` 1 switch token used, ${this.tokens.players[p.eosID].tokens} left.`;
+      } else return false;
+    }
+    this.reverting.add(p.eosID);
+    try {
+      await this.server.rcon.switchTeam(p.eosID);
+      p.teamID = 3 - from;
+      if (this.lock) this.lock.set(p.eosID, 3 - from);
+      await this.tell([p.eosID], `Smart Shuffle: you were moved to team ${3 - from}${how}.${paid}`);
+      return true;
+    } catch (err) {
+      this.verbose(1, `Switch gate: could not move ${p.eosID}: ${err}`);
+      return false;
+    } finally {
+      this.reverting.delete(p.eosID);
+    }
+  }
+
+  async onSwitchCommand(info) {
+    const id = info.eosID || (info.player && info.player.eosID);
+    const p = id && this.server.players.find((x) => x.eosID === id);
+    if (!p || !(+p.teamID === 1 || +p.teamID === 2)) return;
+    const word = (info.message || '').trim().toLowerCase();
+    const now = Date.now();
+    if (word === 'cancel') {
+      const had = this.queue.some((q) => q.id === id);
+      this.queue = this.queue.filter((q) => q.id !== id);
+      return this.tell([id], had ? 'Smart Shuffle: your switch request is cancelled.' : 'Smart Shuffle: you have no switch request.');
+    }
+    if (this.busy || !this.inMatch) return this.tell([id], 'Smart Shuffle: switching is closed until the next match starts.');
+    if (!this.canPay(id, now)) {
+      return this.tell([id], this.tokens
+        ? 'Smart Shuffle: teams are locked this round and you have no switch tokens left.'
+        : 'Smart Shuffle: teams are locked this round, switching opens after the round ends.');
+    }
+    const from = +p.teamID;
+    // someone on the other team is waiting to come over: swap the two, the sizes stay the same
+    const partner = this.queue.find((q) => q.to === from && this.canPay(q.id, now));
+    if (partner) {
+      const other = this.server.players.find((x) => x.eosID === partner.id);
+      this.queue = this.queue.filter((q) => q !== partner);
+      if (other && +other.teamID === 3 - from && (await this.gateMove(other, now, ' (swapped with a player who asked for your team)'))) {
+        await this.gateMove(p, now, ' (swapped with a player who asked for your team)');
+        return;
+      }
+    }
+    if (this.fits(from)) {
+      await this.gateMove(p, now, '');
+      return;
+    }
+    const minutes = this.options.switchQueueMinutes;
+    if (!(minutes > 0)) return this.tell([id], `Smart Shuffle: team ${3 - from} is full right now, try again later.`);
+    this.queue = this.queue.filter((q) => q.id !== id);
+    this.queue.push({ id, to: 3 - from, until: now + minutes * 60000 });
+    await this.tell([id], `Smart Shuffle: team ${3 - from} is full, you are in the queue for ${minutes} min. ` +
+      `You move when a slot opens or someone there wants your team. !${this.switchCmd} cancel to leave the queue.`);
+  }
+
+  // waiting requests: drop the expired ones, move whoever fits now
+  async runQueue(now) {
+    const keep = [];
+    for (const q of this.queue) {
+      const p = this.server.players.find((x) => x.eosID === q.id);
+      if (!p || +p.teamID === q.to) continue; // left, or already over there
+      if (now > q.until) {
+        await this.tell([q.id], 'Smart Shuffle: your switch request timed out.');
+        continue;
+      }
+      if (this.inMatch && !this.busy && this.canPay(q.id, now) && this.fits(+p.teamID) &&
+          (await this.gateMove(p, now, ' (from the queue)'))) continue;
+      keep.push(q);
+    }
+    this.queue = keep;
+  }
+
+  // ---- mid-match check for the admins ----
+
+  async imbalanceAlert() {
+    try {
+      const plan = await this.plan(false);
+      if (!plan) return;
+      const { players, P } = plan;
+      const gap = scoreGap(P, (i) => players[i].teamID === 2);
+      if (gap < this.options.imbalanceAlertGap) return;
+      const n = this.teamSizes();
+      const strong = (() => {
+        let a = 0;
+        let b = 0;
+        players.forEach((pl, i) => (pl.teamID === 2 ? (b += P[i]) : (a += P[i])));
+        return a >= b ? 1 : 2;
+      })();
+      await this.tell(this.adminsOnline(null),
+        `Smart Shuffle: teams look uneven ${this.options.imbalanceAlertMinutes} min in (score gap ${gap.toFixed(0)}%, ` +
+        `team ${strong} stronger, ${n[1]} v ${n[2]} players). "!${this.options.command} now" balances them at round end.`);
+    } catch (err) {
+      this.verbose(1, `Imbalance check: ${err}`);
+    }
+  }
+
   // a faster read of the player list while teams are locked, so a switch is noticed within seconds
   async onLockCheck() {
     if (!this.lock || !this.locking || this.busy || this.checking) return;
@@ -1084,6 +1290,7 @@ export default class SmartShuffle extends BasePlugin {
     if (this.tokenTimer) clearInterval(this.tokenTimer);
     this.tokenTimer = null;
     if (this.tokenCmd) this.server.removeListener(`CHAT_COMMAND:${this.tokenCmd}`, this.onTokenCommand);
+    if (this.switchCmd) this.server.removeListener(`CHAT_COMMAND:${this.switchCmd}`, this.onSwitchCommand);
     if (this.tokens) this.saveTokens(true);
     const rules = this.server.logParser.getRules();
     const at = rules.indexOf(this.dumpRule);
@@ -1152,6 +1359,12 @@ export default class SmartShuffle extends BasePlugin {
     }
     if (this.outsideOn) this.fetchOutside().catch((err) => this.verbose(1, `MySquadStats: ${err}`));
     if (this.tokens) await this.tokenTick(this.inMatch ? dt : 0, now);
+    if (this.queue.length) await this.runQueue(now);
+    if (this.inMatch && !this.alerted && this.options.imbalanceAlertMinutes > 0 &&
+        now - this.matchStart >= this.options.imbalanceAlertMinutes * 60000) {
+      this.alerted = true;
+      await this.imbalanceAlert();
+    }
     if (!this.lock || !this.locking) return;
     const seen = this.server.players.filter((p) => (+p.teamID === 1 || +p.teamID === 2) && this.lock.has(p.eosID));
     if (!this.lockAligned) {
@@ -1184,9 +1397,10 @@ export default class SmartShuffle extends BasePlugin {
       this.reverting.add(p.eosID);
       try {
         await this.server.rcon.switchTeam(p.eosID);
-        const tip = this.tokens
+        let tip = this.tokens
           ? ` You have no switch tokens left${this.options.tokenSeedMinutes.length ? ', seed the server to earn more' : ''}.`
           : '';
+        if (this.switchCmd) tip += ` Type !${this.switchCmd} to ask for a switch.`;
         await this.server.rcon.warn(p.eosID, `Smart Shuffle: team changes are locked until this round ends, you were moved back.${tip}`);
       } catch (err) {
         this.verbose(1, `Could not move ${p.eosID} back: ${err}`);
@@ -1205,6 +1419,9 @@ export default class SmartShuffle extends BasePlugin {
     this.dump = null;
     this.inMatch = true;
     this.lastTick = Date.now();
+    this.matchStart = Date.now();
+    this.alerted = false;
+    this.queue = [];
     if (this.lock && this.locking && this.options.announceLockStart) {
       const how = this.tokens ? ` Switching team costs a switch token (type !${this.tokenCmd || 'tokens'} to see yours).` : ' Switching team is undone.';
       // after the map loads, so the players see it
@@ -1362,17 +1579,19 @@ export default class SmartShuffle extends BasePlugin {
     return (P) => blendScores(P, L, w);
   }
 
-  async onRoundEnded() {
+  async onRoundEnded(info) {
     this.inMatch = false;
     this.roundCounts = !this.skipReason();
     const hadLock = !!this.lock && this.locking;
     this.lock = null;
+    this.queue = [];
+    const result = this.roundResult(info);
     const forced = this.pendingNow;
     if (!(this.auto || forced) || this.busy) {
       if (hadLock && this.options.announceLockEnd) await this.say('Smart Shuffle: team lock lifted, you may switch teams again.');
       return;
     }
-    const skip = forced ? null : this.skipReason();
+    const skip = forced ? null : this.skipReason() || this.triggerSkip(result);
     if (skip) {
       this.verbose(1, `Auto shuffle skipped: ${skip}.`);
       if (this.options.reportSkips) await this.tell(this.adminsOnline(null), `Smart Shuffle: automatic shuffle skipped this round (${skip}).`);
@@ -1385,11 +1604,47 @@ export default class SmartShuffle extends BasePlugin {
     this.busy = true;
     try {
       await this.shuffle(this.round, Date.now(), requester);
+      this.streak = 0; // new teams: a win streak starts again
+      this.lastWinners = null;
     } catch (err) {
       this.verbose(1, `Shuffle failed: ${err}`);
     } finally {
       this.busy = false;
     }
+  }
+
+  // ticket gap and win streak of the round that just ended. info: SquadJS ROUND_ENDED data
+  // ({ winner: { team, tickets }, loser: { team, tickets } }); missing fields leave the values null.
+  roundResult(info) {
+    const w = info && info.winner;
+    const l = info && info.loser;
+    const gap = w && l && Number.isFinite(+w.tickets) && Number.isFinite(+l.tickets) ? Math.abs(+w.tickets - +l.tickets) : null;
+    const team = w && (+w.team === 1 || +w.team === 2) ? +w.team : null;
+    if (team) {
+      // the same group of players won again if most of today's winners were also among the last winners
+      const winners = new Set(this.server.players.filter((p) => +p.teamID === team).map((p) => p.eosID));
+      const prev = this.lastWinners || new Set();
+      let same = 0;
+      for (const id of winners) if (prev.has(id)) same += 1;
+      this.streak = winners.size && same >= 0.5 * winners.size ? (this.streak || 1) + 1 : 1;
+      this.lastWinners = winners;
+    }
+    return { gap, streak: team ? this.streak : null };
+  }
+
+  // a trigger is set and this round does not meet it (null = shuffle). With both set either one is enough;
+  // a round whose result is unknown shuffles as before.
+  triggerSkip(result) {
+    const minGap = this.options.shuffleTicketGap;
+    const minStreak = this.options.shuffleWinStreak;
+    if (!(minGap > 0) && !(minStreak > 0)) return null;
+    if (result.gap === null && result.streak === null) return null;
+    if (minGap > 0 && result.gap !== null && result.gap >= minGap) return null;
+    if (minStreak > 0 && result.streak !== null && result.streak >= minStreak) return null;
+    const parts = [];
+    if (minGap > 0) parts.push(`ticket gap ${result.gap === null ? '?' : result.gap}, needs ${minGap}`);
+    if (minStreak > 0) parts.push(`win streak ${result.streak === null ? '?' : result.streak}, needs ${minStreak}`);
+    return parts.join('; ');
   }
 
   // why an automatic shuffle should not run this round (null = run it)
@@ -1465,6 +1720,18 @@ export default class SmartShuffle extends BasePlugin {
       // a party bigger than maxPartySize is not kept together: it is split like free players
       const cap = +this.options.maxPartySize > 0 ? +this.options.maxPartySize : Infinity;
       groups = [...byParty.values()].filter((g) => g.length >= 2 && g.length <= cap);
+    }
+    if (this.squads) {
+      // whole squads up to maxPartySize stay together too; a party and a squad that share a player are one group
+      const cap = +this.options.maxPartySize > 0 ? +this.options.maxPartySize : Infinity;
+      const bySquad = new Map();
+      players.forEach((p, i) => {
+        if (p.squadID === null || p.squadID === undefined) return;
+        const k = `${p.teamID}:${p.squadID}`;
+        if (!bySquad.has(k)) bySquad.set(k, []);
+        bySquad.get(k).push(i);
+      });
+      groups = mergeGroups([...groups, ...[...bySquad.values()].filter((g) => g.length >= 2 && g.length <= cap)]);
     }
 
     const fewer = Math.min(Math.max(+this.options.fewerMoves || 0, 0), 10);

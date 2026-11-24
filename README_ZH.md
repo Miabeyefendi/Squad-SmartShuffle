@@ -377,6 +377,14 @@ Smart Shuffle report: 44 moved, 0 not placed, score gap 21% -> 1%, done in 3.2 s
 | `tokenMessages` | `on` | 关于令牌的私信：已使用、剩余、获得、过期 |
 | `tokenCommand` | `tokens` | 任何玩家可输入查看自己令牌的聊天命令（`!tokens`）。`"off"` = 无命令 |
 | `tokenFile` | `smart-shuffle-tokens.json` | 保存令牌的文件，相对于 SquadJS 文件夹 |
+| `shuffleTicketGap` | `0` | 只有在一局以至少这么多票数获胜后才自动打乱。`0` = 每局。若同时设置 `shuffleWinStreak`，满足其一即可 |
+| `shuffleWinStreak` | `0` | 只有同一批玩家连续赢这么多局后才自动打乱。`0` = 关闭 |
+| `moveSquads` | `off` | 打乱时不仅保持组队，也保持整个小队在一起，最多 `maxPartySize` 人 |
+| `switchCommand` | `off` | 换队闸门，类似 `!switch` 插件：玩家用此命令申请，插件在允许时（锁定回合需令牌、队伍人数）移动他们，不会出现换过去又被移回。`"off"` = 无闸门 |
+| `switchMaxDiff` | `2` | 换队闸门：大队最多领先这么多人时允许移动 |
+| `switchQueueMinutes` | `10` | 换队闸门：暂时无法完成的申请等待这么多分钟，等空位或反向换队的玩家，然后两人互换。`0` = 无队列 |
+| `imbalanceAlertMinutes` | `0` | 比赛进行到这么多分钟时，若队伍看起来不平衡，只告诉在线管理员。`0` = 关闭 |
+| `imbalanceAlertGap` | `15` | `imbalanceAlertMinutes` 判定为不平衡的分数差（百分比） |
 | `shuffleDelaySeconds` | `0` | 对局结束后移动玩家前等待的秒数（留出看计分板的时间），0 到 25 |
 | `shuffleDeadlineSeconds` | `30` | 对局结束超过这么多秒后不再移动任何人，下一张地图开始后也绝不移动 |
 | `announceMinutes` | `10` | 有分队待执行时，每隔这么多分钟向全服公告一次。0 表示不公告 |
